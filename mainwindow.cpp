@@ -57,11 +57,15 @@ void MainWindow::paintEvent(QPaintEvent *)
 
         //实例化画家对象  this指定的是绘图设备
         QPainter painter(this);
-
+        //painter.drawRect(0,490,80,50);
+        painter.drawRect(30,500,30,50);
+        painter.drawRect(460,450,40,10);
         //画地面
         painter.drawLine(QPoint(0,GroundY),QPoint(WidgetWidth,GroundY));
         //画人
-        painter.drawPixmap(player->heroPosX,player->heroPosY,QPixmap(":/hero/adventurer-run-04.png"));
+        //通过测试可以得到画出来的人物的 左上角点为(heroPosX,heroPosY+10),宽为30,高为40
+        painter.drawPixmap(player->heroPosX-30,player->heroPosY,80,50,QPixmap(":/hero/adventurer-run-04.png"));
+
 }
 void MainWindow::timerEvent(QTimerEvent *ev)
 {
