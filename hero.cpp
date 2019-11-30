@@ -57,12 +57,12 @@ int hero::JudgeWhatHeroMeets(int Type)
     switch(Type)
     {
         case Brick:
-            if(heroPosX>=BrickLeft && heroPosX<=BrickRight && heroPosY <= BrickButtom)
+            if(heroPosX>=BrickLeft && heroPosX<=BrickRight && heroPosY >= BrickButtom)
             {
                 HeroJumpHeight = groundY-HeroHeight-BrickButtom;
                 qDebug()<<"上面是砖头";
             }
-            if(heroPosX>=BrickLeft && heroPosX<=BrickRight && heroPosY >= BrickTop)//判断有没有跳到砖头的上面
+            if(heroPosX>=BrickLeft && heroPosX<=BrickRight && heroPosY < BrickTop)//判断有没有跳到砖头的上面
             {
                 //这里表示的是跳到了砖块的上方,则修改原来的groundY地平线为BrickTop
                 groundY = BrickTop+HeroHeight;
@@ -76,7 +76,7 @@ int hero::JudgeWhatHeroMeets(int Type)
                 HeroJumpHeight = HeroJumpHeightNormal;
                 //flag = 1;
                 StartTimer();
-                qDebug()<<"跳到底了吗?";
+                //qDebug()<<"跳到底了吗?";
 
             }
         break;
