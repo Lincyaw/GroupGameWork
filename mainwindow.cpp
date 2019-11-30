@@ -14,7 +14,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     resize(WidgetWidth,WidgetHeight);
 
-
+奥术大师多asd
 ///////////////////////////////人物////////////////////////////////////////////////
     connect(player,&hero::UpDatePainter,[=](){
         update();
