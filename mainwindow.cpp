@@ -57,7 +57,7 @@ void MainWindow::paintEvent(QPaintEvent *)
 
         //实例化画家对象  this指定的是绘图设备
         QPainter painter(this);
-update()
+
         //画地面
         painter.drawLine(QPoint(0,GroundY),QPoint(WidgetWidth,GroundY));
         //画人
