@@ -12,6 +12,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     this->player = new hero(this);
     this->land = new obstacle(this);
+    land->type=1;
     this->brick = new obstacle(this);
 
 
@@ -20,7 +21,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 ///////////////////////////////人物////////////////////////////////////////////////
     connect(player,&hero::UpDatePainter,[=](){
-        update(player->heroPosX-5,player->heroPosY,80,50);
+        update(player->heroPosX-10,player->heroPosY,80,50);
     });
     connect(player,&hero::StartTimer,[=](){
         FallTimer->start(12);
@@ -29,14 +30,14 @@ MainWindow::MainWindow(QWidget *parent) :
         FallTimer->stop();
     });
     connect(JumpTimer,&QTimer::timeout,[=](){ //跳跃的函数, 降落到地面的时候停止定时器
-        update(player->heroPosX-5,player->heroPosY,80,50);
+        update(player->heroPosX-10,player->heroPosY,80,50);
         if(player->HeroJump())
         {
             JumpTimer->stop();
         }
     });
     connect(FallTimer,&QTimer::timeout,[=](){ //跳跃的函数, 降落到地面的时候停止定时器
-        update(player->heroPosX-5,player->heroPosY,80,50);
+        update(player->heroPosX-10,player->heroPosY,80,50);
         if(player->HeroFallDown())
         {
             FallTimer->stop();

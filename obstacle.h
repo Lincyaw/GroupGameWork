@@ -9,7 +9,8 @@ class obstacle : public QWidget
 public:
     explicit obstacle(QWidget *parent = 0);
 
-//    int sort[10];  //障碍物类型 0: 天空 1: 陆地
+//    int sort[10];  //障碍物类型 0: 天空 1: 陆地 2：砖
+    int type;  //障碍物类型 0: 天空 1: 陆地 2：砖
     int obPosX[10];  //障碍物坐标
     int obPosY[10];
     int obWidth[10];  //障碍物的宽

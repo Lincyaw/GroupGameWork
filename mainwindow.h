@@ -18,6 +18,7 @@ public:
     hero *player;
     obstacle *land;
     obstacle *brick;
+    obstacle *coin;
 
     void paintEvent(QPaintEvent *);
     void timerEvent(QTimerEvent *);
