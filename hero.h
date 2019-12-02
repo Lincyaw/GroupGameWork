@@ -23,12 +23,12 @@ public:
     const static int HeroJumpHeightNormal = 200;
     int HeroJumpHeight = 100;
 
-    QPixmap HeroSkin = QPixmap(":/hero/adventurer-run-04.png");
-    QPixmap HeroSkin = QPixmap(":/hero/adventurer-run-04.png");
-    QPixmap HeroSkin = QPixmap(":/hero/adventurer-run-04.png");
-    QPixmap HeroSkin = QPixmap(":/hero/adventurer-run-04.png");
-    QPixmap HeroSkin = QPixmap(":/hero/adventurer-run-04.png");
-    QPixmap HeroSkin = QPixmap(":/hero/adventurer-run-04.png");
+    QPixmap HeroSkin;
+    QPixmap HeroSkin1 = QPixmap(":/hero/adventurer-run-01.png");
+    QPixmap HeroSkin2 = QPixmap(":/hero/adventurer-run-02.png");
+    QPixmap HeroSkin3 = QPixmap(":/hero/adventurer-run-03.png");
+    QPixmap HeroSkin4 = QPixmap(":/hero/adventurer-run-04.png");
+    QPixmap HeroSkin5 = QPixmap(":/hero/adventurer-run-05.png");
 
 
     int groundY = 540;

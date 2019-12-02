@@ -87,7 +87,7 @@ int hero::JudgeWhatHeroMeets(obstacle *ob)
                 HeroJumpHeight = HeroJumpHeightNormal;
                 //flag = 1;
                 StartTimer();
-                qDebug()<<"跳到底了吗?";
+               // qDebug()<<"跳到底了吗?";
 
             }
 //            if(StandOnTheBrickflag)
