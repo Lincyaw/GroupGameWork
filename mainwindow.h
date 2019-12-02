@@ -3,6 +3,7 @@
 #include <QMainWindow>
 #include "hero.h"
 #include <QTimer>
+#include "obstacle.h"
 namespace Ui {
 class MainWindow;
 }
@@ -15,6 +16,8 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     hero *player;
+    obstacle *land;
+    obstacle *brick;
 
     void paintEvent(QPaintEvent *);
     void timerEvent(QTimerEvent *);

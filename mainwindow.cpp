@@ -11,6 +11,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->setupUi(this);
     this->player = new hero(this);
+    this->land = new obstacle(this);
+    this->brick = new obstacle(this);
+
 
     resize(WidgetWidth,WidgetHeight);
 
@@ -44,7 +47,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
 ////////////////////////////////背景///////////////////////////////////////////////
 
-
+    land->InitLandData();
+    brick->InitBrickData();
 
 
 
@@ -54,17 +58,24 @@ MainWindow::MainWindow(QWidget *parent) :
 
 void MainWindow::paintEvent(QPaintEvent *)
 {
+    int i;
+    //实例化画家对象  this指定的是绘图设备
+    QPainter painter(this);
+    QPainter obPainter(this);
 
-        //实例化画家对象  this指定的是绘图设备
-        QPainter painter(this);
-        //painter.drawRect(0,490,80,50);
-        painter.drawRect(30,500,30,50);
-        painter.drawRect(460,450,40,10);
-        //画地面
-        painter.drawLine(QPoint(0,GroundY),QPoint(WidgetWidth,GroundY));
-        //画人
-        //通过测试可以得到画出来的人物的 左上角点为(heroPosX,heroPosY+10),宽为30,高为40
-        painter.drawPixmap(player->heroPosX-30,player->heroPosY,80,50,QPixmap(":/hero/adventurer-run-04.png"));
+    //painter.drawRect(0,490,80,50);
+    painter.drawRect(30,500,30,50);
+    painter.drawRect(460,450,40,10);
+    //画地面
+    obPainter.drawPixmap(land->obPosX[0],land->obPosY[0],land->obWidth[0],land->obHeight[0],QPixmap(":/background/background/brick01.png"));
+    for (i = 0; i < 3; i++)
+    {
+        obPainter.drawPixmap(brick->obPosX[i],brick->obPosY[i],brick->obWidth[i],brick->obHeight[i],QPixmap(":/background/background/brick01.png"));
+    }
+//    painter.drawLine(QPoint(0,GroundY),QPoint(WidgetWidth,GroundY));
+    //画人
+    //通过测试可以得到画出来的人物的 左上角点为(heroPosX,heroPosY+10),宽为30,高为40
+    painter.drawPixmap(player->heroPosX-30,player->heroPosY,80,50,QPixmap(":/hero/adventurer-run-04.png"));
 
 }
 void MainWindow::timerEvent(QTimerEvent *ev)
