@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'hero.h'
 **
-** Created by: The Qt Meta Object Compiler version 67 (Qt 5.5.0)
+** Created by: The Qt Meta Object Compiler version 67 (Qt 5.6.3)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
@@ -12,7 +12,7 @@
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'hero.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
-#error "This file was generated using the moc from 5.5.0. It"
+#error "This file was generated using the moc from 5.6.3. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
@@ -84,18 +84,21 @@ void hero::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void *
             typedef void (hero::*_t)();
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&hero::StopTimer)) {
                 *result = 0;
+                return;
             }
         }
         {
             typedef void (hero::*_t)();
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&hero::StartTimer)) {
                 *result = 1;
+                return;
             }
         }
         {
             typedef void (hero::*_t)();
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&hero::UpDatePainter)) {
                 *result = 2;
+                return;
             }
         }
     }
