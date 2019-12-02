@@ -20,7 +20,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 ///////////////////////////////人物////////////////////////////////////////////////
     connect(player,&hero::UpDatePainter,[=](){
-        update(player->heroPosX-5,player->heroPosY,80,50);
+        update(player->heroPosX-10,player->heroPosY,80,50);
     });
     connect(player,&hero::StartTimer,[=](){
         FallTimer->start(12);
@@ -29,15 +29,15 @@ MainWindow::MainWindow(QWidget *parent) :
         FallTimer->stop();
     });
     connect(JumpTimer,&QTimer::timeout,[=](){ //跳跃的函数, 降落到地面的时候停止定时器
-        update(player->heroPosX-5,player->heroPosY,80,50);
-        if(player->HeroJump())
+        update(player->heroPosX-10,player->heroPosY,80,50);
+        if(player->HeroJump(brick))
         {
             JumpTimer->stop();
         }
     });
     connect(FallTimer,&QTimer::timeout,[=](){ //跳跃的函数, 降落到地面的时候停止定时器
-        update(player->heroPosX-5,player->heroPosY,80,50);
-        if(player->HeroFallDown())
+        update(player->heroPosX-10,player->heroPosY,80,50);
+        if(player->HeroFallDown(brick))
         {
             FallTimer->stop();
         }
@@ -84,13 +84,13 @@ void MainWindow::timerEvent(QTimerEvent *ev)
     {
         update(player->heroPosX-10,player->heroPosY,80,50);
         //update();
-        player->HeroJump();
+        player->HeroJump(brick);
 
     }
     if(ev->timerId() == FallTimer->timerId())
     {
         update(player->heroPosX-10,player->heroPosY,80,50);
-        player->HeroFallDown();
+        player->HeroFallDown(brick);
     }
 
 }
@@ -107,12 +107,12 @@ void MainWindow::keyPressEvent(QKeyEvent *ev)
     }
     if(ev->key() == Qt::Key_A)//左移
     {
-        player->HeroGoLeft(); //人向左运动
+        player->HeroGoLeft(brick); //人向左运动
         update(player->heroPosX-10,player->heroPosY,80,50);
     }
     if(ev->key() == Qt::Key_D)//右移
     {
-        player->HeroGoRight();//人向右运动
+        player->HeroGoRight(brick);//人向右运动
         update(player->heroPosX-10,player->heroPosY,80,50);
     }
 }
