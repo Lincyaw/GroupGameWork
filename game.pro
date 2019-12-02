@@ -27,11 +27,13 @@ CONFIG += c++11
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    hero.cpp
+    hero.cpp \
+    obstacle.cpp
 
 HEADERS += \
         mainwindow.h \
-    hero.h
+    hero.h \
+    obstacle.h
 
 FORMS += \
         mainwindow.ui

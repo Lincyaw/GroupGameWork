@@ -110,4 +110,9 @@
         <file>hero/adventurer-wall-slide-00.png</file>
         <file>hero/adventurer-wall-slide-01.png</file>
     </qresource>
+    <qresource prefix="/background">
+        <file>background/brick01.png</file>
+        <file>background/brick02.png</file>
+        <file>background/role.png</file>
+    </qresource>
 </RCC>
