@@ -114,5 +114,6 @@
         <file>background/brick01.png</file>
         <file>background/brick02.png</file>
         <file>background/role.png</file>
+        <file>background/coin.png</file>
     </qresource>
 </RCC>
