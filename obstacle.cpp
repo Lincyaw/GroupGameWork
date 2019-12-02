@@ -24,7 +24,7 @@ void obstacle::InitBrickData()
     int i;
     for (i = 0; i < 3; i++)
     {
-        obPosY[i] = 470;
+        obPosY[i] = 400;
         obHeight[i] = 30;
         obWidth[i] = 40;
         obPosX[i] = 460 + i * obWidth[i];
