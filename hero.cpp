@@ -54,33 +54,53 @@ int hero::JudgeWhatHeroMeets(obstacle *ob)
 {
     //左上角点为(heroPosX,heroPosY+10),宽为30,高为40
     int i;
+
     for(i=0;i<ob->number;i++)
     {
         int BrickLeft = ob->obPosX[i],BrickRight = ob->obPosX[i]+ob->obWidth[i],BrickTop =ob->obPosY[i];//因为没有写好具体的砖块类, 因此砖块的大小暂时在这里用临时变量
-         int BrickButtom = ob->obPosY[i]+ob->obHeight[i];                                                //代替, 在砖块类写好后可以把这些量换成砖块的posXrange和posYrange
+         int BrickButtom = ob->obPosY[i]+ob->obHeight[i];
 
-        if(heroPosX>=BrickLeft && heroPosX<=BrickRight && HeroPosY >= BrickButtom)
-        {
-            HeroJumpHeight = groundY-HeroHeight-BrickButtom;
-            qDebug()<<"上面是砖头";
-        }
-        if(heroPosX>=BrickLeft && heroPosX<=BrickRight && HeroPosY+HeroHeight < BrickTop)//判断有没有跳到砖头的上面
+         //代替, 在砖块类写好后可以把这些量换成砖块的posXrange和posYrange
+
+//         int BrickLeft =460,BrickRight = 580,BrickTop =400;//因为没有写好具体的砖块类, 因此砖块的大小暂时在这里用临时变量
+//          int BrickButtom = 430;
+
+
+//qDebug()<<"BrickLeft="<<BrickLeft<<"\n"<<"BrickRight="<<BrickRight<<"\n"<<"BrickTop="<<BrickTop<<"\n"<<"BrickButtom="<<BrickButtom<<"\n-----------";
+
+        if(heroPosX+HeroWidth>=BrickLeft && heroPosX<=BrickRight && heroPosY+HeroHeight <= BrickTop)//判断有没有跳到砖头的上面
         {
             //这里表示的是跳到了砖块的上方,则修改原来的groundY地平线为BrickTop
-            groundY = BrickTop;// + HeroHeight;
+            groundY = BrickTop;
             HeroJumpHeight = HeroJumpHeightNormal;
             qDebug()<<"跳到了上面";
+            StandOnTheBrickflag = 1;
+            break;
         }
-        if((heroPosX<BrickLeft || heroPosX>BrickRight) && JumpOrNot==0)
+        else
         {
-            //没有则回到原来的地平线;  注意,如果有其他的地形同理
-            groundY = 540;//MainWindow::GroundY是主窗口设定的地平线
-            HeroJumpHeight = HeroJumpHeightNormal;
-            //flag = 1;
-            StartTimer();
-            //qDebug()<<"跳到底了吗?";
+            if((heroPosX+HeroWidth<BrickLeft || heroPosX>BrickRight) && JumpOrNot==0)
+            {
+                StandOnTheBrickflag = 0;
+                //没有则回到原来的地平线;  注意,如果有其他的地形同理
+                groundY = 540;//MainWindow::GroundY是主窗口设定的地平线
+                HeroJumpHeight = HeroJumpHeightNormal;
+                //flag = 1;
+                StartTimer();
+                qDebug()<<"跳到底了吗?";
 
+            }
+//            if(StandOnTheBrickflag)
+//                break;
+            if(heroPosX+HeroWidth>=BrickLeft && heroPosX<=BrickRight && HeroPosY >= BrickButtom)
+            {
+                HeroJumpHeight = groundY-HeroHeight-BrickButtom;
+                qDebug()<<"上面是砖头";
+                StandOnTheBrickflag = 0;
+            }
         }
+
+
     }
 
 

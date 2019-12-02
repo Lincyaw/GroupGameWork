@@ -70,7 +70,7 @@ void MainWindow::paintEvent(QPaintEvent *)
 
     //painter.drawRect(0,490,80,50);
     painter.drawRect(30,500,30,50);
-    painter.drawRect(460,450,40,10);
+    painter.drawRect(460,450,40,20);
     //画地面
     obPainter.drawPixmap(land->obPosX[0],land->obPosY[0],land->obWidth[0],land->obHeight[0],QPixmap(":/background/background/brick01.png"));
     for (i = 0; i < 3; i++)
