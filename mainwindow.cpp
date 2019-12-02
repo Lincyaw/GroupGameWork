@@ -14,6 +14,7 @@ MainWindow::MainWindow(QWidget *parent) :
     this->land = new obstacle(this);
     land->type=1;
     this->brick = new obstacle(this);
+    this->coin = new obstacle(this);
 
 
     resize(WidgetWidth,WidgetHeight);
@@ -54,9 +55,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     land->InitLandData();
     brick->InitBrickData();
-
-
-
+    coin->InitCoinData();
 
 ////////////////////////////////怪物//////////////////////////////////////////////
 }
@@ -76,6 +75,10 @@ void MainWindow::paintEvent(QPaintEvent *)
     for (i = 0; i < brick->number; i++)
     {
         obPainter.drawPixmap(brick->obPosX[i],brick->obPosY[i],brick->obWidth[i],brick->obHeight[i],QPixmap(":/background/background/brick01.png"));
+    }
+    for (i = 0; i < coin->number; i++)
+    {
+        obPainter.drawPixmap(coin->obPosX[i],coin->obPosY[i],coin->obWidth[i],coin->obHeight[i],QPixmap(":/background/background/coin.png"));
     }
 //    painter.drawLine(QPoint(0,GroundY),QPoint(WidgetWidth,GroundY));
     //画人
