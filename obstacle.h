@@ -17,6 +17,7 @@ public:
 
     void InitLandData();  //初始化陆地的数据
     void InitBrickData();  //初始化砖块的数据
+    void InitCoinData();  //初始化金币的数据
 signals:
 
 public slots:
