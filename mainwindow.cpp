@@ -82,6 +82,7 @@ void MainWindow::timerEvent(QTimerEvent *ev)
 {
     if(ev->timerId() == JumpTimer->timerId())
     {
+        //update(player->heroPosX,player->heroPosY,80,50);
         update();
         player->HeroJump();
 
