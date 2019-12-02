@@ -43,10 +43,17 @@ void obstacle::InitCoinData()
     int i;
     for (i = 0; i < 3; i++)
     {
-        obPosY[i] = 440;
+        obPosY[i] = 370;
         obHeight[i] = 30;
         obWidth[i] = 40;
         obPosX[i] = 460 + i * obWidth[i];
+    }
+    for (i = 0; i < 3; i++)
+    {
+        obPosY[i+3] = 270;
+        obHeight[i+3] = 30;
+        obWidth[i+3] = 40;
+        obPosX[i+3] = 680 + i * obWidth[i+3];
     }
 }
 
