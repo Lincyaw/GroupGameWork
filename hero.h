@@ -24,6 +24,12 @@ public:
     int HeroJumpHeight = 100;
 
     QPixmap HeroSkin = QPixmap(":/hero/adventurer-run-04.png");
+    QPixmap HeroSkin = QPixmap(":/hero/adventurer-run-04.png");
+    QPixmap HeroSkin = QPixmap(":/hero/adventurer-run-04.png");
+    QPixmap HeroSkin = QPixmap(":/hero/adventurer-run-04.png");
+    QPixmap HeroSkin = QPixmap(":/hero/adventurer-run-04.png");
+    QPixmap HeroSkin = QPixmap(":/hero/adventurer-run-04.png");
+
 
     int groundY = 540;
     int HeroHeight = 50;//人物这张图片画图是从左上角开始的, 因此要在想绘制的地方
