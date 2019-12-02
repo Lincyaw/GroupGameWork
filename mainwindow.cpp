@@ -15,10 +15,6 @@ MainWindow::MainWindow(QWidget *parent) :
     land->type=1;
     this->brick = new obstacle(this);
     this->coin = new obstacle(this);
-<<<<<<< HEAD
-=======
-
->>>>>>> 1ab8ef307be65346096c4844b5542fae656cddea
 
     resize(WidgetWidth,WidgetHeight);
 
@@ -59,11 +55,7 @@ MainWindow::MainWindow(QWidget *parent) :
     land->InitLandData();
     brick->InitBrickData();
     coin->InitCoinData();
-<<<<<<< HEAD
 
-
-=======
->>>>>>> 1ab8ef307be65346096c4844b5542fae656cddea
 
 ////////////////////////////////怪物//////////////////////////////////////////////
 }
