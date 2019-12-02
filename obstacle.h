@@ -12,7 +12,7 @@ public:
 
 //    int sort[10];  //障碍物类型 0: 天空 1: 陆地
     int type;
-    const static int number = 3;
+    const static int number = 6;
     int obPosX[number];  //障碍物坐标
     int obPosY[number];
     int obWidth[number];  //障碍物的宽

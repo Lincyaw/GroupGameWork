@@ -68,7 +68,7 @@ int hero::JudgeWhatHeroMeets(obstacle *ob)
 
 //qDebug()<<"BrickLeft="<<BrickLeft<<"\n"<<"BrickRight="<<BrickRight<<"\n"<<"BrickTop="<<BrickTop<<"\n"<<"BrickButtom="<<BrickButtom<<"\n-----------";
 
-        if(heroPosX+HeroWidth>=BrickLeft && heroPosX<=BrickRight && heroPosY+HeroHeight <= BrickTop)//判断有没有跳到砖头的上面
+        if(heroPosX+HeroWidth>=BrickLeft && heroPosX<=BrickRight && heroPosY+HeroHeight-5 <= BrickTop)//判断有没有跳到砖头的上面
         {
             //这里表示的是跳到了砖块的上方,则修改原来的groundY地平线为BrickTop
             groundY = BrickTop;

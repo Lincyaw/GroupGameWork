@@ -1,6 +1,6 @@
 #ifndef HERO_H
 #define HERO_H
-
+#include <QPixmap>
 #include <QObject>
 #include<QTimer>
 #include <QDebug>
@@ -16,13 +16,15 @@ public:
     int heroPosY = 490;
     int HeroPosY = heroPosY+10; //修正后的人的左上角, 因为用heroPosY的话上方还有一点点空白
     int HeroWidth = 30;
-
     int HeroStep = 4;
     int Jumpflag = 0; //判断跳跃的时候是往下还是往上
     int StandOnTheBrickflag = 0;
     int JumpOrNot = 0;
     const static int HeroJumpHeightNormal = 200;
     int HeroJumpHeight = 100;
+
+    QPixmap HeroSkin = QPixmap(":/hero/adventurer-run-04.png");
+
     int groundY = 540;
     int HeroHeight = 50;//人物这张图片画图是从左上角开始的, 因此要在想绘制的地方
                         //减去整张照片的高度才能画在想画的位置.

@@ -29,6 +29,13 @@ void obstacle::InitBrickData()
         obWidth[i] = 40;
         obPosX[i] = 460 + i * obWidth[i];
     }
+    for (i = 0; i < 3; i++)
+    {
+        obPosY[i+3] = 300;
+        obHeight[i+3] = 30;
+        obWidth[i+3] = 40;
+        obPosX[i+3] = 680 + i * obWidth[i+3];
+    }
 }
 
 void obstacle::InitCoinData()
