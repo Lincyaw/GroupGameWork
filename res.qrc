@@ -116,4 +116,7 @@
         <file>background/role.png</file>
         <file>background/coin.png</file>
     </qresource>
+    <qresource prefix="/monster">
+        <file>hell-beast-breath.png</file>
+    </qresource>
 </RCC>
