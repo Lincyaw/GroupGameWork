@@ -25,12 +25,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
+    anemy.cpp \
         main.cpp \
         mainwindow.cpp \
     hero.cpp \
     obstacle.cpp
 
 HEADERS += \
+    anemy.h \
         mainwindow.h \
     hero.h \
     obstacle.h

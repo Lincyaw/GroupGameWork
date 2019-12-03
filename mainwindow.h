@@ -4,6 +4,7 @@
 #include "hero.h"
 #include <QTimer>
 #include "obstacle.h"
+#include "anemy.h"
 namespace Ui {
 class MainWindow;
 }
@@ -16,6 +17,7 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     hero *player;
+    anemy *monster;
     obstacle *land;
     obstacle *brick;
     obstacle *coin;

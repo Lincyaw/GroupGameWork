@@ -65,6 +65,7 @@ MainWindow::MainWindow(QWidget *parent) :
 //    }
 
 ////////////////////////////////怪物//////////////////////////////////////////////
+    this->monster = new anemy(this,400);
 }
 
 void MainWindow::paintEvent(QPaintEvent *)
@@ -94,7 +95,7 @@ void MainWindow::paintEvent(QPaintEvent *)
     //画人
     //通过测试可以得到画出来的人物的 左上角点为(heroPosX,heroPosY+10),宽为30,高为40
     painter.drawPixmap(player->heroPosX-30,player->heroPosY,80,50,player->HeroSkin);
-
+    painter.drawPixmap(monster->heroPosX-30,monster->heroPosY,80,50,monster->HeroSkin);
 }
 void MainWindow::timerEvent(QTimerEvent *ev)
 {
