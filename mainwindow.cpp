@@ -55,7 +55,11 @@ MainWindow::MainWindow(QWidget *parent) :
     land->InitLandData();
     brick->InitBrickData();
     coin->InitCoinData();
-
+//    connect(player,)
+//    if(coin->CoinDisappear(player))
+//    {
+//        update(coin->obPosX,coin->obPosY,coin->obWidth,coin->obHeight);
+//    }
 
 ////////////////////////////////怪物//////////////////////////////////////////////
 }
@@ -78,7 +82,10 @@ void MainWindow::paintEvent(QPaintEvent *)
     }
     for (i = 0; i < coin->number; i++)
     {
-        obPainter.drawPixmap(coin->obPosX[i],coin->obPosY[i],coin->obWidth[i],coin->obHeight[i],QPixmap(":/background/background/coin.png"));
+        if(coin->showflag[i])
+        {
+            obPainter.drawPixmap(coin->obPosX[i],coin->obPosY[i],coin->obWidth[i],coin->obHeight[i],QPixmap(":/background/background/coin.png"));
+        }
     }
 //    painter.drawLine(QPoint(0,GroundY),QPoint(WidgetWidth,GroundY));
     //画人
@@ -100,7 +107,6 @@ void MainWindow::timerEvent(QTimerEvent *ev)
         update(player->heroPosX-10,player->heroPosY,80,50);
         player->HeroFallDown(brick);
     }
-
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *ev)
