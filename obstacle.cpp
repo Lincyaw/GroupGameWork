@@ -21,7 +21,7 @@ void obstacle::InitLandData()
 
 void obstacle::InitBrickData()
 {
-    type = 1；
+    type = 1;
     int i;
     for (i = 0; i < 3; i++)
     {
@@ -61,15 +61,15 @@ void obstacle::InitCoinData()
     }
 }
 
-void obstacle::CoinDisappear(hero *player)
-{
-    int i;
-    for (i = 0; i < number; i++)
-    {
-        if((player->heroPosX + player->HeroWidth >= obPosX[i] && player->heroPosX <= obPosX[i]) && (player->HeroPosY + player->HeroHeight >= obPosY && player->HeroPosY <= obPosY + obHeight))
-        {
-            showflag[i] = 0;
-        }
-    }
-}
+//void obstacle::CoinDisappear(hero *player)
+//{
+//    int i;
+//    for (i = 0; i < number; i++)
+//    {
+//        if((player->heroPosX + player->HeroWidth >= obPosX[i] && player->heroPosX <= obPosX[i]) && (player->HeroPosY + player->HeroHeight >= obPosY && player->HeroPosY <= obPosY + obHeight))
+//        {
+//            showflag[i] = 0;
+//        }
+//    }
+//}
 

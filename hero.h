@@ -24,6 +24,7 @@ public:
     int JumpOrNot;
     int HeroJumpHeightNormal;
     int HeroJumpHeight;
+    int HeroMeetWhichObstacle;
 
     QPixmap HeroSkin;
     QPixmap HeroRunSkin1;
