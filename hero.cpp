@@ -7,7 +7,7 @@ hero::hero(QObject *parent) : QObject(parent)
     heroPosY = 490;
     HeroPosY = heroPosY+10; //修正后的人的左上角, 因为用heroPosY的话上方还有一点点空白
     HeroWidth = 30;
-    HeroStep = 12;
+    HeroStep = 5;
     JumpSpeed = 6;
     FallSpeed = 4;
     Jumpflag = 0; //判断跳跃的时候是往下还是往上
@@ -78,7 +78,7 @@ bool hero::HeroJump(obstacle *ob)
 int hero::JudgeWhatHeroMeets(obstacle *ob)
 {
     //左上角点为(heroPosX,heroPosY+10),宽为30,高为40
-
+    //qDebug()<<"type是"<<ob->type;
     int i;
     if(ob->type==1)
     {
@@ -93,7 +93,7 @@ int hero::JudgeWhatHeroMeets(obstacle *ob)
                 //这里表示的是跳到了砖块的上方,则修改原来的groundY地平线为BrickTop
                 groundY = BrickTop;
                 HeroJumpHeight = HeroJumpHeightNormal;
-                qDebug()<<"跳到了上面";
+                //qDebug()<<"跳到了上面";
                 StandOnTheBrickflag = 1;
                 break;
                 HeroMeetWhichObstacle = i;
@@ -116,14 +116,13 @@ int hero::JudgeWhatHeroMeets(obstacle *ob)
                 if(heroPosX+HeroWidth>=BrickLeft && heroPosX<=BrickRight && HeroPosY >= BrickButtom)
                 {
                     HeroJumpHeight = groundY-HeroHeight-BrickButtom;
-                    qDebug()<<"上面是砖头";
+                   // qDebug()<<"上面是砖头";
                     StandOnTheBrickflag = 0;
                 }
                 HeroMeetWhichObstacle = i;
             }
 
     }
-
     }
     else if(ob->type==2)
     {
@@ -133,15 +132,17 @@ int hero::JudgeWhatHeroMeets(obstacle *ob)
             int BrickLeft = ob->obPosX[i],BrickRight = ob->obPosX[i]+ob->obWidth[i],BrickTop =ob->obPosY[i];//因为没有写好具体的砖块类, 因此砖块的大小暂时在这里用临时变量
              int BrickButtom = ob->obPosY[i]+ob->obHeight[i];
 
-            if(heroPosX+HeroWidth>=BrickLeft && heroPosX<=BrickRight && heroPosY+10 >= BrickTop && heroPosY+10<=BrickButtom)//判断有没有跳到砖头的上面
+            if((heroPosX+HeroWidth>=BrickLeft && heroPosX+HeroWidth<= BrickRight) && heroPosY+20 >= BrickTop && heroPosY+20<=BrickButtom)//判断有没有跳到砖头的上面
             {
-                emit MeetCoin();
                 HeroMeetWhichObstacle = i;
-                return i;
+                emit MeetCoin();
+                qDebug()<<"遭遇金币"<<i;
+
+
             }
     }
     }
-
+return 0;
 }
 bool hero::HeroFallDown(obstacle *ob)
 {
