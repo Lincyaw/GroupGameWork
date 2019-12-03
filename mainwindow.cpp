@@ -24,7 +24,7 @@ MainWindow::MainWindow(QWidget *parent) :
         update(player->heroPosX-10,player->heroPosY,80,50);
     });
     connect(player,&hero::StartTimer,[=](){
-        FallTimer->start(12);
+        FallTimer->start(5);
     });
     connect(player,&hero::StopTimer,[=](){
         FallTimer->stop();
