@@ -23,7 +23,7 @@ public:
     void InitBrickData();  //初始化砖块的数据
     void InitCoinData();  //初始化金币的数据
 
-    //void CoinDisappear(hero *player);
+    void CoinDisappear(hero *player);
 signals:
 
 public slots:
