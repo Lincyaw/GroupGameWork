@@ -26,13 +26,13 @@ public:
     int HeroJumpHeight;
 
     QPixmap HeroSkin;
-    QPixmap HeroSkin1;
-    QPixmap HeroSkin2;
-    QPixmap HeroSkin3;
-    QPixmap HeroSkin4;
-    QPixmap HeroSkin5;
+    QPixmap HeroRunSkin1;
+    QPixmap HeroRunSkin2;
+    QPixmap HeroRunSkin3;
+    QPixmap HeroRunSkin4;
+    QPixmap HeroRunSkin5;
 
-
+    int RunSkinCounter = 0;
     int groundY;
     int HeroHeight;//人物这张图片画图是从左上角开始的, 因此要在想绘制的地方
                         //减去整张照片的高度才能画在想画的位置.
@@ -49,6 +49,7 @@ signals:
     void StopTimer();//关闭定时器信号
     void StartTimer();//打开定时器信号
     void UpDatePainter();
+    void MeetCoin();
 public slots:
 };
 
