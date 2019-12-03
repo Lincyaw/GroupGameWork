@@ -111,6 +111,9 @@ void MainWindow::timerEvent(QTimerEvent *ev)
 
 void MainWindow::keyPressEvent(QKeyEvent *ev)
 {
+
+    int i = 0;
+
     if(ev->key() == Qt::Key_J ) //跳跃
     {
         if(player->JumpOrNot==0)//如果在跳跃的过程中就不进行下面的进程, 即防止二段跳使人物一直在最高度
@@ -126,6 +129,30 @@ void MainWindow::keyPressEvent(QKeyEvent *ev)
     }
     if(ev->key() == Qt::Key_D)//右移
     {
+
+        i++;
+        //i= i==5?0:i;
+
+        switch(i)
+        {
+            case 0:
+                player->HeroSkin = player->HeroSkin1;
+                break;
+            case 1:
+                player->HeroSkin = player->HeroSkin2;
+                break;
+            case 2:
+                player->HeroSkin = player->HeroSkin3;
+                break;
+            case 3:
+                player->HeroSkin = player->HeroSkin4;
+                break;
+            case 4:
+                player->HeroSkin = player->HeroSkin5;
+                break;
+        }
+
+qDebug()<<i;
         player->HeroGoRight(brick);//人向右运动
         update(player->heroPosX-10,player->heroPosY,80,50);
     }

@@ -23,10 +23,16 @@ public:
     const static int HeroJumpHeightNormal = 200;
     int HeroJumpHeight = 100;
 
-    QPixmap HeroSkin = QPixmap(":/hero/adventurer-run-04.png");
-
     int groundY = 540;
     int HeroHeight = 50;//人物这张图片画图是从左上角开始的, 因此要在想绘制的地方
+    QPixmap HeroSkin;
+    QPixmap HeroSkin1;
+    QPixmap HeroSkin2;
+    QPixmap HeroSkin3;
+    QPixmap HeroSkin4;
+    QPixmap HeroSkin5;
+
+
                         //减去整张照片的高度才能画在想画的位置.
             //通过测试可以得到画出来的人物的 左上角点为(heroPosX,heroPosY+10),宽为30,高为40
 
