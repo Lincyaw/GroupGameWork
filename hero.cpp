@@ -96,6 +96,7 @@ int hero::JudgeWhatHeroMeets(obstacle *ob)
                 qDebug()<<"跳到了上面";
                 StandOnTheBrickflag = 1;
                 break;
+                HeroMeetWhichObstacle = i;
             }
             else
             {
@@ -118,7 +119,9 @@ int hero::JudgeWhatHeroMeets(obstacle *ob)
                     qDebug()<<"上面是砖头";
                     StandOnTheBrickflag = 0;
                 }
+                HeroMeetWhichObstacle = i;
             }
+
     }
 
     }
@@ -133,10 +136,12 @@ int hero::JudgeWhatHeroMeets(obstacle *ob)
             if(heroPosX+HeroWidth>=BrickLeft && heroPosX<=BrickRight && heroPosY+10 >= BrickTop && heroPosY+10<=BrickButtom)//判断有没有跳到砖头的上面
             {
                 emit MeetCoin();
+                HeroMeetWhichObstacle = i;
+                return i;
             }
     }
     }
-return 0;
+
 }
 bool hero::HeroFallDown(obstacle *ob)
 {
