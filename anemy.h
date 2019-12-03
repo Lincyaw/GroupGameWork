@@ -1,13 +1,13 @@
 #ifndef ANEMY_H
 #define ANEMY_H
-
+#include "hero.h"
 #include <QObject>
 
-class anemy : public QObject
+class anemy : public hero
 {
     Q_OBJECT
 public:
-    explicit anemy(QObject *parent = nullptr);
+    explicit anemy(QObject *parent = nullptr,int pos_x = 0,int pos_y = 490);
 
 signals:
 
