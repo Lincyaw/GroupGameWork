@@ -12,9 +12,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     this->player = new hero(this);
     this->land = new obstacle(this);
-//    land->type=1;
     this->brick = new obstacle(this);
     this->coin = new obstacle(this);
+    this->box = new obstacle(this);
 
     resize(WidgetWidth,WidgetHeight);
 
@@ -59,6 +59,7 @@ MainWindow::MainWindow(QWidget *parent) :
         coin->showflag[player->HeroMeetWhichObstacle] = 0;
         update(coin->obPosX[player->HeroMeetWhichObstacle],coin->obPosY[player->HeroMeetWhichObstacle],coin->obWidth[player->HeroMeetWhichObstacle],coin->obHeight[player->HeroMeetWhichObstacle]);
     });
+    box->InitBoxData();
 //    if(coin->CoinDisappear(player))
 //    {
 //        update(coin->obPosX,coin->obPosY,coin->obWidth,coin->obHeight);
@@ -90,6 +91,8 @@ void MainWindow::paintEvent(QPaintEvent *)
             obPainter.drawPixmap(coin->obPosX[i],coin->obPosY[i],coin->obWidth[i],coin->obHeight[i],QPixmap(":/background/background/coin.png"));
         }
     }
+    obPainter.drawPixmap(box->obPosX[0],box->obPosY[0],box->obWidth[0],box->obHeight[0],QPixmap(":/background/background/brick02.png"));
+
 //    painter.drawLine(QPoint(0,GroundY),QPoint(WidgetWidth,GroundY));
     //画人
     //通过测试可以得到画出来的人物的 左上角点为(heroPosX,heroPosY+10),宽为30,高为40

@@ -21,8 +21,8 @@ void obstacle::InitLandData()
 
 void obstacle::InitBrickData()
 {
-    type = 1;
     int i;
+    type = 1;
     for (i = 0; i < 3; i++)
     {
         obPosY[i] = 400;
@@ -59,6 +59,16 @@ void obstacle::InitCoinData()
         obWidth[i+3] = 40;
         obPosX[i+3] = 680 + i * obWidth[i+3];
     }
+}
+
+void obstacle::InitBoxData()
+{
+    type = 3;
+
+    obPosY[0] = 400;
+    obHeight[0] = 30;
+    obWidth[0] = 40;
+    obPosX[0] = 720;
 }
 
 

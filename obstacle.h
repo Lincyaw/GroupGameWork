@@ -10,8 +10,8 @@ public:
     explicit obstacle(QWidget *parent = 0);
 
 
-//    int sort[10];  //障碍物类型 1: 砖块 2: 金币
-    int type;  //障碍物类型 1: 砖块 2: 金币
+//    int sort[10];  //障碍物类型 1: 砖块 2: 金币 3：箱子
+    int type;  //障碍物类型 1: 砖块 2: 金币 3：箱子
     const static int number = 6;
     int obPosX[number];  //障碍物坐标
     int obPosY[number];
@@ -22,6 +22,7 @@ public:
     void InitLandData();  //初始化陆地的数据
     void InitBrickData();  //初始化砖块的数据
     void InitCoinData();  //初始化金币的数据
+    void InitBoxData();  //初始化箱子的数据
 
     void CoinDisappear(int i);
 signals:

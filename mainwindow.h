@@ -19,6 +19,7 @@ public:
     obstacle *land;
     obstacle *brick;
     obstacle *coin;
+    obstacle *box;
 
     void paintEvent(QPaintEvent *);
     void timerEvent(QTimerEvent *);
