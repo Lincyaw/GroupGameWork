@@ -24,7 +24,7 @@ MainWindow::MainWindow(QWidget *parent) :
         update(player->heroPosX-18,player->heroPosY,80,50);
     });
     connect(player,&hero::StartTimer,[=](){
-        FallTimer->start(12);
+        FallTimer->start(3);
     });
     connect(player,&hero::StopTimer,[=](){
         FallTimer->stop();
@@ -124,6 +124,30 @@ void MainWindow::keyPressEvent(QKeyEvent *ev)
     }
     if(ev->key() == Qt::Key_A)//左移
     {
+        player->RunSkinCounter = player->RunSkinCounter==0?21:player->RunSkinCounter-1;
+        switch(player->RunSkinCounter)
+        {
+            case 0:
+                player->HeroSkin = player->HeroRunSkin1;
+               // qDebug()<<"0001";
+                break;
+            case 5:
+                player->HeroSkin = player->HeroRunSkin2;
+               // qDebug()<<"0002";
+                break;
+            case 10:
+                player->HeroSkin = player->HeroRunSkin3;
+                //qDebug()<<"0003";
+                break;
+            case 15:
+                player->HeroSkin = player->HeroRunSkin4;
+               // qDebug()<<"0004";
+                break;
+            case 20:
+                player->HeroSkin = player->HeroRunSkin5;
+                //qDebug()<<"0005";
+                break;
+        }
         player->HeroGoLeft(brick); //人向左运动
         player->HeroGoLeft(coin); //人向左运动
         update(player->heroPosX-18,player->heroPosY,80,50);
@@ -155,7 +179,7 @@ void MainWindow::keyPressEvent(QKeyEvent *ev)
                 break;
         }
         player->HeroGoRight(brick);//人向右运动
-        player->HeroGoRight(coin); //人向左运动
+        player->HeroGoRight(coin); //人向右运动
        // qDebug()<<player->RunSkinCounter;
         update(player->heroPosX-18,player->heroPosY,80,50);
 
