@@ -1,0 +1,12 @@
+INPUT(
+./release\anemy.o
+./release\main.o
+./release\mainwindow.o
+./release\hero.o
+./release\obstacle.o
+./release\qrc_res.o
+./release\moc_mainwindow.o
+./release\moc_hero.o
+./release\moc_obstacle.o
+./release\moc_Anemy.o
+);

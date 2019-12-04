@@ -1,14 +1,33 @@
-#include "anemy.h"
-
-anemy::anemy(QObject *parent, int pos_x,int pos_y) : hero(parent)
+#include "Anemy.h"
+#include <QDebug>
+Anemy::Anemy(QObject *parent ,int mPosX ,int mPosY)
 {
-    heroPosX = pos_x;
-    heroPosY = pos_y;
+    PosX = mPosX;
+    PosY = mPosY;
+    MoveDir = 0;
+    AnemyStandSkin = QPixmap();
+    MaxLeftPosX = mPosX - MaxLeftPosX;
+    MaxRightPosX = mPosX + MaxRightPosX;
+}
 
-    HeroSkin= QPixmap(":/monster/monster/hell-monster/hell-beast-breath.png");
-//    HeroSkin1 = QPixmap(":/hero/adventurer-run-01.png");
-//    HeroSkin2 = QPixmap(":/hero/adventurer-run-02.png");
-//    HeroSkin3 = QPixmap(":/hero/adventurer-run-03.png");
-//    HeroSkin4 = QPixmap(":/hero/adventurer-run-04.png");
-//    HeroSkin5 = QPixmap(":/hero/adventurer-run-05.png");
+
+void Anemy::MoveX()
+{
+    qDebug()<<MoveDir;
+    if((MoveDir == 0)&&(PosX >= MaxLeftPosX))
+    {
+        PosX -= 1;
+    }
+    else if((MoveDir == 0)&&(PosX <= MaxLeftPosX))
+    {
+        MoveDir = 1;
+    }
+    else if((MoveDir == 1)&&(PosX <= MaxRightPosX))
+    {
+        PosX += 1;
+    }
+    else
+    {
+        MoveDir = 0;
+    }
 }
