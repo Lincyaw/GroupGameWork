@@ -5,6 +5,7 @@
 #include<QTimer>
 #include <QDebug>
 #include "obstacle.h"
+#define updateHero update(player->heroPosX-12,player->heroPosY-12,47,52)
 class hero : public QObject
 {
     Q_OBJECT
@@ -13,23 +14,24 @@ public:
     explicit hero(QObject *parent = 0);
     int Brick = 1; // 定义砖块类型为1;
     int heroPosX = 0;//人物图片的横坐标
-    int heroPosY = 490;//人物图片的纵坐标
+    int heroPosY = 512;//人物图片的纵坐标
     int HeroPosY = heroPosY+10; //修正后的人的左上角, 因为用heroPosY的话上方还有一点点空白
-    int HeroWidth = 30;//人物的宽度
-    int HeroHeight = 50;//人物这张图片画图是从左上角开始的, 因此要在想绘制的地方
+    int HeroWidth = 23;//人物的宽度
+    int HeroHeight = 28;//人物这张图片画图是从左上角开始的, 因此要在想绘制的地方
                         //减去整张照片的高度才能画在想画的位置.
             //通过测试可以得到画出来的人物的 左上角点为(heroPosX,heroPosY+10),宽为30,高为40
     int HeroStep = 5;//人物平移的时候的步子
-    int JumpSpeed = 6;//人物跳跃的速度
-    int FallSpeed = 6;//人物坠落的速度
+    int JumpSpeed = 8;//人物跳跃的速度
+    int FallSpeed = 5;//人物坠落的速度
     int Jumpflag = 0; //判断跳跃的时候是往下还是往上
     int StandOnTheBrickflag = 0;//判断有没有站在砖头上
     int JumpOrNot = 0;//判断人物有没有在跳跃的标志位
-    const static int HeroJumpHeightNormal = 150;//人物正常的跳跃高度
-    int HeroJumpHeight = 150;//人物在任何情况下的可改变的跳跃高度
+    const static int HeroJumpHeightNormal = 200;//人物正常的跳跃高度
+    int HeroJumpHeight = 200;//人物在任何情况下的可改变的跳跃高度
     int HeroMeetWhichObstacle = 0;//人物遇到什么障碍物标志位
 
-    QPixmap HeroSkin = QPixmap(":/hero/adventurer-run-01.png");
+    QPixmap HeroSkin = QPixmap(":/hero/adventurer-run-00.png");
+    QPixmap HeroRunSkin0 = QPixmap(":/hero/adventurer-run-00.png");
     QPixmap HeroRunSkin1 = QPixmap(":/hero/adventurer-run-01.png");
     QPixmap HeroRunSkin2 = QPixmap(":/hero/adventurer-run-02.png");
     QPixmap HeroRunSkin3 = QPixmap(":/hero/adventurer-run-03.png");
