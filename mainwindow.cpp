@@ -167,6 +167,10 @@ void MainWindow::keyPressEvent(QKeyEvent *ev)
         }
         else  //角色在屏幕右半部分时，障碍物左移
         {
+            player->JudgeWhatHeroMeets(brick);
+            player->JudgeWhatHeroMeets(coin);
+            update(player->heroPosX-18,player->heroPosY,80,50);
+
             brick->ObstacleGoLeft();
             for (int i = 0; i < brick->number; i++)
             {
