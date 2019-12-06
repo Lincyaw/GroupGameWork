@@ -32,10 +32,10 @@ SOURCES += \
     obstacle.cpp
 
 HEADERS += \
+    anemy.h \
         mainwindow.h \
     hero.h \
-    obstacle.h \
-    Anemy.h
+    obstacle.h
 
 FORMS += \
         mainwindow.ui
@@ -45,4 +45,5 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-RESOURCES +=
+RESOURCES += \
+    res.qrc
