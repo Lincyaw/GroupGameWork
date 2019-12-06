@@ -74,7 +74,7 @@ void MainWindow::paintEvent(QPaintEvent *)
     QPainter obPainter(this);
 
     //画地面
-   // obPainter.drawPixmap(land->obPosX[0],land->obPosY[0],land->obWidth[0],land->obHeight[0],QPixmap(":/background/background/brick01.png"));
+    obPainter.drawPixmap(land->obPosX[0],land->obPosY[0],land->obWidth[0],land->obHeight[0],QPixmap(":/background/background/brick01.png"));
     for (i = 0; i < brick->number; i++)
     {
         obPainter.drawPixmap(brick->obPosX[i],brick->obPosY[i],brick->obWidth[i],brick->obHeight[i],QPixmap(":/background/background/brick01.png"));
@@ -86,7 +86,7 @@ void MainWindow::paintEvent(QPaintEvent *)
             obPainter.drawPixmap(coin->obPosX[i],coin->obPosY[i],coin->obWidth[i],coin->obHeight[i],QPixmap(":/background/background/coin.png"));
         }
     }
-    painter.drawLine(QPoint(0,GroundY),QPoint(WidgetWidth,GroundY));
+    //painter.drawLine(QPoint(0,GroundY),QPoint(WidgetWidth,GroundY));
     //画人
     //通过测试可以得到画出来的人物的 左上角点为(heroPosX,heroPosY),宽为23,高为28
     painter.drawPixmap(player->heroPosX,player->heroPosY,23,28,player->HeroSkin);

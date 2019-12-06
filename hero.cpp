@@ -16,11 +16,11 @@ void hero::HeroGoRight(obstacle *ob)
     heroPosX+=HeroStep;
     JudgeWhatHeroMeets(ob);
 
-    qDebug()<<"HeroPosx = "<<heroPosX<<"HeroposY = "<<heroPosY;
+    //qDebug()<<"HeroPosx = "<<heroPosX<<"HeroposY = "<<heroPosY;
 }
 bool hero::HeroJump(obstacle *ob)
 {
-    qDebug()<<heroPosX;
+    //qDebug()<<heroPosX;
     JudgeWhatHeroMeets(ob);
     if(heroPosY>groundY-HeroJumpHeight-HeroHeight && Jumpflag == 0) //跳跃的上界
     {
@@ -67,7 +67,7 @@ int hero::JudgeWhatHeroMeets(obstacle *ob)
                 //这里表示的是跳到了砖块的上方,则修改原来的groundY地平线为BrickTop
                 groundY = BrickTop;
                 HeroJumpHeight = HeroJumpHeightNormal;
-                qDebug()<<"跳到了上面"<<i;
+                //qDebug()<<"跳到了上面"<<i;
 
                 StandOnTheBrickflag = 1;
                 HeroMeetWhichObstacle = i;
@@ -84,7 +84,7 @@ int hero::JudgeWhatHeroMeets(obstacle *ob)
                     HeroJumpHeight = HeroJumpHeightNormal;
                     //flag = 1;
                     //qDebug()<<"JumpOrNot="<<JumpOrNot;
-                    qDebug()<<"跳到底了吗?"<<i;
+                    //qDebug()<<"跳到底了吗?"<<i;
 
                 }
     //            if(StandOnTheBrickflag)
@@ -129,7 +129,7 @@ bool hero::HeroFallDown(obstacle *ob)
     {
 
 
-        qDebug()<<"groundY-HeroHeight = "<<groundY-HeroHeight <<"heroPosY="<<heroPosY;
+        //qDebug()<<"groundY-HeroHeight = "<<groundY-HeroHeight <<"heroPosY="<<heroPosY;
         heroPosY += FallSpeed;
         return 0;
     }
