@@ -17,7 +17,7 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     hero *player;
-    anemy *monster;
+    Anemy *monster;
     obstacle *land;
     obstacle *brick;
     obstacle *coin;
