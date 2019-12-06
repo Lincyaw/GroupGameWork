@@ -5,7 +5,7 @@ Anemy::Anemy(QObject *parent ,int mPosX ,int mPosY)
     PosX = mPosX;
     PosY = mPosY;
     MoveDir = 0;
-    AnemyStandSkin = QPixmap(":/monster/monster/hell-monster/hell-beast-breath.png");
+    AnemyStandSkin = QPixmap();
     MaxLeftPosX = mPosX - MaxLeftPosX;
     MaxRightPosX = mPosX + MaxRightPosX;
 }
