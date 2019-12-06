@@ -12,9 +12,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     this->player = new hero(this);
     this->land = new obstacle(this);
-//    land->type=1;
     this->brick = new obstacle(this);
     this->coin = new obstacle(this);
+    this->box = new obstacle(this);
 
     resize(WidgetWidth,WidgetHeight);
 
@@ -59,10 +59,8 @@ MainWindow::MainWindow(QWidget *parent) :
         coin->showflag[player->HeroMeetWhichObstacle] = 0;
         update(coin->obPosX[player->HeroMeetWhichObstacle],coin->obPosY[player->HeroMeetWhichObstacle],coin->obWidth[player->HeroMeetWhichObstacle],coin->obHeight[player->HeroMeetWhichObstacle]);
     });
-//    if(coin->CoinDisappear(player))
-//    {
-//        update(coin->obPosX,coin->obPosY,coin->obWidth,coin->obHeight);
-//    }
+    box->InitBoxData();
+
 
 ////////////////////////////////怪物//////////////////////////////////////////////
     this->monster = new anemy(this,400);
@@ -78,12 +76,14 @@ void MainWindow::paintEvent(QPaintEvent *)
     //painter.drawRect(0,490,80,50);
     painter.drawRect(30,500,30,50);
     painter.drawRect(460,450,40,20);
-    //画地面
+    //画陆地
     obPainter.drawPixmap(land->obPosX[0],land->obPosY[0],land->obWidth[0],land->obHeight[0],QPixmap(":/background/background/brick01.png"));
+    //画砖块
     for (i = 0; i < brick->number; i++)
     {
         obPainter.drawPixmap(brick->obPosX[i],brick->obPosY[i],brick->obWidth[i],brick->obHeight[i],QPixmap(":/background/background/brick01.png"));
     }
+    //画金币
     for (i = 0; i < coin->number; i++)
     {
         if(coin->showflag[i])
@@ -91,6 +91,9 @@ void MainWindow::paintEvent(QPaintEvent *)
             obPainter.drawPixmap(coin->obPosX[i],coin->obPosY[i],coin->obWidth[i],coin->obHeight[i],QPixmap(":/background/background/coin.png"));
         }
     }
+    //画箱子
+    obPainter.drawPixmap(box->obPosX[0],box->obPosY[0],box->obWidth[0],box->obHeight[0],QPixmap(":/background/background/brick02.png"));
+
 //    painter.drawLine(QPoint(0,GroundY),QPoint(WidgetWidth,GroundY));
     //画人
     //通过测试可以得到画出来的人物的 左上角点为(heroPosX,heroPosY+10),宽为30,高为40
@@ -125,6 +128,7 @@ void MainWindow::keyPressEvent(QKeyEvent *ev)
     }
     if(ev->key() == Qt::Key_A)//左移
     {
+
         player->HeroGoLeft(brick); //人向左运动
         player->HeroGoLeft(coin); //人向左运动
         update(player->heroPosX-18,player->heroPosY,80,50);
@@ -155,10 +159,34 @@ void MainWindow::keyPressEvent(QKeyEvent *ev)
                 //qDebug()<<"0005";
                 break;
         }
-        player->HeroGoRight(brick);//人向右运动
-        player->HeroGoRight(coin); //人向左运动
-       // qDebug()<<player->RunSkinCounter;
-        update(player->heroPosX-18,player->heroPosY,80,50);
+        if (player->heroPosX < 750)  //角色在屏幕左半部分时，角色右移
+        {
+            player->HeroGoRight(brick);//人向右运动
+            player->HeroGoRight(coin); //人向右运动
+            // qDebug()<<player->RunSkinCounter;
+            update(player->heroPosX-18,player->heroPosY,80,50);
+        }
+        else  //角色在屏幕右半部分时，障碍物左移
+        {
+            player->JudgeWhatHeroMeets(brick);
+            player->JudgeWhatHeroMeets(coin);
+            update(player->heroPosX-18,player->heroPosY,80,50);
+
+            brick->ObstacleGoLeft();
+            for (int i = 0; i < brick->number; i++)
+            {
+                update(brick->obPosX[i],brick->obPosY[i],brick->obWidth[i] + 10,brick->obHeight[i]);
+            }
+
+            coin->ObstacleGoLeft();
+            for (int i = 0; i < coin->number; i++)
+            {
+                update(coin->obPosX[i],coin->obPosY[i],coin->obWidth[i] + 10,coin->obHeight[i]);
+            }
+
+            box->ObstacleGoLeft();
+            update(box->obPosX[0],box->obPosY[0],box->obWidth[0] + 10,box->obHeight[0]);
+        }
 
     }
 }
