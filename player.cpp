@@ -1,6 +1,6 @@
-#include "hero.h"
+#include "player.h"
 
-hero::hero(QObject *parent = 0) :QObject(parent)
+player::player(QObject *parent) : QObject(parent)
 {
     setToolTip("憨憨!");//提示
     setCursor(Qt::OpenHandCursor);
@@ -10,18 +10,18 @@ hero::hero(QObject *parent = 0) :QObject(parent)
         FreeFalling();
          update(heroPosX-50, heroPosY-50,46+100, 156);
     });
+
     setData(1,2);  //?
     setPosition(0,0);
     setVelocity(20);
-
 }
 
-QRectF hero::boundingRect()const
+QRectF player::boundingRect()const
 {
     qreal penWidth = 1;
     return QRectF(heroPosX-penWidth / 2, heroPosY - penWidth/2,46+penWidth, 56+penWidth);
 }
-void hero::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+void player::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     Q_UNUSED(option)
     Q_UNUSED(widget)
@@ -33,13 +33,13 @@ void hero::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
     painter->drawPixmap(heroPosX,heroPosY,46,56,HeroSkin);
 
 }
-void hero::mousePressEvent(QGraphicsSceneMouseEvent *event)
+void player::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     setCursor(Qt::ClosedHandCursor);
     //moveBy(10,0);
 
 }
-void hero::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
+void player::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
 //    if(QLineF(event->screenPos(),event->buttonDownScreenPos(Qt::LeftButton)).length() <QApplication::startDragDistance())
 //    {
@@ -71,11 +71,11 @@ void hero::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 //    setCursor(Qt::OpenHandCursor);
 
 }
-void hero::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
+void player::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
 //    setCursor(Qt::OpenHandCursor);
 }
-void hero::keyPressEvent(QKeyEvent *event)
+void player::keyPressEvent(QKeyEvent *event)
 {
     if(event->key() == Qt::Key_W && !JumpOrnot)
     {
@@ -89,7 +89,7 @@ void hero::keyPressEvent(QKeyEvent *event)
     if(event->key() == Qt::Key_A)
     {
        // qDebug()<<heroPosX<<"  "<<heroPosY;
-        HorizontalDir = bullet::left;
+        HorizontalDir = bullets::left;
         heroPosX-=HorizontalSpeed;
         RunSkinCounter--;
         switch(RunSkinCounter)
@@ -123,7 +123,7 @@ void hero::keyPressEvent(QKeyEvent *event)
     if(event->key() == Qt::Key_D)
     {
      //   qDebug()<<heroPosX<<"  "<<heroPosY;
-        HorizontalDir = bullet::right;
+        HorizontalDir = bullets::right;
         heroPosX+=HorizontalSpeed;
         RunSkinCounter++;
         switch(RunSkinCounter)
@@ -170,22 +170,12 @@ void hero::keyPressEvent(QKeyEvent *event)
     }
     if(event->key() == Qt::Key_K)
     {
-        bullet *D1 = new bullet(bullet::right,0,-10);
-       // bullet *D1 = new bullet(HorizontalDir,heroPosX,heroPosY);
-        connect(D1->shootTimer,&QTimer::timeout,[=](){
-                    if(D1->bulletPosX >500 || D1->bulletPosX <-750)
-                    {
-                        qDebug()<<"一个子弹析构";
-                        D1->deleteLater();
-                    }
-
-        });
+        emit shoot();
     }
 }
-void hero::FreeFalling(void)
+void player::FreeFalling(void)
 {
     int i;
-    int flag = 0;
     if(Velocity<0)
     {
         Direction = down;
@@ -206,7 +196,7 @@ void hero::FreeFalling(void)
     {
         for(i = 0;i <collidingItems().length(); i++)
         {
-            if(collidingItems().at(i)->data(1).toInt()==2 && Direction == down)
+            if(collidingItems().at(i)->data(1).toInt()==4 && Direction == down)
             {
                 //qDebug()<<"类型是2";
                 JumpOrnot = false;
@@ -226,15 +216,15 @@ void hero::FreeFalling(void)
     }
     return;
 }
-void hero::setPosition(int x,int y)
+void player::setPosition(int x,int y)
 {
     heroPosX = x;
     heroPosY = y;
 }
-void hero::setVelocity(int v)
+void player::setVelocity(int v)
 {
     Velocity = v;
 }
-void hero::advance(int phase)
+void player::advance(int phase)
 {
 }

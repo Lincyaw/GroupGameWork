@@ -1,10 +1,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
+#include"player.h"
 #include <QMainWindow>
-#include "hero.h"
-#include <QTimer>
-#include "obstacle.h"
-#include "anemy.h"
+
 namespace Ui {
 class MainWindow;
 }
@@ -14,32 +12,16 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = nullptr);
+    explicit MainWindow(QWidget *parent = 0);
+    void keyPressEvent(QKeyEvent *event);
+
+    QGraphicsScene *pScene = new QGraphicsScene();
+    QGraphicsView *pView = new QGraphicsView();
+    void shootBullet();
     ~MainWindow();
-    hero *player;
-    Anemy *monster;
-    obstacle *land;
-    obstacle *brick;
-    obstacle *coin;
-    obstacle *box;
-
-    void paintEvent(QPaintEvent *);
-    void timerEvent(QTimerEvent *);
-    QTimer *JumpTimer = new QTimer(this);
-    QTimer *FallTimer = new QTimer(this);
-    void keyPressEvent(QKeyEvent *);
-    const static int GroundY = 540;
-    int WidgetWidth = 1500;
-    int WidgetHeight = 800;
-
 
 private:
     Ui::MainWindow *ui;
-
-signals:
-
-public slots:
-
 };
 
 #endif // MAINWINDOW_H
