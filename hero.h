@@ -21,7 +21,7 @@ public:
                         //减去整张照片的高度才能画在想画的位置.
             //通过测试可以得到画出来的人物的 左上角点为(heroPosX,heroPosY+10),宽为30,高为40
     int HeroStep = 5;//人物平移的时候的步子
-    int JumpSpeed = 6;//人物跳跃的速度
+    int JumpSpeed = 8;//人物跳跃的速度
     int FallSpeed = 3;//人物坠落的速度
     int Jumpflag = 0; //判断跳跃的时候是往下还是往上
     int StandOnTheBrickflag = 0;//判断有没有站在砖头上
