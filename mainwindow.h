@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 #include"player.h"
+#include"obstacle.h"
 #include <QMainWindow>
 
 namespace Ui {

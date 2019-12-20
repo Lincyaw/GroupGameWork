@@ -15,12 +15,16 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     player.cpp \
-    bullets.cpp
+    bullets.cpp \
+    obstacle.cpp
+
 
 HEADERS  += mainwindow.h \
     somedeclare.h \
     player.h \
-    bullets.h
+    bullets.h \
+    obstacle.h
+
 
 FORMS    += mainwindow.ui
 
