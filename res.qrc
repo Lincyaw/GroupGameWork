@@ -110,10 +110,12 @@
         <file>hero/adventurer-wall-slide-00.png</file>
         <file>hero/adventurer-wall-slide-01.png</file>
     </qresource>
+
     <qresource prefix="/obstacle">
         <file>obstacle/brick01.png</file>
         <file>obstacle/brick02.png</file>
         <file>obstacle/coin.png</file>
         <file>obstacle/mushroom.png</file>
     </qresource>
+
 </RCC>

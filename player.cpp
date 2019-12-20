@@ -197,6 +197,9 @@ void player::FreeFalling(void)
         for(i = 0;i <collidingItems().length(); i++)
         {
             if(collidingItems().at(i)->data(1).toInt()==2 && Direction == down)
+
+            if(collidingItems().at(i)->data(1).toInt()==4 && Direction == down)
+
             {
                 //qDebug()<<"类型是2";
                 JumpOrnot = false;

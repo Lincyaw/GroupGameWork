@@ -11,6 +11,7 @@ MainWindow::MainWindow(QWidget *parent) :
     obstacle *ground;
     obstacle *coin[3];
 
+
     item = new player;
     item->setFlag(QGraphicsItem::ItemIsFocusable);  //鼠标选中这个item之后就是聚焦, 然后可以用键盘控制这个item
     item->setFlag(QGraphicsItem::ItemIsMovable);
@@ -34,6 +35,7 @@ MainWindow::MainWindow(QWidget *parent) :
     }
 
 
+
     //bullet *D1 = new bullet;
     // 将 item 添加至场景中
     connect(item,&player::shoot,[=](){
@@ -42,6 +44,7 @@ MainWindow::MainWindow(QWidget *parent) :
     pScene->addItem(item);
     pScene->setFocusItem(item);
 
+
     //新建一个直线项
     QGraphicsLineItem *line = new QGraphicsLineItem(-750, 50, 750, 50);
     line->setData(1,2);
@@ -49,6 +52,23 @@ MainWindow::MainWindow(QWidget *parent) :
     reg->setData(1,3);
     //pScene->addItem(line);
     pScene->addItem(reg);
+   // qDebug() << item->shape();   //输出item的shape信息
+   // qDebug() << item->boundingRect();  //输出item的boundingRect信息
+
+
+    //新建一个直线项
+    QGraphicsLineItem *line = new QGraphicsLineItem(-750, 50, 750, 50);
+    line->setData(1,4);
+    QGraphicsRectItem *reg = new QGraphicsRectItem(0,-10,50,50);
+    reg->setData(1,4);
+
+//    QGraphicsRectItem *reg2 = new QGraphicsRectItem(200,-10,50,50);
+//    reg->setData(1,3);
+
+
+    pScene->addItem(line);
+    pScene->addItem(reg);
+    //pScene->addItem(reg2);
    // qDebug() << item->shape();   //输出item的shape信息
    // qDebug() << item->boundingRect();  //输出item的boundingRect信息
 
@@ -66,6 +86,7 @@ MainWindow::MainWindow(QWidget *parent) :
     pView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     pView->setParent(this);
 
+
 }
 void MainWindow::keyPressEvent(QKeyEvent *event)
 {
@@ -82,6 +103,35 @@ void MainWindow::shootBullet()
                 }
     });
 }
+
+}
+void MainWindow::keyPressEvent(QKeyEvent *event)
+{
+}
+void MainWindow::shootBullet()
+{
+    int i;
+    bullets *D1 = new bullets;
+    pScene->addItem(D1);
+    for(i=0;i<D1->collidingItems().length();i++)
+    {
+        if(D1->collidingItems().at(i)->data(1).toInt() == 2)
+        {
+            pScene->removeItem(D1);
+        }
+    }
+
+//    connect(D1->shootTimer,&QTimer::timeout,[=](){
+
+//                if(D1->bulletPosX >500 || D1->bulletPosX <-750)
+//                {
+//                    qDebug()<<"一个子弹析构";
+//                   // D1->deleteLater();
+//                    pScene->removeItem(D1);
+//                }
+//    });
+}
+
 
 MainWindow::~MainWindow()
 {
