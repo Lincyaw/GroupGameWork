@@ -1,5 +1,7 @@
-#ifndef HERO_H
-#define HERO_H
+#ifndef PLAYER_H
+#define PLAYER_H
+
+#include <QObject>
 #include <QGraphicsItem>
 #include <QRectF>
 #include<QCursor>
@@ -19,14 +21,13 @@
 #include<QKeyEvent>
 #include<QList>
 #include<QPainter>
-#include "bullet.h"
+#include "bullets.h"
 #include"somedeclare.h"
-class hero : public QObject,public QGraphicsItem
+class player : public QObject,public QGraphicsItem
 {
     Q_OBJECT
 public:
-
-    explicit hero(QObject *parent = 0);
+    explicit player(QObject *parent = 0);
     int heroPosX;//人物的x位置
     int heroPosY;//人物的y位置
     int Velocity;//人物跳跃时候的垂直的速度
@@ -34,7 +35,7 @@ public:
 
     enum Dir{up,down,left,right};//人物的方向
     Dir Direction;
-    bullet::Dir HorizontalDir;
+    bullets::Dir HorizontalDir;
     int RunSkinCounter = 0;//人物移动的时候皮肤切换计数器
 
 
@@ -67,9 +68,9 @@ private:
     int Gravity = 1; //重力值
 
 signals:
-
+    void shoot();
 public slots:
      void FreeFalling(void);
 };
 
-#endif // HERO_H
+#endif // PLAYER_H

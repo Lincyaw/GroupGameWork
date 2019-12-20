@@ -1,31 +1,50 @@
 #ifndef OBSTACLE_H
 #define OBSTACLE_H
-//#include "hero.h"
-#include <QWidget>
-#define MAX 10
 
-class obstacle : public QWidget
+#include <QObject>
+#include <QGraphicsItem>
+#include <QRectF>
+#include<QCursor>
+#include<QGraphicsSceneMouseEvent>
+#include<QDrag>
+#include<QWidget>
+#include<QMimeData>
+#include<QApplication>
+#include<QGraphicsScene>
+#include <QMainWindow>
+#include <QGraphicsPixmapItem>
+#include<QGraphicsView>
+#include<QTimer>
+#include <QPixmap>
+#include <QObject>
+#include <QDebug>
+#include<QKeyEvent>
+#include<QList>
+#include<QPainter>
+
+class obstacle : public QObject,public QGraphicsItem
 {
     Q_OBJECT
 public:
-    explicit obstacle(QWidget *parent = 0);
+    explicit obstacle(QObject *parent = 0);
 
-
-//    int sort[10];  //障碍物类型 1: 砖块 2: 金币 3：箱子
     int type;  //障碍物类型 1: 砖块 2: 金币 3：箱子
-    int number;  //障碍物个数
-    int obPosX[MAX];  //障碍物坐标
-    int obPosY[MAX];
-    int obWidth[MAX];  //障碍物的宽
-    int obHeight[MAX];  //障碍物的高
-    int showflag[MAX];  //障碍物是否显示 0: 不显示 1： 显示
+//    int number;  //障碍物个数
+    int obPosX;  //障碍物坐标
+    int obPosY;
+    int obWidth;  //障碍物的宽
+    int obHeight;  //障碍物的高
+    int showflag;  //障碍物是否显示 0: 不显示 1： 显示
 
-    void InitLandData();  //初始化陆地的数据
-    void InitBrickData();  //初始化砖块的数据
-    void InitCoinData();  //初始化金币的数据
-    void InitBoxData();  //初始化箱子的数据
+    QPixmap Ground = QPixmap(":/obstacle/obstacle/brick01.png");
+    QPixmap Coin = QPixmap(":/obstacle/obstacle/coin.png");
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
 
-    void ObstacleGoLeft();  //障碍物左移
+    //    void ObstacleGoLeft();  //障碍物左移
+    void setType(int num);
+    void setPosition(int x,int y);
+    void setWidthHeight(int width,int height);
+    QRectF boundingRect() const override;
 signals:
 
 public slots:
