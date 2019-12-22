@@ -9,6 +9,7 @@ MainWindow::MainWindow(QWidget *parent) :
     resize(1500,800);
     player *item;
     obstacle *ground;
+    obstacle *brick[6];
     obstacle *coin[3];
 
 
@@ -19,17 +20,36 @@ MainWindow::MainWindow(QWidget *parent) :
     //初始化地面
     ground = new obstacle;
     ground->setType(1);
-    ground->setPosition(-750,250);
+    ground->setPosition(-750,540);
     ground->setWidthHeight(1500,250);
     ground->setData(1,2);
     pScene->addItem(ground);
+    //初始化砖块
+    for(int i = 0; i < 3; i++)
+    {
+        brick[i] = new obstacle;
+        brick[i]->setType(1);
+        brick[i]->setPosition(-200 + 50 * i,350);
+        brick[i]->setWidthHeight(50,50);
+        brick[i]->setData(1,2);
+        pScene->addItem(brick[i]);
+    }
+    for(int i = 3; i < 6; i++)
+    {
+        brick[i] = new obstacle;
+        brick[i]->setType(1);
+        brick[i]->setPosition(-50 + 50 * i,200);
+        brick[i]->setWidthHeight(50,50);
+        brick[i]->setData(1,2);
+        pScene->addItem(brick[i]);
+    }
     //初始化金币
     for(int i = 0; i < 3; i++)
     {
         coin[i] = new obstacle;
         coin[i]->setType(2);
-        coin[i]->setPosition(0 + 30 * i,0);
-        coin[i]->setWidthHeight(30,30);
+        coin[i]->setPosition(-200 + 50 * i,300);
+        coin[i]->setWidthHeight(50,50);
         coin[i]->setData(1,3);
         pScene->addItem(coin[i]);
     }
@@ -45,32 +65,32 @@ MainWindow::MainWindow(QWidget *parent) :
     pScene->setFocusItem(item);
 
 
-    //新建一个直线项
-    QGraphicsLineItem *line = new QGraphicsLineItem(-750, 50, 750, 50);
-    line->setData(1,2);
-    QGraphicsRectItem *reg = new QGraphicsRectItem(0,-10,50,50);
-    reg->setData(1,3);
-    //pScene->addItem(line);
-    pScene->addItem(reg);
-   // qDebug() << item->shape();   //输出item的shape信息
-   // qDebug() << item->boundingRect();  //输出item的boundingRect信息
+//    //新建一个直线项
+//    QGraphicsLineItem *line = new QGraphicsLineItem(-750, 50, 750, 50);
+//    line->setData(1,2);
+//    QGraphicsRectItem *reg = new QGraphicsRectItem(0,-10,50,50);
+//    reg->setData(1,3);
+//    pScene->addItem(line);
+//    pScene->addItem(reg);
+//    qDebug() << item->shape();   //输出item的shape信息
+//    qDebug() << item->boundingRect();  //输出item的boundingRect信息
 
 
-    //新建一个直线项
-   // QGraphicsLineItem *line = new QGraphicsLineItem(-750, 50, 750, 50);
-   // line->setData(1,4);
- //   QGraphicsRectItem *reg = new QGraphicsRectItem(0,-10,50,50);
-   // reg->setData(1,4);
+//    新建一个直线项
+//    QGraphicsLineItem *line = new QGraphicsLineItem(-750, 50, 750, 50);
+//    line->setData(1,4);
+//    QGraphicsRectItem *reg = new QGraphicsRectItem(0,-10,50,50);
+//    reg->setData(1,4);
 
 //    QGraphicsRectItem *reg2 = new QGraphicsRectItem(200,-10,50,50);
 //    reg->setData(1,3);
 
 
-    //pScene->addItem(line);
-    pScene->addItem(reg);
-    //pScene->addItem(reg2);
-   // qDebug() << item->shape();   //输出item的shape信息
-   // qDebug() << item->boundingRect();  //输出item的boundingRect信息
+//    pScene->addItem(line);
+//    pScene->addItem(reg);
+//    pScene->addItem(reg2);
+//    qDebug() << item->shape();   //输出item的shape信息
+//    qDebug() << item->boundingRect();  //输出item的boundingRect信息
 
 
 
