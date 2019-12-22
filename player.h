@@ -69,6 +69,7 @@ private:
 
 signals:
     void shoot();
+    void BackGroundMove();
 public slots:
      void FreeFalling(void);
 };

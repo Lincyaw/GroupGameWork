@@ -124,7 +124,15 @@ void player::keyPressEvent(QKeyEvent *event)
     {
      //   qDebug()<<heroPosX<<"  "<<heroPosY;
         HorizontalDir = bullets::right;
-        heroPosX+=HorizontalSpeed;
+        if(heroPosX<-430)
+        {
+            heroPosX+=HorizontalSpeed;
+          moveBy(HorizontalSpeed,0);  //相对现在的位置移动
+        }
+        else
+        {
+            emit BackGroundMove();
+        }
         RunSkinCounter++;
         switch(RunSkinCounter)
         {
@@ -155,7 +163,7 @@ void player::keyPressEvent(QKeyEvent *event)
                 RunSkinCounter=0;
               break;
         }
-        moveBy(HorizontalSpeed,0);  //相对现在的位置移动
+
     }
     if(event->key() == Qt::Key_S)
     {

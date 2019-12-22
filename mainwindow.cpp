@@ -15,7 +15,7 @@ MainWindow::MainWindow(QWidget *parent) :
     item = new player;
     item->setFlag(QGraphicsItem::ItemIsFocusable);  //鼠标选中这个item之后就是聚焦, 然后可以用键盘控制这个item
     item->setFlag(QGraphicsItem::ItemIsMovable);
-    item->setPosition(-700,0);
+    item->setPosition(-700,50);
     //初始化地面
     ground = new obstacle;
     ground->setType(1);
@@ -40,6 +40,9 @@ MainWindow::MainWindow(QWidget *parent) :
     // 将 item 添加至场景中
     connect(item,&player::shoot,[=](){
         shootBullet();
+    });
+    connect(item,&player::BackGroundMove,[=](){
+
     });
     pScene->addItem(item);
     pScene->setFocusItem(item);
