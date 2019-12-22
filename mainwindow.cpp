@@ -9,9 +9,9 @@ MainWindow::MainWindow(QWidget *parent) :
     resize(1500,800);
     player *item;
     obstacle *ground;
-    obstacle *brick[6];
-    obstacle *coin[3];
-
+    obstacle *brick[12];
+    obstacle *coin[12];
+    obstacle *book;
 
     item = new player;
     item->setFlag(QGraphicsItem::ItemIsFocusable);  //鼠标选中这个item之后就是聚焦, 然后可以用键盘控制这个item
@@ -45,6 +45,24 @@ MainWindow::MainWindow(QWidget *parent) :
         brick[i]->setData(1,2);
         pScene->addItem(brick[i]);
     }
+    for(int i = 6; i < 9; i++)
+    {
+        brick[i] = new obstacle;
+        brick[i]->setType(1);
+        brick[i]->setPosition(100 + 50 * i,400);
+        brick[i]->setWidthHeight(50,50);
+        brick[i]->setData(1,2);
+        pScene->addItem(brick[i]);
+    }
+    for(int i = 9; i < 12; i++)
+    {
+        brick[i] = new obstacle;
+        brick[i]->setType(1);
+        brick[i]->setPosition(500 + 50 * i,400);
+        brick[i]->setWidthHeight(50,50);
+        brick[i]->setData(1,2);
+        pScene->addItem(brick[i]);
+    }
     //初始化金币
     for(int i = 0; i < 3; i++)
     {
@@ -56,7 +74,43 @@ MainWindow::MainWindow(QWidget *parent) :
         coin[i]->setData(1,3);
         pScene->addItem(coin[i]);
     }
-
+    for(int i = 3; i < 6; i++)
+    {
+        coin[i] = new obstacle;
+        coin[i]->setType(2);
+        coin[i]->setPosition(-80 + 50 * i,150);
+        coin[i]->setWidthHeight(50,50);
+        coin[i]->setShowFlag(1);
+        coin[i]->setData(1,3);
+        pScene->addItem(coin[i]);
+    }
+    for(int i = 6; i < 9; i++)
+    {
+        coin[i] = new obstacle;
+        coin[i]->setType(2);
+        coin[i]->setPosition(100 + 50 * i,350);
+        coin[i]->setWidthHeight(50,50);
+        coin[i]->setShowFlag(1);
+        coin[i]->setData(1,3);
+        pScene->addItem(coin[i]);
+    }
+    for(int i = 9; i < 12; i++)
+    {
+        coin[i] = new obstacle;
+        coin[i]->setType(2);
+        coin[i]->setPosition(500 + 50 * i,350);
+        coin[i]->setWidthHeight(50,50);
+        coin[i]->setShowFlag(1);
+        coin[i]->setData(1,3);
+        pScene->addItem(coin[i]);
+    }
+    //初始化书
+    book = new obstacle;
+    book->setType(3);
+    book->setPosition(1500,390);//边界630
+    book->setWidthHeight(120,150);
+    book->setData(1,4);
+    pScene->addItem(book);
 
     //bullet *D1 = new bullet;
     // 将 item 添加至场景中
@@ -64,16 +118,18 @@ MainWindow::MainWindow(QWidget *parent) :
         shootBullet();
     });
     connect(item,&player::BackGroundMove,[=](){
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < 12; i++)
         {
             brick[i]->moveBy(-3,0);
             update(brick[i]->obPosX,brick[i]->obPosY,brick[i]->obWidth,brick[i]->obHeight);
         }
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 12; i++)
         {
             coin[i]->moveBy(-3,0);
             update(coin[i]->obPosX,coin[i]->obPosY,coin[i]->obWidth,coin[i]->obHeight);
         }
+        book->moveBy(-3,0);
+        update(book->obPosX,book->obPosY,book->obWidth,book->obHeight);
     });
     pScene->addItem(item);
     pScene->setFocusItem(item);
