@@ -25,7 +25,7 @@ class bullets : public QObject,public QGraphicsItem
 {
     Q_OBJECT
 public:
-    explicit bullets(QObject *parent = 0);
+    bullets(int x,int y);
     enum Dir{up,down,left,right};
     QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;

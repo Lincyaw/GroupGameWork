@@ -1,6 +1,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
-
+#include <QString>
+#include <QList>
 #include <QObject>
 #include <QGraphicsItem>
 #include <QRectF>
@@ -66,7 +67,30 @@ public:
 private:
     QColor color;
     void keyPressEvent(QKeyEvent *event) override;
+    void keyReleaseEvent(QKeyEvent *event) override;
     int Gravity = 2; //重力值
+    inline void SaveKeyPressed( int key )
+    {
+        m_PressedKeys |= ( 1 << key );
+    }
+    inline void SaveKeyReleased( int key )
+    {
+        m_PressedKeys &= ~( 1 << key );
+    }
+    inline bool KeyPressed( int key )
+    {
+        return m_PressedKeys & ( 1 << key );
+    }
+    enum Interested_Keys
+    {
+        Key_A = 1,
+        Key_W,
+        Key_D,
+        Key_K
+    };
+        QString                       m_Text;
+        QString                       m_ShowText;
+        quint32                       m_PressedKeys;
 
 signals:
     void shoot();
