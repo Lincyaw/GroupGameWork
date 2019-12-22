@@ -13,7 +13,7 @@ player::player(QObject *parent) : QObject(parent)
 
     setData(1,2);  //?
     setPosition(0,0);
-    setVelocity(20);
+    setVelocity(0);
 }
 
 QRectF player::boundingRect()const
@@ -82,7 +82,7 @@ void player::keyPressEvent(QKeyEvent *event)
         qDebug()<<heroPosX<<"  "<<heroPosY;
         Direction = up;
         JumpOrnot = true;
-        setVelocity(20);
+        setVelocity(30);
         //heroPosY-=HorizontalSpeed;
        // moveBy(0,-HorizontalSpeed);  //相对现在的位置移动
     }
@@ -184,16 +184,16 @@ void player::keyPressEvent(QKeyEvent *event)
 void player::FreeFalling(void)
 {
     int i;
-    if(Velocity<0)
+    if(Velocity<=0)
     {
         Direction = down;
     }
-    if(Velocity>=0)
+    if(Velocity>0)
     {
         Direction = up;
     }
   //  qDebug()<<"Velocity="<<Velocity;
-    if((collidingItems().isEmpty()||Direction == up))
+    if(Direction == up)
     {
 
         heroPosY-=Velocity;
@@ -208,12 +208,19 @@ void player::FreeFalling(void)
             if(collidingItems().at(i)->data(1).toInt()==2 && Direction == down)
             {
                 //qDebug()<<"类型是2";
+                    heroPosY-=1;
                 JumpOrnot = false;
+                Velocity=0;
                 break;
             }
             else
             {
                 JumpOrnot = true;
+            }
+            if(collidingItems().at(i)->data(1).toInt()==2 && Direction == up)
+            {
+                heroPosY+=Velocity;
+                Velocity = -1;
             }
         }
     }
@@ -223,6 +230,7 @@ void player::FreeFalling(void)
         heroPosY-=Velocity;
         Velocity-=Gravity;
     }
+
     return;
 }
 void player::setPosition(int x,int y)

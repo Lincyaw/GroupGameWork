@@ -65,7 +65,7 @@ public:
 private:
     QColor color;
     void keyPressEvent(QKeyEvent *event) override;
-    int Gravity = 1; //重力值
+    int Gravity = 2; //重力值
 
 signals:
     void shoot();
