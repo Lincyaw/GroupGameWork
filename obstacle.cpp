@@ -1,5 +1,5 @@
 #include "obstacle.h"
-
+#include<QDebug>
 obstacle::obstacle(QObject *parent) : QObject(parent)
 {
 
@@ -15,14 +15,28 @@ void obstacle::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
     Q_UNUSED(widget)
     switch(type)
     {
-    case 1:
+    case 1://砖块
     {
         painter->drawPixmap(obPosX,obPosY,obWidth,obHeight,Ground);
         break;
     }
-    case 2:
+    case 2://金币
     {
-        painter->drawPixmap(obPosX,obPosY,obWidth,obHeight,Coin);
+        if (showflag == 1)
+        {
+            painter->drawPixmap(obPosX,obPosY,obWidth,obHeight,Coin);
+        }
+        if(!collidingItems().isEmpty())
+        {
+            for(int i = 0; i < collidingItems().length(); i++)
+            {
+                if(collidingItems().at(i)->data(1).toInt()==1)
+                {
+                    setShowFlag(0);
+                    update(obPosX,obPosY,obWidth,obHeight);
+                }
+            }
+        }
         break;
     }
     }
@@ -45,4 +59,9 @@ void obstacle::setWidthHeight(int width,int height)
 {
     obWidth = width;
     obHeight = height;
+}
+
+void obstacle::setShowFlag(int num)
+{
+    showflag = num;
 }

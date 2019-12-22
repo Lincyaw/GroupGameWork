@@ -17,6 +17,8 @@ MainWindow::MainWindow(QWidget *parent) :
     item->setFlag(QGraphicsItem::ItemIsFocusable);  //鼠标选中这个item之后就是聚焦, 然后可以用键盘控制这个item
     item->setFlag(QGraphicsItem::ItemIsMovable);
     item->setPosition(-700,50);
+    item->setData(1,1);
+
     //初始化地面
     ground = new obstacle;
     ground->setType(1);
@@ -38,7 +40,7 @@ MainWindow::MainWindow(QWidget *parent) :
     {
         brick[i] = new obstacle;
         brick[i]->setType(1);
-        brick[i]->setPosition(-50 + 50 * i,200);
+        brick[i]->setPosition(-80 + 50 * i,200);
         brick[i]->setWidthHeight(50,50);
         brick[i]->setData(1,2);
         pScene->addItem(brick[i]);
@@ -50,10 +52,10 @@ MainWindow::MainWindow(QWidget *parent) :
         coin[i]->setType(2);
         coin[i]->setPosition(-200 + 50 * i,300);
         coin[i]->setWidthHeight(50,50);
+        coin[i]->setShowFlag(1);
         coin[i]->setData(1,3);
         pScene->addItem(coin[i]);
     }
-
 
 
     //bullet *D1 = new bullet;
@@ -62,7 +64,16 @@ MainWindow::MainWindow(QWidget *parent) :
         shootBullet();
     });
     connect(item,&player::BackGroundMove,[=](){
-
+        for (int i = 0; i < 6; i++)
+        {
+            brick[i]->moveBy(-3,0);
+            update(brick[i]->obPosX,brick[i]->obPosY,brick[i]->obWidth,brick[i]->obHeight);
+        }
+        for (int i = 0; i < 3; i++)
+        {
+            coin[i]->moveBy(-3,0);
+            update(coin[i]->obPosX,coin[i]->obPosY,coin[i]->obWidth,coin[i]->obHeight);
+        }
     });
     pScene->addItem(item);
     pScene->setFocusItem(item);

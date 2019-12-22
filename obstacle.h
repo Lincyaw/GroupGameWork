@@ -38,13 +38,14 @@ public:
 
     QPixmap Ground = QPixmap(":/obstacle/obstacle/brick01.png");
     QPixmap Coin = QPixmap(":/obstacle/obstacle/coin.png");
+    QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
 
-    //    void ObstacleGoLeft();  //障碍物左移
     void setType(int num);
     void setPosition(int x,int y);
     void setWidthHeight(int width,int height);
-    QRectF boundingRect() const override;
+    void setShowFlag(int num);
+
 signals:
 
 public slots:
