@@ -115,7 +115,7 @@ MainWindow::MainWindow(QWidget *parent) :
     //bullet *D1 = new bullet;
     // 将 item 添加至场景中
     connect(item,&player::shoot,[=](){
-        shootBullet();
+        shootBullet(item->heroPosX,item->heroPosY);
     });
     connect(item,&player::BackGroundMove,[=](){
         for (int i = 0; i < 12; i++)
@@ -184,10 +184,10 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 
 
 
-void MainWindow::shootBullet()
+void MainWindow::shootBullet(int p,int q)
 {
     int i;
-    bullets *D1 = new bullets;
+    bullets *D1 = new bullets(p,q);
     pScene->addItem(D1);
     for(i=0;i<D1->collidingItems().length();i++)
     {

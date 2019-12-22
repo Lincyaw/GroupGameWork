@@ -1,14 +1,12 @@
 #include "bullets.h"
 
-bullets::bullets(QObject *parent) : QObject(parent)
+bullets::bullets(int x,int y)
 {
     qDebug()<<"一个子弹";
         setSpeed(10);
         setDirection(right);
 
-        setPosition(0,-10);
-
-        setPosition(0,5);
+        setPosition(x,y);
 
         connect(shootTimer,&QTimer::timeout,[=](){
                 if(direction == right)

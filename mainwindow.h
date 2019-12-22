@@ -18,11 +18,12 @@ public:
 
     QGraphicsScene *pScene = new QGraphicsScene();
     QGraphicsView *pView = new QGraphicsView();
-    void shootBullet();
+    void shootBullet(int p,int q);
     ~MainWindow();
 
 private:
     Ui::MainWindow *ui;
+
 };
 
 #endif // MAINWINDOW_H

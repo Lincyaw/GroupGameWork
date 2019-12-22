@@ -79,60 +79,87 @@ void player::keyPressEvent(QKeyEvent *event)
 {
     if(event->key() == Qt::Key_W && !JumpOrnot)
     {
+        SaveKeyPressed(Qt::Key_W);
+    }
+    if(event->key() == Qt::Key_A)
+    {
+        SaveKeyPressed(Qt::Key_A);
+    }
+    if(event->key() == Qt::Key_D)
+    {
+        SaveKeyPressed(Qt::Key_D);
+    }
+    if(event->key() == Qt::Key_S)
+    {
+        qDebug()<<heroPosX<<"  "<<heroPosY;
+        //Direction = down;
+      //SaveKeyPressed(Qt::Key_S);
+        heroPosY+=HorizontalSpeed;
+        moveBy(0,HorizontalSpeed);  //相对现在的位置移动
+    }
+    if(event->key() == Qt::Key_Q)
+    {
+        JumpTimer->start(100);
+    }
+    if(event->key() == Qt::Key_K)
+    {
+      SaveKeyPressed(Qt::Key_K);
+    }
+    if(KeyPressed(Qt::Key_W))
+    {
         qDebug()<<heroPosX<<"  "<<heroPosY;
         Direction = up;
         JumpOrnot = true;
         setVelocity(28);
-        //heroPosY-=HorizontalSpeed;
-       // moveBy(0,-HorizontalSpeed);  //相对现在的位置移动
     }
-    if(event->key() == Qt::Key_A)
+    if(KeyPressed(Qt::Key_A))
     {
-       // qDebug()<<heroPosX<<"  "<<heroPosY;
-        HorizontalDir = bullets::left;
-        heroPosX-=HorizontalSpeed;
-        RunSkinCounter--;
-        switch(RunSkinCounter)
-        {
-            case 0:
-                HeroSkin = HeroRunSkin1;
-                RunSkinCounter = 30;
-               // qDebug()<<"0001";
-                break;
-            case 5:
-                HeroSkin = HeroRunSkin2;
-               // qDebug()<<"0002";
-                break;
-            case 10:
-                HeroSkin = HeroRunSkin3;
-                //qDebug()<<"0003";
-                break;
-            case 15:
-                HeroSkin = HeroRunSkin4;
-               // qDebug()<<"0004";
-                break;
-            case 20:
-                HeroSkin = HeroRunSkin5;
-                //qDebug()<<"0005";
-            case 25:
-                HeroSkin = HeroRunSkin0;
-                break;
-        }
-        moveBy(-HorizontalSpeed,0);  //相对现在的位置移动
+        // qDebug()<<heroPosX<<"  "<<heroPosY;
+         HorizontalDir = bullets::left;
+         heroPosX-=HorizontalSpeed;
+         RunSkinCounter--;
+
+         switch(RunSkinCounter)
+         {
+             case 0:
+                 HeroSkin = HeroRunSkin1;
+                 RunSkinCounter = 30;
+                // qDebug()<<"0001";
+                 break;
+             case 5:
+                 HeroSkin = HeroRunSkin2;
+                // qDebug()<<"0002";
+                 break;
+             case 10:
+                 HeroSkin = HeroRunSkin3;
+                 //qDebug()<<"0003";
+                 break;
+             case 15:
+                 HeroSkin = HeroRunSkin4;
+                // qDebug()<<"0004";
+                 break;
+             case 20:
+                 HeroSkin = HeroRunSkin5;
+                 //qDebug()<<"0005";
+             case 25:
+                 HeroSkin = HeroRunSkin0;
+                 break;
+         }
+         moveBy(-HorizontalSpeed,0);  //相对现在的位置移动
     }
-    if(event->key() == Qt::Key_D)
+
+    if(KeyPressed(Qt::Key_D))
     {
-     //   qDebug()<<heroPosX<<"  "<<heroPosY;
         HorizontalDir = bullets::right;
         if(heroPosX<-430)
         {
-            heroPosX+=HorizontalSpeed;
           moveBy(HorizontalSpeed,0);  //相对现在的位置移动
         }
         else
         {
             emit BackGroundMove();
         }
+        heroPosX+=HorizontalSpeed;
         RunSkinCounter++;
         switch(RunSkinCounter)
         {
@@ -165,22 +192,34 @@ void player::keyPressEvent(QKeyEvent *event)
         }
 
     }
-    if(event->key() == Qt::Key_S)
-    {
-        qDebug()<<heroPosX<<"  "<<heroPosY;
-        //Direction = down;
-        heroPosY+=HorizontalSpeed;
-        moveBy(0,HorizontalSpeed);  //相对现在的位置移动
-    }
-    if(event->key() == Qt::Key_Q)
-    {
-        JumpTimer->start(100);
-    }
-    if(event->key() == Qt::Key_K)
+    if(KeyPressed(Qt::Key_K))
     {
         emit shoot();
     }
+
 }
+void player::keyReleaseEvent(QKeyEvent *event)
+{
+    if(event->key()==Qt::Key_A)
+    {
+        SaveKeyReleased(Qt::Key_A);
+    }
+    if(event->key()==Qt::Key_W)
+    {
+        SaveKeyReleased(Qt::Key_W);
+    }
+    if(event->key()==Qt::Key_D)
+    {
+        SaveKeyReleased(Qt::Key_D);
+    }
+    if(event->key()==Qt::Key_K)
+    {
+        SaveKeyReleased(Qt::Key_K);
+    }
+
+
+}
+
 void player::FreeFalling(void)
 {
     int i;
