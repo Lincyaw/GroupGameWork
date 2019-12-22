@@ -61,6 +61,7 @@ public:
     void setPosition(int x,int y);
     void setVelocity(int v);
     bool JumpOrnot;
+    bool UnderBrick;
     //////////////////////////////////////////////////////////////////////////////
 private:
     QColor color;
