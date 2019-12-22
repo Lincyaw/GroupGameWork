@@ -82,7 +82,7 @@ void player::keyPressEvent(QKeyEvent *event)
         qDebug()<<heroPosX<<"  "<<heroPosY;
         Direction = up;
         JumpOrnot = true;
-        setVelocity(30);
+        setVelocity(28);
         //heroPosY-=HorizontalSpeed;
        // moveBy(0,-HorizontalSpeed);  //相对现在的位置移动
     }
@@ -184,52 +184,73 @@ void player::keyPressEvent(QKeyEvent *event)
 void player::FreeFalling(void)
 {
     int i;
+  //  bool fag = false;
+  //  bool MoveUpSlowly = false;
     if(Velocity<=0)
     {
         Direction = down;
     }
-    if(Velocity>0)
+    else if(Velocity>0)
     {
         Direction = up;
     }
-  //  qDebug()<<"Velocity="<<Velocity;
-    if(Direction == up)
+    if(Direction == up || collidingItems().isEmpty())
     {
-
         heroPosY-=Velocity;
         Velocity-=Gravity;
-        JumpOrnot = true;
     }
     if(!collidingItems().isEmpty())
     {
-        for(i = 0;i <collidingItems().length(); i++)
+        for(i = 0;i < collidingItems().length(); i++)
         {
-
+//            if(collidingItems().at(i)->data(1).toInt()==2 &&(HorizontalDir == bullets::left))
+//            {
+//                 heroPosX -= HorizontalSpeed;
+//            }
+//            else if(collidingItems().at(i)->data(1).toInt()==2 &&(HorizontalDir == bullets::right))
+//            {
+//                 heroPosX += HorizontalSpeed;
+//            }
             if(collidingItems().at(i)->data(1).toInt()==2 && Direction == down)
             {
                 //qDebug()<<"类型是2";
-                    heroPosY-=1;
+                qDebug()<<"direction1 = "<<Direction;
+                heroPosY-=1;
                 JumpOrnot = false;
+                UnderBrick = false;
                 Velocity=0;
-                break;
+            }
+            else if(collidingItems().at(i)->data(1).toInt()==2 && (Direction == up))
+            {
+                qDebug()<<"direction2 = "<<Direction;
+                heroPosY+=Velocity;
+                UnderBrick = true;
             }
             else
             {
+                qDebug()<<"direction3 = "<<Direction;
                 JumpOrnot = true;
-            }
-            if(collidingItems().at(i)->data(1).toInt()==2 && Direction == up)
-            {
-                heroPosY+=Velocity;
-                Velocity = -1;
+                UnderBrick = false;
             }
         }
+        if(JumpOrnot)
+        {
+            heroPosY-=Velocity;
+            Velocity-=Gravity;
+        }
+        if(UnderBrick)//如果向上跳跃的时候碰到了砖头
+        {
+            qDebug()<<"direction4 = "<<Direction;
+            if(Velocity>0)
+            {
+                Velocity =  0 - Velocity;
+            }
+            heroPosY-=Velocity;//让人往下掉
+            Velocity-=Gravity;
+        }
     }
-    if(JumpOrnot)
-    {
-        JumpOrnot = true;
-        heroPosY-=Velocity;
-        Velocity-=Gravity;
-    }
+
+
 
     return;
 }
