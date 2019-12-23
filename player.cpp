@@ -30,25 +30,25 @@ player::player(QObject *parent) : QObject(parent)
              {
                  case 0:
                      HeroSkin = HeroRunSkin1;
-                     RunSkinCounter = 30;
+                     RunSkinCounter = 60;
                     // qDebug()<<"0001";
                      break;
-                 case 5:
+                 case 10:
                      HeroSkin = HeroRunSkin2;
                     // qDebug()<<"0002";
                      break;
-                 case 10:
+                 case 20:
                      HeroSkin = HeroRunSkin3;
                      //qDebug()<<"0003";
                      break;
-                 case 15:
+                 case 30:
                      HeroSkin = HeroRunSkin4;
                     // qDebug()<<"0004";
                      break;
-                 case 20:
+                 case 40:
                      HeroSkin = HeroRunSkin5;
                      //qDebug()<<"0005";
-                 case 25:
+                 case 50:
                      HeroSkin = HeroRunSkin0;
                      break;
              }
@@ -76,26 +76,26 @@ player::player(QObject *parent) : QObject(parent)
                     HeroSkin = HeroRunSkin1;
                    // qDebug()<<"0001";
                     break;
-                case 5:
+                case 10:
                     HeroSkin = HeroRunSkin2;
                    // qDebug()<<"0002";
                     break;
-                case 10:
+                case 20:
                     HeroSkin = HeroRunSkin3;
                     //qDebug()<<"0003";
                     break;
-                case 15:
+                case 30:
                     HeroSkin = HeroRunSkin4;
                    // qDebug()<<"0004";
                     break;
-                case 20:
+                case 40:
                     HeroSkin = HeroRunSkin5;
                     //qDebug()<<"0005";
                     break;
-                case 25:
+                case 50:
                     HeroSkin = HeroRunSkin0;
                     break;
-                case 30:
+                case 60:
                     RunSkinCounter=0;
                   break;
             }
@@ -106,7 +106,7 @@ player::player(QObject *parent) : QObject(parent)
             emit shoot();
         }
     });
-    JumpTimer->start(100);
+    JumpTimer->start(50);
     KeyTimer->start(10);
     setPosition(-700,0);
     setData(1,1);
@@ -137,39 +137,9 @@ void player::mousePressEvent(QGraphicsSceneMouseEvent *event)
 }
 void player::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
-//    if(QLineF(event->screenPos(),event->buttonDownScreenPos(Qt::LeftButton)).length() <QApplication::startDragDistance())
-//    {
-//        //如果按下的点到现在的点的距离小于程序默认的拖动距离, 表示没有拖动,则返回
-//        return;
-//    }
-//    //为event所在的窗口部件新建拖动对象
-//    QDrag *drag = new QDrag(event->widget());
-//    //新建QMimeData对象, 他用来储存拖动的数据
-//    QMimeData *mime = new QMimeData;
-//    //关联
-//    drag->setMimeData(mime);
-//    //放入颜色数据
-//    mime->setColorData(color);
-
-//    //新建QPixmap对象,它用来重新绘制原型,在拖动时显示
-//    QPixmap pix(21,21);
-//    pix.fill(Qt::white);
-//    QPainter painter(&pix);
-//    paint(&painter,0,0);
-//    drag->setPixmap(pix);
-
-
-//    //让指针指向圆形的(10,15)点
-//    drag->setHotSpot(QPoint(10,15));
-//    //开始拖动
-//    drag->exec();
-//    //改变光标形状
-//    setCursor(Qt::OpenHandCursor);
-
 }
 void player::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
-//    setCursor(Qt::OpenHandCursor);
 }
 void player::keyPressEvent(QKeyEvent *event)
 {

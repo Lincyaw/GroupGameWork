@@ -40,7 +40,7 @@ public:
     int RunSkinCounter = 0;//人物移动的时候皮肤切换计数器
 
 
-    int HorizontalSpeed = 3;
+    int HorizontalSpeed = 1;
     QTimer *JumpTimer = new QTimer;
     QTimer *KeyTimer = new QTimer;
 
