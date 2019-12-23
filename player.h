@@ -31,6 +31,7 @@ public:
     explicit player(QObject *parent = 0);
     enum Dir{up,down,left,right};//人物的方向
     QTimer *JumpTimer = new QTimer;
+    QTimer *KeyTimer = new QTimer;
     QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
