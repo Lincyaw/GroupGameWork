@@ -239,6 +239,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     pView->resize(SCREENWIDTH,SCREENHEIGHT);
 
+
     pView->setScene(pScene);
     pView->setStyleSheet("border:none; background:black;");
     pView->centerOn(0,0);
