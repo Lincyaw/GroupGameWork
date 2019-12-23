@@ -10,7 +10,7 @@ player::player(QObject *parent) : QObject(parent)
         FreeFalling();
          update(heroPosX-50, heroPosY-50,46+100, 156);
     });
-
+JumpTimer->start(100);
     setData(1,2);  //?
     setPosition(0,0);
     setVelocity(0);
@@ -79,15 +79,15 @@ void player::keyPressEvent(QKeyEvent *event)
 {
     if(event->key() == Qt::Key_W && !JumpOrnot)
     {
-        SaveKeyPressed(Qt::Key_W);
+        SaveKeyPressed(Key_W);
     }
     if(event->key() == Qt::Key_A)
     {
-        SaveKeyPressed(Qt::Key_A);
+        SaveKeyPressed(Key_A);
     }
     if(event->key() == Qt::Key_D)
     {
-        SaveKeyPressed(Qt::Key_D);
+        SaveKeyPressed(Key_D);
     }
     if(event->key() == Qt::Key_S)
     {
@@ -97,22 +97,18 @@ void player::keyPressEvent(QKeyEvent *event)
         heroPosY+=HorizontalSpeed;
         moveBy(0,HorizontalSpeed);  //相对现在的位置移动
     }
-    if(event->key() == Qt::Key_Q)
-    {
-        JumpTimer->start(100);
-    }
     if(event->key() == Qt::Key_K)
     {
-      SaveKeyPressed(Qt::Key_K);
+      SaveKeyPressed(Key_K);
     }
-    if(KeyPressed(Qt::Key_W))
+    if(KeyPressed(Key_W))
     {
         qDebug()<<heroPosX<<"  "<<heroPosY;
         Direction = up;
         JumpOrnot = true;
         setVelocity(28);
     }
-    if(KeyPressed(Qt::Key_A))
+    if(KeyPressed(Key_A))
     {
         // qDebug()<<heroPosX<<"  "<<heroPosY;
          HorizontalDir = bullets::left;
@@ -148,18 +144,19 @@ void player::keyPressEvent(QKeyEvent *event)
          moveBy(-HorizontalSpeed,0);  //相对现在的位置移动
     }
 
-    if(KeyPressed(Qt::Key_D))
+    if(KeyPressed(Key_D))
     {
         HorizontalDir = bullets::right;
         if(heroPosX<-430)
         {
           moveBy(HorizontalSpeed,0);  //相对现在的位置移动
+           heroPosX+=HorizontalSpeed;
         }
         else
         {
             emit BackGroundMove();
         }
-        heroPosX+=HorizontalSpeed;
+
         RunSkinCounter++;
         switch(RunSkinCounter)
         {
@@ -192,7 +189,7 @@ void player::keyPressEvent(QKeyEvent *event)
         }
 
     }
-    if(KeyPressed(Qt::Key_K))
+    if(KeyPressed(Key_K))
     {
         emit shoot();
     }
@@ -202,19 +199,19 @@ void player::keyReleaseEvent(QKeyEvent *event)
 {
     if(event->key()==Qt::Key_A)
     {
-        SaveKeyReleased(Qt::Key_A);
+        SaveKeyReleased(Key_A);
     }
     if(event->key()==Qt::Key_W)
     {
-        SaveKeyReleased(Qt::Key_W);
+        SaveKeyReleased(Key_W);
     }
     if(event->key()==Qt::Key_D)
     {
-        SaveKeyReleased(Qt::Key_D);
+        SaveKeyReleased(Key_D);
     }
     if(event->key()==Qt::Key_K)
     {
-        SaveKeyReleased(Qt::Key_K);
+        SaveKeyReleased(Key_K);
     }
 
 

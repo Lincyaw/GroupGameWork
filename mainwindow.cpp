@@ -16,7 +16,7 @@ MainWindow::MainWindow(QWidget *parent) :
     item = new player;
     item->setFlag(QGraphicsItem::ItemIsFocusable);  //鼠标选中这个item之后就是聚焦, 然后可以用键盘控制这个item
     item->setFlag(QGraphicsItem::ItemIsMovable);
-    item->setPosition(-700,50);
+    item->setPosition(-700,500);
     item->setData(1,1);
 
     //初始化地面

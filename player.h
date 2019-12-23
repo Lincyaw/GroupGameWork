@@ -84,13 +84,11 @@ private:
     enum Interested_Keys
     {
         Key_A = 1,
-        Key_W,
-        Key_D,
-        Key_K
+        Key_W = 3,
+        Key_D = 5,
+        Key_K = 7
     };
-        QString                       m_Text;
-        QString                       m_ShowText;
-        quint32                       m_PressedKeys;
+        quint32  m_PressedKeys=0;
 
 signals:
     void shoot();
