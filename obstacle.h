@@ -28,7 +28,7 @@ class obstacle : public QObject,public QGraphicsItem
 public:
     explicit obstacle(QObject *parent = 0);
 
-    int type;  //障碍物类型 1: 砖块 2: 金币 3：书
+    int type;  //障碍物类型 0：云 1: 砖块 2: 金币 3：书
 //    int number;  //障碍物个数
     int obPosX;  //障碍物坐标
     int obPosY;
@@ -36,6 +36,7 @@ public:
     int obHeight;  //障碍物的高
     int showflag;  //障碍物是否显示 0: 不显示 1： 显示
 
+    QPixmap Cloud = QPixmap(":/obstacle/obstacle/cloud.png");
     QPixmap Ground = QPixmap(":/obstacle/obstacle/brick01.png");
     QPixmap Coin = QPixmap(":/obstacle/obstacle/coin.png");
     QPixmap Book = QPixmap(":/obstacle/obstacle/book.jpg");

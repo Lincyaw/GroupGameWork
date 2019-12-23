@@ -16,6 +16,11 @@ void obstacle::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
     Q_UNUSED(widget)
     switch(type)
     {
+    case 0://云
+    {
+        painter->drawPixmap(obPosX,obPosY,obWidth,obHeight,Cloud);
+        break;
+    }
     case 1://砖块
     {
         painter->drawPixmap(obPosX,obPosY,obWidth,obHeight,Ground);
