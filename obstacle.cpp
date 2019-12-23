@@ -4,6 +4,7 @@ obstacle::obstacle(QObject *parent) : QObject(parent)
 {
 
 }
+
 QRectF obstacle::boundingRect()const
 {
     return QRectF(obPosX,obPosY,obWidth,obHeight);
