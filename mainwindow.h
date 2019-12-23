@@ -18,7 +18,7 @@ public:
 
     QGraphicsScene *pScene = new QGraphicsScene();
     QGraphicsView *pView = new QGraphicsView();
-    void shootBullet(int p,int q);
+    void shootBullet(int x, int y);
     ~MainWindow();
 
 private:

@@ -29,20 +29,18 @@ class player : public QObject,public QGraphicsItem
     Q_OBJECT
 public:
     explicit player(QObject *parent = 0);
-    int heroPosX;//人物的x位置
-    int heroPosY;//人物的y位置
-    int Velocity;//人物跳跃时候的垂直的速度
-
-
     enum Dir{up,down,left,right};//人物的方向
-    Dir Direction;
-    bullets::Dir HorizontalDir;
-    int RunSkinCounter = 0;//人物移动的时候皮肤切换计数器
-
-
-    int HorizontalSpeed = 3;
     QTimer *JumpTimer = new QTimer;
-
+    QRectF boundingRect() const override;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
+    void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
+    void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
+    void advance(int phase) override;
+    void setPosition(int x,int y);
+    void setVelocity(int v);
+    int getPosX();
+    int getPosY();
     QPixmap HeroSkin = QPixmap(":/hero/adventurer-run-00.png");
     QPixmap HeroRunSkin0 = QPixmap(":/hero/adventurer-run-00.png");
     QPixmap HeroRunSkin1 = QPixmap(":/hero/adventurer-run-01.png");
@@ -50,25 +48,21 @@ public:
     QPixmap HeroRunSkin3 = QPixmap(":/hero/adventurer-run-03.png");
     QPixmap HeroRunSkin4 = QPixmap(":/hero/adventurer-run-04.png");
     QPixmap HeroRunSkin5 = QPixmap(":/hero/adventurer-run-05.png");
-
-    QRectF boundingRect() const override;
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
-    void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
-    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
-    void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
-    void advance(int phase) override;
-
-
-    void setPosition(int x,int y);
-    void setVelocity(int v);
-    bool JumpOrnot;
-    bool UnderBrick;
     //////////////////////////////////////////////////////////////////////////////
 private:
     QColor color;
+    int heroPosX;//人物的x位置
+    int heroPosY;//人物的y位置
+    int Velocity;//人物跳跃时候的垂直的速度
+    bool JumpOrnot;
+    bool UnderBrick;
+    int Gravity = 2; //重力值
+    int RunSkinCounter = 0;//人物移动的时候皮肤切换计数器
+    int HorizontalSpeed = 3;
+    Dir Direction;
+    bullets::Dir HorizontalDir;
     void keyPressEvent(QKeyEvent *event) override;
     void keyReleaseEvent(QKeyEvent *event) override;
-    int Gravity = 2; //重力值
     inline void SaveKeyPressed( int key )
     {
         m_PressedKeys |= ( 1 << key );
@@ -91,7 +85,7 @@ private:
         quint32  m_PressedKeys=0;
 
 signals:
-    void shoot();
+    void shoot(int x,int y);
     void BackGroundMove();
 public slots:
      void FreeFalling(void);

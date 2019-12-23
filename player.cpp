@@ -1,5 +1,4 @@
 #include "player.h"
-
 player::player(QObject *parent) : QObject(parent)
 {
     setToolTip("憨憨!");//提示
@@ -11,8 +10,8 @@ player::player(QObject *parent) : QObject(parent)
          update(heroPosX-50, heroPosY-50,46+100, 156);
     });
 JumpTimer->start(100);
-    setData(1,2);  //?
-    setPosition(0,0);
+    setPosition(-700,0);
+    setData(1,1);
     setVelocity(0);
 }
 
@@ -25,55 +24,18 @@ void player::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QW
 {
     Q_UNUSED(option)
     Q_UNUSED(widget)
-    //painter->setBrush(!collidingItems().isEmpty()? Qt::red : Qt::green);
-   // painter->drawRect(0,0,20,20);
-   // painter->drawRect(0,50,30,20);
-    //如果与其他图形项碰撞则显示红色，否则显示绿色
-
     painter->drawPixmap(heroPosX,heroPosY,46,56,HeroSkin);
 
 }
 void player::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     setCursor(Qt::ClosedHandCursor);
-    //moveBy(10,0);
-
 }
 void player::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
-//    if(QLineF(event->screenPos(),event->buttonDownScreenPos(Qt::LeftButton)).length() <QApplication::startDragDistance())
-//    {
-//        //如果按下的点到现在的点的距离小于程序默认的拖动距离, 表示没有拖动,则返回
-//        return;
-//    }
-//    //为event所在的窗口部件新建拖动对象
-//    QDrag *drag = new QDrag(event->widget());
-//    //新建QMimeData对象, 他用来储存拖动的数据
-//    QMimeData *mime = new QMimeData;
-//    //关联
-//    drag->setMimeData(mime);
-//    //放入颜色数据
-//    mime->setColorData(color);
-
-//    //新建QPixmap对象,它用来重新绘制原型,在拖动时显示
-//    QPixmap pix(21,21);
-//    pix.fill(Qt::white);
-//    QPainter painter(&pix);
-//    paint(&painter,0,0);
-//    drag->setPixmap(pix);
-
-
-//    //让指针指向圆形的(10,15)点
-//    drag->setHotSpot(QPoint(10,15));
-//    //开始拖动
-//    drag->exec();
-//    //改变光标形状
-//    setCursor(Qt::OpenHandCursor);
-
 }
 void player::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
-//    setCursor(Qt::OpenHandCursor);
 }
 void player::keyPressEvent(QKeyEvent *event)
 {
@@ -106,11 +68,12 @@ void player::keyPressEvent(QKeyEvent *event)
         qDebug()<<heroPosX<<"  "<<heroPosY;
         Direction = up;
         JumpOrnot = true;
-        setVelocity(28);
+        setVelocity(27);
     }
     if(KeyPressed(Key_A))
     {
-        // qDebug()<<heroPosX<<"  "<<heroPosY;
+
+         qDebug()<<pos();
          HorizontalDir = bullets::left;
          heroPosX-=HorizontalSpeed;
          RunSkinCounter--;
@@ -146,6 +109,7 @@ void player::keyPressEvent(QKeyEvent *event)
 
     if(KeyPressed(Key_D))
     {
+                 qDebug()<<pos();
         HorizontalDir = bullets::right;
         if(heroPosX<-430)
         {
@@ -191,7 +155,7 @@ void player::keyPressEvent(QKeyEvent *event)
     }
     if(KeyPressed(Key_K))
     {
-        emit shoot();
+        emit shoot(heroPosX,heroPosY);
     }
 
 }
@@ -250,7 +214,7 @@ void player::FreeFalling(void)
             if(collidingItems().at(i)->data(1).toInt()==2 && Direction == down)
             {
                 //qDebug()<<"类型是2";
-                qDebug()<<"direction1 = "<<Direction;
+               // qDebug()<<"direction1 = "<<Direction;
                 heroPosY-=1;
                 JumpOrnot = false;
                 UnderBrick = false;
@@ -258,13 +222,13 @@ void player::FreeFalling(void)
             }
             else if(collidingItems().at(i)->data(1).toInt()==2 && (Direction == up))
             {
-                qDebug()<<"direction2 = "<<Direction;
+              //  qDebug()<<"direction2 = "<<Direction;
                 heroPosY+=Velocity;
                 UnderBrick = true;
             }
             else
             {
-                qDebug()<<"direction3 = "<<Direction;
+               // qDebug()<<"direction3 = "<<Direction;
                 JumpOrnot = true;
                 UnderBrick = false;
             }
@@ -276,7 +240,7 @@ void player::FreeFalling(void)
         }
         if(UnderBrick)//如果向上跳跃的时候碰到了砖头
         {
-            qDebug()<<"direction4 = "<<Direction;
+           // qDebug()<<"direction4 = "<<Direction;
             if(Velocity>0)
             {
                 Velocity =  0 - Velocity;
@@ -301,4 +265,12 @@ void player::setVelocity(int v)
 }
 void player::advance(int phase)
 {
+}
+int player::getPosX()
+{
+    return heroPosX;
+}
+int player::getPosY()
+{
+    return heroPosY;
 }
