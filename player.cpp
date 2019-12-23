@@ -54,6 +54,8 @@ player::player(QObject *parent) : QObject(parent)
                      case 50:
                          HeroSkin = HeroRunSkin0;
                          break;
+                 default:
+                     break;
                  }
              }
         }
@@ -100,8 +102,10 @@ player::player(QObject *parent) : QObject(parent)
                         HeroSkin = HeroRunSkin0;
                         break;
                     case 60:
-                        RunSkinCounter=0;
+                        RunSkinCounter=-10;
                       break;
+                default:
+                    break;
                 }
             }
         }
