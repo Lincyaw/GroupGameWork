@@ -396,7 +396,14 @@ void player::FreeFalling(void)
         }
     }
 
-
+//    if(collidingItems().at(i)->data(2).toInt()==0&&!SkillTimer1->isActive()&&!SkillTimer0->isActive()&&!SkillTimer2->isActive())
+//    {//遭遇怪兽并且人物没有在放技能
+//        heroBlood-=1;
+//        //if(heroBlood==0)
+//        //{
+//        //   gameover
+//        //}
+//    }
 
     return;
 }
@@ -412,3 +419,4 @@ void player::setVelocity(int v)
 void player::advance(int phase)
 {
 }
+
