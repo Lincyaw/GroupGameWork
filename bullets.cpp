@@ -2,27 +2,22 @@
 
 bullets::bullets(int x,int y)
 {
-    qDebug()<<"一个子弹";
-        setSpeed(10);
-        setDirection(right);
-
-        setPosition(x,y);
-
-        connect(shootTimer,&QTimer::timeout,[=](){
-                if(direction == right)
-                {
-                    bulletPosX += speed;
-                    update();
-                }
-                if(direction == left)
-                {
-                    bulletPosY -= speed;
-                    update();
-                }
-
-
-        });
-      shootTimer->start(100);
+    setSpeed(10);
+    setDirection(right);
+    setPosition(x,y);
+    connect(shootTimer,&QTimer::timeout,[=](){
+        if(direction == right)
+        {
+            bulletPosX += speed;
+            update();
+        }
+        if(direction == left)
+        {
+            bulletPosY -= speed;
+            update();
+        }
+    });
+    shootTimer->start(100);
 }
 QRectF bullets::boundingRect()const
 {

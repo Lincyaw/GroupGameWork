@@ -16,7 +16,7 @@ MainWindow::MainWindow(QWidget *parent) :
     item = new player;
     item->setFlag(QGraphicsItem::ItemIsFocusable);  //鼠标选中这个item之后就是聚焦, 然后可以用键盘控制这个item
     item->setFlag(QGraphicsItem::ItemIsMovable);
-    item->setPosition(-700,50);
+    item->setPosition(-700,500);
     item->setData(1,1);
 
     //初始化地面
@@ -153,35 +153,6 @@ MainWindow::MainWindow(QWidget *parent) :
     pScene->setFocusItem(item);
 
 
-//    //新建一个直线项
-//    QGraphicsLineItem *line = new QGraphicsLineItem(-750, 50, 750, 50);
-//    line->setData(1,2);
-//    QGraphicsRectItem *reg = new QGraphicsRectItem(0,-10,50,50);
-//    reg->setData(1,3);
-//    pScene->addItem(line);
-//    pScene->addItem(reg);
-//    qDebug() << item->shape();   //输出item的shape信息
-//    qDebug() << item->boundingRect();  //输出item的boundingRect信息
-
-
-//    新建一个直线项
-//    QGraphicsLineItem *line = new QGraphicsLineItem(-750, 50, 750, 50);
-//    line->setData(1,4);
-//    QGraphicsRectItem *reg = new QGraphicsRectItem(0,-10,50,50);
-//    reg->setData(1,4);
-
-//    QGraphicsRectItem *reg2 = new QGraphicsRectItem(200,-10,50,50);
-//    reg->setData(1,3);
-
-
-//    pScene->addItem(line);
-//    pScene->addItem(reg);
-//    pScene->addItem(reg2);
-//    qDebug() << item->shape();   //输出item的shape信息
-//    qDebug() << item->boundingRect();  //输出item的boundingRect信息
-
-
-
 
     // 为视图设置场景
 
@@ -214,16 +185,6 @@ void MainWindow::shootBullet(int p,int q)
             pScene->removeItem(D1);
         }
     }
-
-//    connect(D1->shootTimer,&QTimer::timeout,[=](){
-
-//                if(D1->bulletPosX >500 || D1->bulletPosX <-750)
-//                {
-//                    qDebug()<<"一个子弹析构";
-//                   // D1->deleteLater();
-//                    pScene->removeItem(D1);
-//                }
-//    });
 }
 
 

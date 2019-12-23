@@ -6,16 +6,112 @@ player::player(QObject *parent) : QObject(parent)
     setCursor(Qt::OpenHandCursor);
     color = QColor(qrand()%256,qrand()%256,qrand()%256);
     connect(JumpTimer,&QTimer::timeout,[=](){
-      //  advance(1);
         FreeFalling();
          update(heroPosX-50, heroPosY-50,46+100, 156);
     });
 
-    setData(1,2);  //?
-    setPosition(0,0);
+    connect(KeyTimer,&QTimer::timeout,[=](){
+        if(KeyPressed(Key_W))
+        {
+            qDebug()<<heroPosX<<"  "<<heroPosY;
+            Direction = up;
+            JumpOrnot = true;
+            setVelocity(27);
+        }
+        if(KeyPressed(Key_A))
+        {
+
+             qDebug()<<pos();
+             HorizontalDir = bullets::left;
+             heroPosX-=HorizontalSpeed;
+             RunSkinCounter--;
+
+             switch(RunSkinCounter)
+             {
+                 case 0:
+                     HeroSkin = HeroRunSkin1;
+                     RunSkinCounter = 60;
+                    // qDebug()<<"0001";
+                     break;
+                 case 10:
+                     HeroSkin = HeroRunSkin2;
+                    // qDebug()<<"0002";
+                     break;
+                 case 20:
+                     HeroSkin = HeroRunSkin3;
+                     //qDebug()<<"0003";
+                     break;
+                 case 30:
+                     HeroSkin = HeroRunSkin4;
+                    // qDebug()<<"0004";
+                     break;
+                 case 40:
+                     HeroSkin = HeroRunSkin5;
+                     //qDebug()<<"0005";
+                 case 50:
+                     HeroSkin = HeroRunSkin0;
+                     break;
+             }
+             moveBy(-HorizontalSpeed,0);  //相对现在的位置移动
+        }
+
+        if(KeyPressed(Key_D))
+        {
+                     qDebug()<<pos();
+            HorizontalDir = bullets::right;
+            if(heroPosX<-430)
+            {
+              moveBy(HorizontalSpeed,0);  //相对现在的位置移动
+               heroPosX+=HorizontalSpeed;
+            }
+            else
+            {
+                emit BackGroundMove();
+            }
+
+            RunSkinCounter++;
+            switch(RunSkinCounter)
+            {
+                case 0:
+                    HeroSkin = HeroRunSkin1;
+                   // qDebug()<<"0001";
+                    break;
+                case 10:
+                    HeroSkin = HeroRunSkin2;
+                   // qDebug()<<"0002";
+                    break;
+                case 20:
+                    HeroSkin = HeroRunSkin3;
+                    //qDebug()<<"0003";
+                    break;
+                case 30:
+                    HeroSkin = HeroRunSkin4;
+                   // qDebug()<<"0004";
+                    break;
+                case 40:
+                    HeroSkin = HeroRunSkin5;
+                    //qDebug()<<"0005";
+                    break;
+                case 50:
+                    HeroSkin = HeroRunSkin0;
+                    break;
+                case 60:
+                    RunSkinCounter=0;
+                  break;
+            }
+
+        }
+        if(KeyPressed(Key_K))
+        {
+            emit shoot();
+        }
+    });
+    JumpTimer->start(50);
+    KeyTimer->start(10);
+    setPosition(-700,0);
+    setData(1,1);
     setVelocity(0);
 }
-
 QRectF player::boundingRect()const
 {
     qreal penWidth = 1;
@@ -41,190 +137,58 @@ void player::mousePressEvent(QGraphicsSceneMouseEvent *event)
 }
 void player::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
-//    if(QLineF(event->screenPos(),event->buttonDownScreenPos(Qt::LeftButton)).length() <QApplication::startDragDistance())
-//    {
-//        //如果按下的点到现在的点的距离小于程序默认的拖动距离, 表示没有拖动,则返回
-//        return;
-//    }
-//    //为event所在的窗口部件新建拖动对象
-//    QDrag *drag = new QDrag(event->widget());
-//    //新建QMimeData对象, 他用来储存拖动的数据
-//    QMimeData *mime = new QMimeData;
-//    //关联
-//    drag->setMimeData(mime);
-//    //放入颜色数据
-//    mime->setColorData(color);
-
-//    //新建QPixmap对象,它用来重新绘制原型,在拖动时显示
-//    QPixmap pix(21,21);
-//    pix.fill(Qt::white);
-//    QPainter painter(&pix);
-//    paint(&painter,0,0);
-//    drag->setPixmap(pix);
-
-
-//    //让指针指向圆形的(10,15)点
-//    drag->setHotSpot(QPoint(10,15));
-//    //开始拖动
-//    drag->exec();
-//    //改变光标形状
-//    setCursor(Qt::OpenHandCursor);
-
 }
 void player::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
-//    setCursor(Qt::OpenHandCursor);
 }
 void player::keyPressEvent(QKeyEvent *event)
 {
     if(event->key() == Qt::Key_W && !JumpOrnot)
     {
-        SaveKeyPressed(Qt::Key_W);
+        SaveKeyPressed(Key_W);
     }
     if(event->key() == Qt::Key_A)
     {
-        SaveKeyPressed(Qt::Key_A);
+        SaveKeyPressed(Key_A);
     }
     if(event->key() == Qt::Key_D)
     {
-        SaveKeyPressed(Qt::Key_D);
+        SaveKeyPressed(Key_D);
     }
     if(event->key() == Qt::Key_S)
     {
-        qDebug()<<heroPosX<<"  "<<heroPosY;
-        //Direction = down;
-      //SaveKeyPressed(Qt::Key_S);
         heroPosY+=HorizontalSpeed;
         moveBy(0,HorizontalSpeed);  //相对现在的位置移动
     }
-    if(event->key() == Qt::Key_Q)
-    {
-        JumpTimer->start(100);
-    }
     if(event->key() == Qt::Key_K)
     {
-      SaveKeyPressed(Qt::Key_K);
+        SaveKeyPressed(Key_K);
     }
-    if(KeyPressed(Qt::Key_W))
-    {
-        qDebug()<<heroPosX<<"  "<<heroPosY;
-        Direction = up;
-        JumpOrnot = true;
-        setVelocity(28);
-    }
-    if(KeyPressed(Qt::Key_A))
-    {
-        // qDebug()<<heroPosX<<"  "<<heroPosY;
-         HorizontalDir = bullets::left;
-         heroPosX-=HorizontalSpeed;
-         RunSkinCounter--;
-
-         switch(RunSkinCounter)
-         {
-             case 0:
-                 HeroSkin = HeroRunSkin1;
-                 RunSkinCounter = 30;
-                // qDebug()<<"0001";
-                 break;
-             case 5:
-                 HeroSkin = HeroRunSkin2;
-                // qDebug()<<"0002";
-                 break;
-             case 10:
-                 HeroSkin = HeroRunSkin3;
-                 //qDebug()<<"0003";
-                 break;
-             case 15:
-                 HeroSkin = HeroRunSkin4;
-                // qDebug()<<"0004";
-                 break;
-             case 20:
-                 HeroSkin = HeroRunSkin5;
-                 //qDebug()<<"0005";
-             case 25:
-                 HeroSkin = HeroRunSkin0;
-                 break;
-         }
-         moveBy(-HorizontalSpeed,0);  //相对现在的位置移动
-    }
-
-    if(KeyPressed(Qt::Key_D))
-    {
-        HorizontalDir = bullets::right;
-        if(heroPosX<-430)
-        {
-          moveBy(HorizontalSpeed,0);  //相对现在的位置移动
-        }
-        else
-        {
-            emit BackGroundMove();
-        }
-        heroPosX+=HorizontalSpeed;
-        RunSkinCounter++;
-        switch(RunSkinCounter)
-        {
-            case 0:
-                HeroSkin = HeroRunSkin1;
-               // qDebug()<<"0001";
-                break;
-            case 5:
-                HeroSkin = HeroRunSkin2;
-               // qDebug()<<"0002";
-                break;
-            case 10:
-                HeroSkin = HeroRunSkin3;
-                //qDebug()<<"0003";
-                break;
-            case 15:
-                HeroSkin = HeroRunSkin4;
-               // qDebug()<<"0004";
-                break;
-            case 20:
-                HeroSkin = HeroRunSkin5;
-                //qDebug()<<"0005";
-                break;
-            case 25:
-                HeroSkin = HeroRunSkin0;
-                break;
-            case 30:
-                RunSkinCounter=0;
-              break;
-        }
-
-    }
-    if(KeyPressed(Qt::Key_K))
-    {
-        emit shoot();
-    }
-
 }
 void player::keyReleaseEvent(QKeyEvent *event)
 {
     if(event->key()==Qt::Key_A)
     {
-        SaveKeyReleased(Qt::Key_A);
+        SaveKeyReleased(Key_A);
     }
     if(event->key()==Qt::Key_W)
     {
-        SaveKeyReleased(Qt::Key_W);
+        SaveKeyReleased(Key_W);
     }
     if(event->key()==Qt::Key_D)
     {
-        SaveKeyReleased(Qt::Key_D);
+        SaveKeyReleased(Key_D);
     }
     if(event->key()==Qt::Key_K)
     {
-        SaveKeyReleased(Qt::Key_K);
+        SaveKeyReleased(Key_K);
     }
 
 
 }
-
 void player::FreeFalling(void)
 {
     int i;
-  //  bool fag = false;
-  //  bool MoveUpSlowly = false;
     if(Velocity<=0)
     {
         Direction = down;
@@ -242,14 +206,6 @@ void player::FreeFalling(void)
     {
         for(i = 0;i < collidingItems().length(); i++)
         {
-//            if(collidingItems().at(i)->data(1).toInt()==2 &&(HorizontalDir == bullets::left))
-//            {
-//                 heroPosX -= HorizontalSpeed;
-//            }
-//            else if(collidingItems().at(i)->data(1).toInt()==2 &&(HorizontalDir == bullets::right))
-//            {
-//                 heroPosX += HorizontalSpeed;
-//            }
             if(collidingItems().at(i)->data(1).toInt()==2 && Direction == down)
             {
                 //qDebug()<<"类型是2";
@@ -279,6 +235,7 @@ void player::FreeFalling(void)
         }
         if(UnderBrick)//如果向上跳跃的时候碰到了砖头
         {
+
             qDebug()<<"direction4 = "<<Direction;
             if(Velocity>0)
             {

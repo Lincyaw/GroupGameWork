@@ -40,8 +40,9 @@ public:
     int RunSkinCounter = 0;//人物移动的时候皮肤切换计数器
 
 
-    int HorizontalSpeed = 3;
+    int HorizontalSpeed = 1;
     QTimer *JumpTimer = new QTimer;
+    QTimer *KeyTimer = new QTimer;
 
     QPixmap HeroSkin = QPixmap(":/hero/adventurer-run-00.png");
     QPixmap HeroRunSkin0 = QPixmap(":/hero/adventurer-run-00.png");
@@ -84,13 +85,11 @@ private:
     enum Interested_Keys
     {
         Key_A = 1,
-        Key_W,
-        Key_D,
-        Key_K
+        Key_W = 3,
+        Key_D = 5,
+        Key_K = 7
     };
-        QString                       m_Text;
-        QString                       m_ShowText;
-        quint32                       m_PressedKeys;
+        quint32  m_PressedKeys=0;
 
 signals:
     void shoot();
