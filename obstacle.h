@@ -28,7 +28,7 @@ class obstacle : public QObject,public QGraphicsItem
 public:
     explicit obstacle(QObject *parent = 0);
 
-    int type;  //障碍物类型 0：云 1: 砖块 2: 金币 3：书
+    int type;  //障碍物类型 1: 砖块 2: 金币 3：书 4：云
 //    int number;  //障碍物个数
     int obPosX;  //障碍物坐标
     int obPosY;
@@ -42,6 +42,8 @@ public:
     QPixmap Book = QPixmap(":/obstacle/obstacle/book.jpg");
     QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
+
+    QTimer *cloudTimer = new QTimer;
 
     void setType(int num);
     void setPosition(int x,int y);
