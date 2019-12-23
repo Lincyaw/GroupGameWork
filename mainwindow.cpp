@@ -5,6 +5,10 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+    //keyboard listener timer
+
+    QTimer *timerkeyboard = new QTimer;
+
     ui->setupUi(this);
     resize(1500,800);
     player *item;
@@ -182,7 +186,8 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 {
 }
 
-
+//void timerEvent(QTimerEvent *)
+//{ if(keys[Qt::Key_Up]) /* some game logic */; }
 
 void MainWindow::shootBullet(int p,int q)
 {
