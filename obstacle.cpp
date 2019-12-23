@@ -39,8 +39,12 @@ void obstacle::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
         }
         break;
     }
+    case 3://书
+    {
+        painter->drawPixmap(obPosX,obPosY,obWidth,obHeight,Book);
+        break;
     }
-
+    }
 
 }
 
