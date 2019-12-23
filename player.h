@@ -40,9 +40,8 @@ public:
     int RunSkinCounter = 0;//人物移动的时候皮肤切换计数器
 
 
-    int HorizontalSpeed = 1;
+    int HorizontalSpeed = 3;
     QTimer *JumpTimer = new QTimer;
-    QTimer *KeyboardTimer = new QTimer;
 
     QPixmap HeroSkin = QPixmap(":/hero/adventurer-run-00.png");
     QPixmap HeroRunSkin0 = QPixmap(":/hero/adventurer-run-00.png");
@@ -69,7 +68,6 @@ private:
     QColor color;
     void keyPressEvent(QKeyEvent *event) override;
     void keyReleaseEvent(QKeyEvent *event) override;
-//    void  timerEvent(QTimerEvent *) override;
     int Gravity = 2; //重力值
     inline void SaveKeyPressed( int key )
     {
