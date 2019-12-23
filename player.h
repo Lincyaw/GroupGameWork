@@ -30,7 +30,7 @@ public:
     explicit player(QObject *parent = 0);
     int heroPosX;//人物的x位置
     int heroPosY;//人物的y位置
-    int Velocity;//人物跳跃时候的垂直的速度
+    float Velocity;//人物跳跃时候的垂直的速度
 
 
     enum Dir{up,down,left,right};//人物的方向
@@ -102,7 +102,7 @@ private:
     int PicHeight;
     void keyPressEvent(QKeyEvent *event) override;
     void keyReleaseEvent(QKeyEvent *event) override;
-    int Gravity = 2; //重力值
+    int Gravity = 4; //重力值
     inline void SaveKeyPressed( int key )
     {
         m_PressedKeys |= ( 1 << key );
@@ -134,6 +134,8 @@ signals:
     void Skill2();
     void Skill3();
     void Skill4();
+    void collided();
+    void notcollided();
 public slots:
      void FreeFalling(void);
 };

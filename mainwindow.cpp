@@ -212,9 +212,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     // 为视图设置场景
-
+    //当有碰撞时不刷新页面
     pView->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
-
     pView->resize(1980,1080);
 
     pView->setScene(pScene);
