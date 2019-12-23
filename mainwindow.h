@@ -3,7 +3,7 @@
 #include"player.h"
 #include"obstacle.h"
 #include <QMainWindow>
-
+#include "hello.h"
 namespace Ui {
 class MainWindow;
 }
@@ -20,6 +20,9 @@ public:
     QGraphicsView *pView = new QGraphicsView();
     void shootBullet(int p,int q);
     ~MainWindow();
+
+private slots:
+    void on_begin_clicked();
 
 private:
     Ui::MainWindow *ui;

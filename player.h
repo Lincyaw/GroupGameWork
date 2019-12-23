@@ -31,7 +31,7 @@ public:
     int heroPosX;//人物的x位置
     int heroPosY;//人物的y位置
     int Velocity;//人物跳跃时候的垂直的速度
-
+    int heroBlood;
 
     enum Dir{up,down,left,right};//人物的方向
     Dir Direction;
@@ -93,6 +93,7 @@ public:
 
     void setPosition(int x,int y);
     void setVelocity(int v);
+    void attackJudge();
     bool JumpOrnot;
     bool UnderBrick;
     //////////////////////////////////////////////////////////////////////////////

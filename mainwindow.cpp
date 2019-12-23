@@ -8,7 +8,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
 
-    resize(1920,1080);
+    //resize(1920,1080);
 
     player *item;
     obstacle *cloud[3];
@@ -192,6 +192,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //bullet *D1 = new bullet;
     // 将 item 添加至场景中
+
     connect(item,&player::BackGroundMove,[=](){
         for (int i = 0; i < 27; i++)
         {
@@ -222,17 +223,20 @@ MainWindow::MainWindow(QWidget *parent) :
     pView->centerOn(0,0);
     pView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     pView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    pView->setParent(this);
-
+   // pView->setParent(this);
+    //pView->setVisible(false);
 
 }
 void MainWindow::keyPressEvent(QKeyEvent *event)
 {
 }
-
-
-
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::on_begin_clicked()
+{
+    pView->show();
+    this->setVisible(false);
 }
