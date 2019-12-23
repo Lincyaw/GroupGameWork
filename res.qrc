@@ -117,5 +117,6 @@
         <file>obstacle/mushroom.png</file>
         <file>obstacle/book.jpg</file>
         <file>obstacle/cloud.png</file>
+        <file>obstacle/mainbuild.png</file>
     </qresource>
 </RCC>

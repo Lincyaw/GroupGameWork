@@ -5,7 +5,6 @@ obstacle::obstacle(QObject *parent) : QObject(parent)
     connect(cloudTimer,&QTimer::timeout,[=](){
         if(type == 4)
         {
-            qDebug()<<obPosX;
             if(obPosX < -800)
             {
                 obPosX = 1180;
@@ -60,6 +59,11 @@ void obstacle::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
     case 4://云
     {
         painter->drawPixmap(obPosX,obPosY,obWidth,obHeight,Cloud);
+        break;
+    }
+    case 5://主楼
+    {
+        painter->drawPixmap(obPosX,obPosY,obWidth,obHeight,H);
         break;
     }
     }
