@@ -43,7 +43,10 @@ public:
     int HorizontalSpeed = 1;
     QTimer *JumpTimer = new QTimer;
     QTimer *KeyTimer = new QTimer;
+    QTimer *SkillTimer0 = new QTimer;
     QTimer *SkillTimer1 = new QTimer;
+    QTimer *SkillTimer2 = new QTimer;
+    QTimer *SkillTimer3 = new QTimer;
 
     QPixmap HeroSkin = QPixmap(":/hero/adventurer-run-00.png");
     QPixmap HeroRunSkin0 = QPixmap(":/hero/adventurer-run-00.png");
@@ -76,6 +79,9 @@ public:
     QPixmap Attack43 = QPixmap(":/hero/adventurer-attack3-03.png");
     QPixmap Attack44 = QPixmap(":/hero/adventurer-attack3-04.png");
     QPixmap Attack45 = QPixmap(":/hero/adventurer-attack3-05.png");
+    QPixmap Attack50 = QPixmap(":/hero/adventurer-air-attack3-loop-00.png");
+    QPixmap Attack51 = QPixmap(":/hero/adventurer-air-attack3-loop-01.png");
+    QPixmap Attack52 = QPixmap(":/hero/adventurer-air-attack3-rdy-00.png");
 
     QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
@@ -123,6 +129,11 @@ private:
 signals:
     void shoot();
     void BackGroundMove();
+    void Skill0();
+    void Skill1();
+    void Skill2();
+    void Skill3();
+    void Skill4();
 public slots:
      void FreeFalling(void);
 };
