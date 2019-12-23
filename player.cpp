@@ -4,6 +4,8 @@ player::player(QObject *parent) : QObject(parent)
 {
     setToolTip("憨憨!");//提示
     setCursor(Qt::OpenHandCursor);
+    PicWidth = 46;
+    PicHeight = 56;
     color = QColor(qrand()%256,qrand()%256,qrand()%256);
     connect(JumpTimer,&QTimer::timeout,[=](){
         FreeFalling();
@@ -13,53 +15,54 @@ player::player(QObject *parent) : QObject(parent)
     connect(KeyTimer,&QTimer::timeout,[=](){
         if(KeyPressed(Key_W))
         {
-            qDebug()<<heroPosX<<"  "<<heroPosY;
             Direction = up;
             JumpOrnot = true;
-            setVelocity(27);
+            setVelocity(20);
         }
         if(KeyPressed(Key_A))
         {
-
-             qDebug()<<pos();
-             HorizontalDir = bullets::left;
+             HorizontalDir = left;
              heroPosX-=HorizontalSpeed;
-             RunSkinCounter--;
-
-             switch(RunSkinCounter)
-             {
-                 case 0:
-                     HeroSkin = HeroRunSkin1;
-                     RunSkinCounter = 60;
-                    // qDebug()<<"0001";
-                     break;
-                 case 10:
-                     HeroSkin = HeroRunSkin2;
-                    // qDebug()<<"0002";
-                     break;
-                 case 20:
-                     HeroSkin = HeroRunSkin3;
-                     //qDebug()<<"0003";
-                     break;
-                 case 30:
-                     HeroSkin = HeroRunSkin4;
-                    // qDebug()<<"0004";
-                     break;
-                 case 40:
-                     HeroSkin = HeroRunSkin5;
-                     //qDebug()<<"0005";
-                 case 50:
-                     HeroSkin = HeroRunSkin0;
-                     break;
-             }
              moveBy(-HorizontalSpeed,0);  //相对现在的位置移动
+             if(!SkillTimer1->isActive()&&!SkillTimer0->isActive()&&!SkillTimer2->isActive())
+             {
+                 PicWidth = 46;
+                 PicHeight = 56;
+                 RunSkinCounter--;
+                 switch(RunSkinCounter)
+                 {
+                     case 0:
+                         HeroSkin = HeroRunSkin1;
+                         RunSkinCounter = 60;
+                        // qDebug()<<"0001";
+                         break;
+                     case 10:
+                         HeroSkin = HeroRunSkin2;
+                        // qDebug()<<"0002";
+                         break;
+                     case 20:
+                         HeroSkin = HeroRunSkin3;
+                         //qDebug()<<"0003";
+                         break;
+                     case 30:
+                         HeroSkin = HeroRunSkin4;
+                        // qDebug()<<"0004";
+                         break;
+                     case 40:
+                         HeroSkin = HeroRunSkin5;
+                         //qDebug()<<"0005";
+                     case 50:
+                         HeroSkin = HeroRunSkin0;
+                         break;
+                 default:
+                     break;
+                 }
+             }
         }
-
         if(KeyPressed(Key_D))
         {
-                     qDebug()<<pos();
-            HorizontalDir = bullets::right;
-            if(heroPosX<-430)
+            HorizontalDir = right;
+            if(heroPosX<-500)
             {
               moveBy(HorizontalSpeed,0);  //相对现在的位置移动
                heroPosX+=HorizontalSpeed;
@@ -68,42 +71,179 @@ player::player(QObject *parent) : QObject(parent)
             {
                 emit BackGroundMove();
             }
-
-            RunSkinCounter++;
-            switch(RunSkinCounter)
+            if(!SkillTimer1->isActive()&&!SkillTimer0->isActive()&&!SkillTimer2->isActive())
             {
-                case 0:
-                    HeroSkin = HeroRunSkin1;
-                   // qDebug()<<"0001";
+                PicWidth = 46;
+                PicHeight = 56;
+                RunSkinCounter++;
+                switch(RunSkinCounter)
+                {
+                    case 0:
+                        HeroSkin = HeroRunSkin1;
+                       // qDebug()<<"0001";
+                        break;
+                    case 10:
+                        HeroSkin = HeroRunSkin2;
+                       // qDebug()<<"0002";
+                        break;
+                    case 20:
+                        HeroSkin = HeroRunSkin3;
+                        //qDebug()<<"0003";
+                        break;
+                    case 30:
+                        HeroSkin = HeroRunSkin4;
+                       // qDebug()<<"0004";
+                        break;
+                    case 40:
+                        HeroSkin = HeroRunSkin5;
+                        //qDebug()<<"0005";
+                        break;
+                    case 50:
+                        HeroSkin = HeroRunSkin0;
+                        break;
+                    case 60:
+                        RunSkinCounter=-10;
+                      break;
+                default:
                     break;
-                case 10:
-                    HeroSkin = HeroRunSkin2;
-                   // qDebug()<<"0002";
-                    break;
-                case 20:
-                    HeroSkin = HeroRunSkin3;
-                    //qDebug()<<"0003";
-                    break;
-                case 30:
-                    HeroSkin = HeroRunSkin4;
-                   // qDebug()<<"0004";
-                    break;
-                case 40:
-                    HeroSkin = HeroRunSkin5;
-                    //qDebug()<<"0005";
-                    break;
-                case 50:
-                    HeroSkin = HeroRunSkin0;
-                    break;
-                case 60:
-                    RunSkinCounter=0;
-                  break;
+                }
             }
-
         }
-        if(KeyPressed(Key_K))
+        if(KeyPressed(Key_K)&&!SkillTimer0->isActive()&&!SkillTimer2->isActive())
         {
-            emit shoot();
+            SkillCounter = 0;
+            SkillTimer1->start(100);
+        }
+        if(KeyPressed(Key_J)&&!SkillTimer1->isActive()&&!SkillTimer2->isActive())
+        {
+            SkillCounter = 0;
+            SkillTimer0->start(100);
+        }
+        if(KeyPressed(Key_L)&&!SkillTimer1->isActive()&&!SkillTimer0->isActive())
+        {
+            SkillCounter = 0;
+            SkillTimer2->start(100);
+        }
+    });
+    connect(SkillTimer0,&QTimer::timeout,[=](){
+        if(!SkillTimer1->isActive()&&!SkillTimer2->isActive())
+        {
+            emit Skill0();
+            PicWidth = 100;
+            PicHeight = 90;
+            heroPosY-=5;
+            switch (SkillCounter) {
+            case 0:
+                HeroSkin = Attack30;
+                break;
+            case 1:
+                HeroSkin = Attack31;
+                break;
+            case 2:
+                HeroSkin = Attack32;
+                break;
+            case 3:
+                HeroSkin = Attack33;
+                break;
+            case 4:
+                HeroSkin = Attack34;
+                break;
+            case 5:
+                HeroSkin = Attack35;
+                break;
+            case 6:
+                SkillTimer0->stop();
+                 break;
+            default:
+                break;
+            }
+            SkillCounter++;
+        }
+
+    });
+    connect(SkillTimer1,&QTimer::timeout,[=](){
+        if(!SkillTimer0->isActive()&&!SkillTimer2->isActive())
+        {
+        emit Skill1();
+        PicWidth = 100;
+        PicHeight = 90;
+        heroPosY-=5;
+        switch (SkillCounter) {
+        case 0:
+            HeroSkin = Attack40;
+            break;
+        case 1:
+            HeroSkin = Attack41;
+            break;
+        case 2:
+            HeroSkin = Attack42;
+            break;
+        case 3:
+            HeroSkin = Attack43;
+            break;
+        case 4:
+            HeroSkin = Attack44;
+            break;
+        case 5:
+            HeroSkin = Attack45;
+            break;
+        case 6:
+            SkillTimer1->stop();
+            break;
+        default:
+            break;
+        }
+        SkillCounter++;
+        }
+    });
+    connect(SkillTimer2,&QTimer::timeout,[=](){
+        if(!SkillTimer0->isActive()&&!SkillTimer1->isActive())
+        {
+        emit Skill2();
+        PicWidth = 100;
+        PicHeight = 90;
+        heroPosY-=5;
+        switch (SkillCounter) {
+        case 0:
+            HeroSkin = Attack00;
+            break;
+        case 1:
+            HeroSkin = Attack01;
+            break;
+        case 2:
+            HeroSkin = Attack02;
+            break;
+        case 3:
+            HeroSkin = Attack03;
+            break;
+        case 4:
+            HeroSkin = Attack10;
+            break;
+        case 5:
+            HeroSkin = Attack11;
+            break;
+        case 6:
+            HeroSkin = Attack12;
+            break;
+        case 7:
+            HeroSkin = Attack50;
+            break;
+        case 8:
+            HeroSkin = Attack51;
+            break;
+        case 9:
+            HeroSkin = Attack50;
+            break;
+        case 10:
+            HeroSkin = Attack51;
+            break;
+        case 11:
+            SkillTimer2->stop();
+            break;
+        default:
+            break;
+        }
+        SkillCounter++;
         }
     });
     JumpTimer->start(50);
@@ -115,7 +255,7 @@ player::player(QObject *parent) : QObject(parent)
 QRectF player::boundingRect()const
 {
     qreal penWidth = 1;
-    return QRectF(heroPosX-penWidth / 2, heroPosY - penWidth/2,46+penWidth, 56+penWidth);
+    return QRectF(heroPosX-penWidth / 2, heroPosY - penWidth/2,PicWidth+penWidth, PicHeight+penWidth);
 }
 void player::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
@@ -126,7 +266,7 @@ void player::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QW
    // painter->drawRect(0,50,30,20);
     //如果与其他图形项碰撞则显示红色，否则显示绿色
 
-    painter->drawPixmap(heroPosX,heroPosY,46,56,HeroSkin);
+    painter->drawPixmap(heroPosX,heroPosY,PicWidth,PicHeight,HeroSkin);
 
 }
 void player::mousePressEvent(QGraphicsSceneMouseEvent *event)
@@ -160,9 +300,17 @@ void player::keyPressEvent(QKeyEvent *event)
         heroPosY+=HorizontalSpeed;
         moveBy(0,HorizontalSpeed);  //相对现在的位置移动
     }
+    if(event->key() == Qt::Key_J)
+    {
+        SaveKeyPressed(Key_J);
+    }
     if(event->key() == Qt::Key_K)
     {
         SaveKeyPressed(Key_K);
+    }
+    if(event->key() == Qt::Key_L)
+    {
+        SaveKeyPressed(Key_L);
     }
 }
 void player::keyReleaseEvent(QKeyEvent *event)
@@ -179,9 +327,17 @@ void player::keyReleaseEvent(QKeyEvent *event)
     {
         SaveKeyReleased(Key_D);
     }
+    if(event->key()==Qt::Key_J)
+    {
+        SaveKeyReleased(Key_J);
+    }
     if(event->key()==Qt::Key_K)
     {
         SaveKeyReleased(Key_K);
+    }
+    if(event->key()==Qt::Key_L)
+    {
+        SaveKeyReleased(Key_L);
     }
 
 
@@ -208,8 +364,6 @@ void player::FreeFalling(void)
         {
             if(collidingItems().at(i)->data(1).toInt()==2 && Direction == down)
             {
-                //qDebug()<<"类型是2";
-                qDebug()<<"direction1 = "<<Direction;
                 heroPosY-=1;
                 JumpOrnot = false;
                 UnderBrick = false;
@@ -217,13 +371,11 @@ void player::FreeFalling(void)
             }
             else if(collidingItems().at(i)->data(1).toInt()==2 && (Direction == up))
             {
-                qDebug()<<"direction2 = "<<Direction;
                 heroPosY+=Velocity;
                 UnderBrick = true;
             }
             else
             {
-                qDebug()<<"direction3 = "<<Direction;
                 JumpOrnot = true;
                 UnderBrick = false;
             }
@@ -235,8 +387,6 @@ void player::FreeFalling(void)
         }
         if(UnderBrick)//如果向上跳跃的时候碰到了砖头
         {
-
-            qDebug()<<"direction4 = "<<Direction;
             if(Velocity>0)
             {
                 Velocity =  0 - Velocity;

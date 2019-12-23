@@ -6,7 +6,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    resize(1980,1080);
+
+
+    resize(1920,1080);
+
     player *item;
     obstacle *cloud[3];
     obstacle *ground;
@@ -189,9 +192,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //bullet *D1 = new bullet;
     // 将 item 添加至场景中
-    connect(item,&player::shoot,[=](){
-        shootBullet(item->heroPosX,item->heroPosY);
-    });
     connect(item,&player::BackGroundMove,[=](){
         for (int i = 0; i < 27; i++)
         {
@@ -214,7 +214,9 @@ MainWindow::MainWindow(QWidget *parent) :
     // 为视图设置场景
 
     pView->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
+
     pView->resize(1980,1080);
+
     pView->setScene(pScene);
     pView->setStyleSheet("border:none; background:white;");
     pView->centerOn(0,0);
@@ -228,21 +230,6 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 {
 }
 
-
-
-void MainWindow::shootBullet(int p,int q)
-{
-    int i;
-    bullets *D1 = new bullets(p,q);
-    pScene->addItem(D1);
-    for(i=0;i<D1->collidingItems().length();i++)
-    {
-        if(D1->collidingItems().at(i)->data(1).toInt() == 2)
-        {
-            pScene->removeItem(D1);
-        }
-    }
-}
 
 
 MainWindow::~MainWindow()

@@ -15,14 +15,12 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     player.cpp \
-    bullets.cpp \
     obstacle.cpp
 
 
 HEADERS  += mainwindow.h \
     somedeclare.h \
     player.h \
-    bullets.h \
     obstacle.h
 
 

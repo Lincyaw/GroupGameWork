@@ -22,7 +22,6 @@
 #include<QKeyEvent>
 #include<QList>
 #include<QPainter>
-#include "bullets.h"
 #include"somedeclare.h"
 class player : public QObject,public QGraphicsItem
 {
@@ -36,13 +35,18 @@ public:
 
     enum Dir{up,down,left,right};//人物的方向
     Dir Direction;
-    bullets::Dir HorizontalDir;
+    Dir HorizontalDir;
     int RunSkinCounter = 0;//人物移动的时候皮肤切换计数器
+    int SkillCounter = 0;
 
 
     int HorizontalSpeed = 1;
     QTimer *JumpTimer = new QTimer;
     QTimer *KeyTimer = new QTimer;
+    QTimer *SkillTimer0 = new QTimer;
+    QTimer *SkillTimer1 = new QTimer;
+    QTimer *SkillTimer2 = new QTimer;
+    QTimer *SkillTimer3 = new QTimer;
 
     QPixmap HeroSkin = QPixmap(":/hero/adventurer-run-00.png");
     QPixmap HeroRunSkin0 = QPixmap(":/hero/adventurer-run-00.png");
@@ -51,6 +55,33 @@ public:
     QPixmap HeroRunSkin3 = QPixmap(":/hero/adventurer-run-03.png");
     QPixmap HeroRunSkin4 = QPixmap(":/hero/adventurer-run-04.png");
     QPixmap HeroRunSkin5 = QPixmap(":/hero/adventurer-run-05.png");
+    QPixmap Attack00 = QPixmap(":/hero/adventurer-air-attack1-00.png");
+    QPixmap Attack01 = QPixmap(":/hero/adventurer-air-attack1-01.png");
+    QPixmap Attack02 = QPixmap(":/hero/adventurer-air-attack1-02.png");
+    QPixmap Attack03 = QPixmap(":/hero/adventurer-air-attack1-03.png");
+    QPixmap Attack10 = QPixmap(":/hero/adventurer-air-attack2-00.png");
+    QPixmap Attack11 = QPixmap(":/hero/adventurer-air-attack2-01.png");
+    QPixmap Attack12 = QPixmap(":/hero/adventurer-air-attack2-02.png");
+    QPixmap Attack20 = QPixmap(":/hero/adventurer-attack1-00.png");
+    QPixmap Attack21 = QPixmap(":/hero/adventurer-attack1-01.png");
+    QPixmap Attack22 = QPixmap(":/hero/adventurer-attack1-02.png");
+    QPixmap Attack23 = QPixmap(":/hero/adventurer-attack1-03.png");
+    QPixmap Attack24 = QPixmap(":/hero/adventurer-attack1-04.png");
+    QPixmap Attack30 = QPixmap(":/hero/adventurer-attack2-00.png");
+    QPixmap Attack31 = QPixmap(":/hero/adventurer-attack2-01.png");
+    QPixmap Attack32 = QPixmap(":/hero/adventurer-attack2-02.png");
+    QPixmap Attack33 = QPixmap(":/hero/adventurer-attack2-03.png");
+    QPixmap Attack34 = QPixmap(":/hero/adventurer-attack2-04.png");
+    QPixmap Attack35 = QPixmap(":/hero/adventurer-attack2-05.png");
+    QPixmap Attack40 = QPixmap(":/hero/adventurer-attack3-00.png");
+    QPixmap Attack41 = QPixmap(":/hero/adventurer-attack3-01.png");
+    QPixmap Attack42 = QPixmap(":/hero/adventurer-attack3-02.png");
+    QPixmap Attack43 = QPixmap(":/hero/adventurer-attack3-03.png");
+    QPixmap Attack44 = QPixmap(":/hero/adventurer-attack3-04.png");
+    QPixmap Attack45 = QPixmap(":/hero/adventurer-attack3-05.png");
+    QPixmap Attack50 = QPixmap(":/hero/adventurer-air-attack3-loop-00.png");
+    QPixmap Attack51 = QPixmap(":/hero/adventurer-air-attack3-loop-01.png");
+    QPixmap Attack52 = QPixmap(":/hero/adventurer-air-attack3-rdy-00.png");
 
     QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
@@ -67,6 +98,8 @@ public:
     //////////////////////////////////////////////////////////////////////////////
 private:
     QColor color;
+    int PicWidth;
+    int PicHeight;
     void keyPressEvent(QKeyEvent *event) override;
     void keyReleaseEvent(QKeyEvent *event) override;
     int Gravity = 2; //重力值
@@ -85,15 +118,22 @@ private:
     enum Interested_Keys
     {
         Key_A = 1,
-        Key_W = 3,
-        Key_D = 5,
-        Key_K = 7
+        Key_W,
+        Key_D,
+        Key_K,
+        Key_J,
+        Key_L
     };
         quint32  m_PressedKeys=0;
 
 signals:
     void shoot();
     void BackGroundMove();
+    void Skill0();
+    void Skill1();
+    void Skill2();
+    void Skill3();
+    void Skill4();
 public slots:
      void FreeFalling(void);
 };
