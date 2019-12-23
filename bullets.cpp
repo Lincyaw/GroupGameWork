@@ -28,6 +28,12 @@ void bullets::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
 {
     Q_UNUSED(option)
     Q_UNUSED(widget)
+    //painter->setBrush(!collidingItems().isEmpty()? Qt::red : Qt::green);
+   // painter->drawRect(0,0,20,20);
+   // painter->drawRect(0,50,30,20);
+    //如果与其他图形项碰撞则显示红色，否则显示绿色
+
+   // painter->drawPixmap(bulletPosX,bulletPosY,46,56,HeroSkin);
     painter->drawEllipse(bulletPosX,bulletPosY,5,5);
 
 }
