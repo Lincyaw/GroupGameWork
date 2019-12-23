@@ -6,7 +6,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    resize(1500,800);
+    resize(1920,1080);
     player *item;
     obstacle *ground;
     obstacle *brick[18];
@@ -154,7 +154,7 @@ MainWindow::MainWindow(QWidget *parent) :
     // 为视图设置场景
 
     pView->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
-    pView->resize(1500,900);
+    pView->resize(1920,1080);
     pView->setScene(pScene);
     pView->setStyleSheet("border:none; background:white;");
     pView->centerOn(0,0);

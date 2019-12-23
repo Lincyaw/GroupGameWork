@@ -62,7 +62,7 @@ player::player(QObject *parent) : QObject(parent)
         if(KeyPressed(Key_D))
         {
             HorizontalDir = right;
-            if(heroPosX<-430)
+            if(heroPosX<-500)
             {
               moveBy(HorizontalSpeed,0);  //相对现在的位置移动
                heroPosX+=HorizontalSpeed;
@@ -109,55 +109,61 @@ player::player(QObject *parent) : QObject(parent)
                 }
             }
         }
-        if(KeyPressed(Key_K))
+        if(KeyPressed(Key_K)&&!SkillTimer0->isActive()&&!SkillTimer2->isActive())
         {
             SkillCounter = 0;
             SkillTimer1->start(100);
         }
-        if(KeyPressed(Key_J))
+        if(KeyPressed(Key_J)&&!SkillTimer1->isActive()&&!SkillTimer2->isActive())
         {
             SkillCounter = 0;
             SkillTimer0->start(100);
         }
-        if(KeyPressed(Key_L))
+        if(KeyPressed(Key_L)&&!SkillTimer1->isActive()&&!SkillTimer0->isActive())
         {
             SkillCounter = 0;
             SkillTimer2->start(100);
         }
     });
     connect(SkillTimer0,&QTimer::timeout,[=](){
-        emit Skill0();
-        PicWidth = 100;
-        PicHeight = 90;
-        heroPosY-=5;
-        switch (SkillCounter) {
-        case 0:
-            HeroSkin = Attack30;
-            break;
-        case 1:
-            HeroSkin = Attack31;
-            break;
-        case 2:
-            HeroSkin = Attack32;
-            break;
-        case 3:
-            HeroSkin = Attack33;
-            break;
-        case 4:
-            HeroSkin = Attack34;
-            break;
-        case 5:
-            HeroSkin = Attack35;
-            break;
-        case 6:
-            SkillTimer0->stop();
-             break;
-        default:
-            break;
+        if(!SkillTimer1->isActive()&&!SkillTimer2->isActive())
+        {
+            emit Skill0();
+            PicWidth = 100;
+            PicHeight = 90;
+            heroPosY-=5;
+            switch (SkillCounter) {
+            case 0:
+                HeroSkin = Attack30;
+                break;
+            case 1:
+                HeroSkin = Attack31;
+                break;
+            case 2:
+                HeroSkin = Attack32;
+                break;
+            case 3:
+                HeroSkin = Attack33;
+                break;
+            case 4:
+                HeroSkin = Attack34;
+                break;
+            case 5:
+                HeroSkin = Attack35;
+                break;
+            case 6:
+                SkillTimer0->stop();
+                 break;
+            default:
+                break;
+            }
+            SkillCounter++;
         }
-        SkillCounter++;
+
     });
     connect(SkillTimer1,&QTimer::timeout,[=](){
+        if(!SkillTimer0->isActive()&&!SkillTimer2->isActive())
+        {
         emit Skill1();
         PicWidth = 100;
         PicHeight = 90;
@@ -188,8 +194,11 @@ player::player(QObject *parent) : QObject(parent)
             break;
         }
         SkillCounter++;
+        }
     });
     connect(SkillTimer2,&QTimer::timeout,[=](){
+        if(!SkillTimer0->isActive()&&!SkillTimer1->isActive())
+        {
         emit Skill2();
         PicWidth = 100;
         PicHeight = 90;
@@ -229,30 +238,13 @@ player::player(QObject *parent) : QObject(parent)
             HeroSkin = Attack51;
             break;
         case 11:
-            HeroSkin = Attack50;
-            break;
-        case 12:
-            HeroSkin = Attack51;
-            break;
-        case 13:
-            HeroSkin = Attack50;
-            break;
-        case 14:
-            HeroSkin = Attack51;
-            break;
-        case 15:
-            HeroSkin = Attack50;
-            break;
-        case 16:
-            HeroSkin = Attack51;
-            break;
-        case 17:
             SkillTimer2->stop();
             break;
         default:
             break;
         }
         SkillCounter++;
+        }
     });
     JumpTimer->start(50);
     KeyTimer->start(10);
