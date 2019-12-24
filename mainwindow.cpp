@@ -29,12 +29,19 @@ MainWindow::~MainWindow()
 }
 void MainWindow::on_begin_clicked()
 {
-    firstLevelIni();
-    pView->show();
+    QMessageBox::information(this,"游戏提示",
+                             "WAD控制角色左右移动和上下移动\nJKL释放技能\n打败怪兽有大量积分哦"
+                                         );
+    if(clickedTimes==0)
+    {
+        firstLevelIni();
+        pView->show();
+        clickedTimes++;
+    }
 }
 void MainWindow::on_pushButton_clicked()
 {
-    pView->deleteLater();
+    pView->close();
 }
 void MainWindow::firstLevelIni()
 {
@@ -45,6 +52,7 @@ void MainWindow::firstLevelIni()
     ground->setWidthHeight(1980,200);
     ground->setData(1,2);
     pScene->addItem(ground);
+
 
     //初始化砖块
     for(int i = 0; i < 3; i++)
@@ -225,13 +233,6 @@ void MainWindow::firstLevelIni()
     //bullet *D1 = new bullet;
     // 将 item 添加至场景中
     // 为视图设置场景
-    pView->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
-    pView->resize(SCREENWIDTH,SCREENHEIGHT);
-    pView->setScene(pScene);
-    pView->setStyleSheet("border:none; background:black;");
-    pView->centerOn(0,0);
-    pView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    pView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
 
     item = new player;
@@ -240,6 +241,15 @@ void MainWindow::firstLevelIni()
     item->setPosition(-700,500);
     pScene->addItem(item);
     pScene->setFocusItem(item);
+
+
+    pView->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
+    pView->resize(SCREENWIDTH,SCREENHEIGHT);
+    pView->setScene(pScene);
+    pView->setStyleSheet("border:none; background:black;");
+    pView->centerOn(0,0);
+    pView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    pView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     connect(item,&player::BackGroundMove,[=](){
         for (int i = 0; i < BRICKNUM; i++)
         {
@@ -252,6 +262,6 @@ void MainWindow::firstLevelIni()
         book->moveBy(-3,0);
     });
     connect(item,&player::succeed,[=](){
-
+        pView->close();
     });
 }

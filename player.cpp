@@ -395,7 +395,6 @@ void player::FreeFalling(void)
             default:
                 break;
 
-
             }
       }
         if(JumpOrnot)

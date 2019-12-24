@@ -4,6 +4,8 @@
 #include"obstacle.h"
 #include <QMainWindow>
 #include "hello.h"
+#include<QPushButton>
+#include<QMessageBox>
 #define SCREENWIDTH 1500
 #define SCREENHEIGHT 1080
 #define BRICKNUM 27
@@ -24,7 +26,7 @@ public:
     void shootBullet(int p,int q);
     ~MainWindow();
     void paintEvent(QPaintEvent *event);
-
+    int clickedTimes=0;
     QGraphicsScene *pScene = new QGraphicsScene();
     QGraphicsView *pView = new QGraphicsView();
     player *item;
