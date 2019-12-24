@@ -2,7 +2,18 @@
 #include<QDebug>
 obstacle::obstacle(QObject *parent) : QObject(parent)
 {
-
+    connect(cloudTimer,&QTimer::timeout,[=](){
+        if(type == 4)
+        {
+            if(obPosX < -800)
+            {
+                obPosX = 1180;
+            }
+            obPosX -= 30;
+            update(obPosX,obPosY,obWidth,obHeight);
+        }
+    });
+    cloudTimer->start(500);
 }
 
 QRectF obstacle::boundingRect()const
@@ -16,11 +27,6 @@ void obstacle::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
     Q_UNUSED(widget)
     switch(type)
     {
-    case 0://云
-    {
-        painter->drawPixmap(obPosX,obPosY,obWidth,obHeight,Cloud);
-        break;
-    }
     case 1://砖块
     {
         painter->drawPixmap(obPosX,obPosY,obWidth,obHeight,Ground);
@@ -48,6 +54,16 @@ void obstacle::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
     case 3://书
     {
         painter->drawPixmap(obPosX,obPosY,obWidth,obHeight,Book);
+        break;
+    }
+    case 4://云
+    {
+        painter->drawPixmap(obPosX,obPosY,obWidth,obHeight,Cloud);
+        break;
+    }
+    case 5://主楼
+    {
+        painter->drawPixmap(obPosX,obPosY,obWidth,obHeight,H);
         break;
     }
     }

@@ -1,44 +1,42 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include<QDebug>
+#define SCREENWIDTH 1920
+#define SCREENHEIGHT 1080
+#define BRICKNUM 27
+#define COINNUM 7
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
 
+
     setFixedSize(400,400);
-    //resize(1920,1080);
 
     player *item;
     obstacle *cloud[3];
     obstacle *ground;
-    obstacle *brick[27];
-    obstacle *coin[6];
+    obstacle *brick[BRICKNUM];
+    obstacle *coin[COINNUM];
     obstacle *book;
+    obstacle *h;
 
     item = new player;
     item->setFlag(QGraphicsItem::ItemIsFocusable);  //鼠标选中这个item之后就是聚焦, 然后可以用键盘控制这个item
     item->setFlag(QGraphicsItem::ItemIsMovable);
     item->setPosition(-700,500);
-    item->setData(1,1);
+    pScene->addItem(item);
+    pScene->setFocusItem(item);
 
-    //初始化云
-    for(int i = 0; i < 3; i++)
-    {
-        cloud[i] = new obstacle;
-        cloud[i]->setType(0);
-        cloud[i]->setPosition(-500 + 530 * i,0);
-        cloud[i]->setWidthHeight(100,50);
-        pScene->addItem(cloud[i]);
-    }
     //初始化地面
     ground = new obstacle;
     ground->setType(1);
-    ground->setPosition(-750,650);
+    ground->setPosition(-700,650);
     ground->setWidthHeight(1980,200);
     ground->setData(1,2);
     pScene->addItem(ground);
+
     //初始化砖块
     for(int i = 0; i < 3; i++)
     {
@@ -113,7 +111,7 @@ MainWindow::MainWindow(QWidget *parent) :
     {
         brick[i+21] = new obstacle;
         brick[i+21]->setType(1);
-        brick[i+21]->setPosition(4450 + 50 * i,250);
+        brick[i+21]->setPosition(4450 + 50 * i,270);
         brick[i+21]->setWidthHeight(50,50);
         brick[i+21]->setData(1,2);
         pScene->addItem(brick[i+21]);
@@ -122,7 +120,7 @@ MainWindow::MainWindow(QWidget *parent) :
     {
         brick[i+24] = new obstacle;
         brick[i+24]->setType(1);
-        brick[i+24]->setPosition(4800 + 50 * i,350);
+        brick[i+24]->setPosition(4800 + 50 * i,400);
         brick[i+24]->setWidthHeight(50,50);
         brick[i+24]->setData(1,2);
         pScene->addItem(brick[i+24]);
@@ -182,54 +180,85 @@ MainWindow::MainWindow(QWidget *parent) :
     coin[5]->setData(1,3);
     pScene->addItem(coin[5]);
 
+    coin[6] = new obstacle;
+    coin[6]->setType(2);
+    coin[6]->setPosition(4450,220);
+    coin[6]->setWidthHeight(50,50);
+    coin[6]->setShowFlag(1);
+    coin[6]->setData(1,3);
+    pScene->addItem(coin[6]);
+
     //初始化书
     book = new obstacle;
     book->setType(3);
-    book->setPosition(6000,500);//边界630
-    book->setWidthHeight(120,150);
+    book->setPosition(6000,450);
+    book->setWidthHeight(160,200);
     book->setData(1,4);
     pScene->addItem(book);
+
+    //初始化云
+    for(int i = 0; i < 3; i++)
+    {
+        cloud[i] = new obstacle;
+        cloud[i]->setType(4);
+        cloud[i]->setPosition(-700 + (SCREENWIDTH / 3) * i,0);
+        cloud[i]->setWidthHeight(100,50);
+        pScene->addItem(cloud[i]);
+//        connect(cloud[i]->cloudTimer,&QTimer::timeout,[=](){
+//            cloud[i]->moveBy(-30,0);
+//            update(cloud[i]->obPosX,cloud[i]->obPosY,cloud[i]->obWidth,cloud[i]->obHeight);
+//        });
+//        cloud[i]->cloudTimer->start(500);
+    }
+
+    //初始化主楼
+    h = new obstacle;
+    h->setType(5);
+    h->setPosition(0,450);
+    h->setWidthHeight(200,200);
+    pScene->addItem(h);
 
     //bullet *D1 = new bullet;
     // 将 item 添加至场景中
 
     connect(item,&player::BackGroundMove,[=](){
-        for (int i = 0; i < 27; i++)
+        for (int i = 0; i < BRICKNUM; i++)
         {
             brick[i]->moveBy(-3,0);
-            update(brick[i]->obPosX,brick[i]->obPosY,brick[i]->obWidth,brick[i]->obHeight);
         }
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < COINNUM; i++)
         {
             coin[i]->moveBy(-3,0);
-            update(coin[i]->obPosX,coin[i]->obPosY,coin[i]->obWidth,coin[i]->obHeight);
         }
         book->moveBy(-3,0);
-        update(book->obPosX,book->obPosY,book->obWidth,book->obHeight);
     });
-    pScene->addItem(item);
-    pScene->setFocusItem(item);
-
-
 
     // 为视图设置场景
-
     pView->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
 
-    pView->resize(1980,1080);
+    pView->resize(SCREENWIDTH,SCREENHEIGHT);
+
 
     pView->setScene(pScene);
-    pView->setStyleSheet("border:none; background:green");
+
+    pView->setStyleSheet("border:none; background:black;");
     pView->centerOn(0,0);
     pView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     pView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
    // pView->setParent(this);
     //pView->setVisible(false);
 
+
 }
+
 void MainWindow::keyPressEvent(QKeyEvent *event)
 {
+
+
+
 }
+
 MainWindow::~MainWindow()
 {
     delete ui;

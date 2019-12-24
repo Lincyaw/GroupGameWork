@@ -1,5 +1,4 @@
 #include "player.h"
-
 player::player(QObject *parent) : QObject(parent)
 {
     setToolTip("憨憨!");//提示
@@ -9,7 +8,10 @@ player::player(QObject *parent) : QObject(parent)
     color = QColor(qrand()%256,qrand()%256,qrand()%256);
     connect(JumpTimer,&QTimer::timeout,[=](){
         FreeFalling();
+        if(collidingItems().isEmpty())
+        {
          update(heroPosX-50, heroPosY-50,46+100, 156);
+        }
     });
 
     connect(KeyTimer,&QTimer::timeout,[=](){
@@ -17,7 +19,7 @@ player::player(QObject *parent) : QObject(parent)
         {
             Direction = up;
             JumpOrnot = true;
-            setVelocity(20);
+            setVelocity(8);
         }
         if(KeyPressed(Key_A))
         {
@@ -246,7 +248,7 @@ player::player(QObject *parent) : QObject(parent)
         SkillCounter++;
         }
     });
-    JumpTimer->start(50);
+    JumpTimer->start(15);
     KeyTimer->start(10);
     setPosition(-700,0);
     setData(1,1);
@@ -356,10 +358,11 @@ void player::FreeFalling(void)
     if(Direction == up || collidingItems().isEmpty())
     {
         heroPosY-=Velocity;
-        Velocity-=Gravity;
+        Velocity=0.7*Velocity-Gravity;
     }
     if(!collidingItems().isEmpty())
     {
+        collided();
         for(i = 0;i < collidingItems().length(); i++)
         {
             if(collidingItems().at(i)->data(1).toInt()==2 && Direction == down)
@@ -392,8 +395,12 @@ void player::FreeFalling(void)
                 Velocity =  0 - Velocity;
             }
             heroPosY-=Velocity;//让人往下掉
-            Velocity-=Gravity;
+            Velocity=(0.8*Velocity-Gravity);
         }
+    }
+    else
+    {
+        notcollided();
     }
 
 //    if(collidingItems().at(i)->data(2).toInt()==0&&!SkillTimer1->isActive()&&!SkillTimer0->isActive()&&!SkillTimer2->isActive())
