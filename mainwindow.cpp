@@ -1,35 +1,52 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include<QDebug>
-#define SCREENWIDTH 1920
-#define SCREENHEIGHT 1080
-#define GROUNDNUM 10
-#define BRICKNUM 27
-#define COINNUM 7
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    setFixedSize(400,400);
+    setWindowIcon(QIcon(":/obstacle/obstacle/coin.png"));
+    setWindowTitle("游戏");
+
+}
+void MainWindow::paintEvent(QPaintEvent *event)
+{
+    QPainter painter(this);
+    QPixmap pix;
+    pix.load(":/m/back/welcome.png");
+    painter.drawPixmap(0,0,this->width(),this->height(),pix);
+}
 
 
   //  resize(SCREENWIDTH,SCREENHEIGHT);//左边界-700 右边界1280
 
 
-    player *item;
-    obstacle *cloud[3];
-    obstacle *ground[GROUNDNUM];
-    obstacle *brick[BRICKNUM];
-    obstacle *coin[COINNUM];
-    obstacle *book;
-    obstacle *h;
 
-    item = new player;
-    item->setFlag(QGraphicsItem::ItemIsFocusable);  //鼠标选中这个item之后就是聚焦, 然后可以用键盘控制这个item
-    item->setFlag(QGraphicsItem::ItemIsMovable);
-    item->setPosition(-700,500);
-    pScene->addItem(item);
-    pScene->setFocusItem(item);
+
+
+
+
+void MainWindow::keyPressEvent(QKeyEvent *event)
+{
+}
+MainWindow::~MainWindow()
+{
+    delete ui;
+}
+void MainWindow::on_begin_clicked()
+{
+    firstLevelIni();
+    pView->show();
+}
+void MainWindow::on_pushButton_clicked()
+{
+    pView->deleteLater();
+}
+void MainWindow::firstLevelIni()
+{
 
     //初始化地面
     for(int i = 0; i < GROUNDNUM; i++)
@@ -210,21 +227,37 @@ MainWindow::MainWindow(QWidget *parent) :
         cloud[i]->setPosition(-700 + (SCREENWIDTH / 3) * i,0);
         cloud[i]->setWidthHeight(100,50);
         pScene->addItem(cloud[i]);
-//        connect(cloud[i]->cloudTimer,&QTimer::timeout,[=](){
-//            cloud[i]->moveBy(-30,0);
-//            update(cloud[i]->obPosX,cloud[i]->obPosY,cloud[i]->obWidth,cloud[i]->obHeight);
-//        });
-//        cloud[i]->cloudTimer->start(500);
     }
-
     //初始化主楼
     h = new obstacle;
     h->setType(5);
     h->setPosition(0,450);
     h->setWidthHeight(200,200);
+    h->setData(1,5);
     pScene->addItem(h);
 
+
     //背景移动
+
+    //bullet *D1 = new bullet;
+    // 将 item 添加至场景中
+    // 为视图设置场景
+    pView->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
+    pView->resize(SCREENWIDTH,SCREENHEIGHT);
+    pView->setScene(pScene);
+    pView->setStyleSheet("border:none; background:black;");
+    pView->centerOn(0,0);
+    pView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    pView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+
+    item = new player;
+    item->setFlag(QGraphicsItem::ItemIsFocusable);  //鼠标选中这个item之后就是聚焦, 然后可以用键盘控制这个item
+    item->setFlag(QGraphicsItem::ItemIsMovable);
+    item->setPosition(-700,500);
+    pScene->addItem(item);
+    pScene->setFocusItem(item);
+
     connect(item,&player::BackGroundMove,[=](){
         for (int i = 0; i < BRICKNUM; i++)
         {
@@ -236,17 +269,10 @@ MainWindow::MainWindow(QWidget *parent) :
         }
         book->moveBy(-3,0);
     });
+    connect(item,&player::succeed,[=](){
 
     // 为视图设置场景
-    pView->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
 
-    pView->resize(SCREENWIDTH,SCREENHEIGHT);
-
-    pView->setScene(pScene);
-    pView->setStyleSheet("border:none; background:black;");
-    pView->centerOn(0,0);
-    pView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    pView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
     // pView->setParent(this);
     //pView->setVisible(false);
@@ -270,4 +296,6 @@ void MainWindow::on_begin_clicked()
 {
     pView->show();
     this->setVisible(false);
+
+
 }

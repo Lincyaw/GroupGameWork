@@ -1,5 +1,4 @@
 #include "player.h"
-
 player::player(QObject *parent) : QObject(parent)
 {
     setToolTip("憨憨!");//提示
@@ -9,7 +8,10 @@ player::player(QObject *parent) : QObject(parent)
     color = QColor(qrand()%256,qrand()%256,qrand()%256);
     connect(JumpTimer,&QTimer::timeout,[=](){
         FreeFalling();
+        if(collidingItems().isEmpty())
+        {
          update(heroPosX-50, heroPosY-50,46+100, 156);
+        }
     });
 
     connect(KeyTimer,&QTimer::timeout,[=](){
@@ -17,7 +19,7 @@ player::player(QObject *parent) : QObject(parent)
         {
             Direction = up;
             JumpOrnot = true;
-            setVelocity(20);
+            setVelocity(19);
         }
         if(KeyPressed(Key_A))
         {
@@ -61,10 +63,11 @@ player::player(QObject *parent) : QObject(parent)
         }
         if(KeyPressed(Key_D))
         {
+            qDebug()<<heroPosX;
             HorizontalDir = right;
-            if(heroPosX<-500)
+            if(heroPosX<-430 || arrive)
             {
-              moveBy(HorizontalSpeed,0);  //相对现在的位置移动
+               moveBy(HorizontalSpeed,0);  //相对现在的位置移动
                heroPosX+=HorizontalSpeed;
             }
             else
@@ -246,7 +249,7 @@ player::player(QObject *parent) : QObject(parent)
         SkillCounter++;
         }
     });
-    JumpTimer->start(50);
+    JumpTimer->start(40);
     KeyTimer->start(10);
     setPosition(-700,0);
     setData(1,1);
@@ -356,30 +359,45 @@ void player::FreeFalling(void)
     if(Direction == up || collidingItems().isEmpty())
     {
         heroPosY-=Velocity;
-        Velocity-=Gravity;
+        Velocity=0.7*Velocity-Gravity;
     }
     if(!collidingItems().isEmpty())
     {
+        emit collided();
         for(i = 0;i < collidingItems().length(); i++)
         {
-            if(collidingItems().at(i)->data(1).toInt()==2 && Direction == down)
-            {
-                heroPosY-=1;
-                JumpOrnot = false;
-                UnderBrick = false;
-                Velocity=0;
+            switch (collidingItems().at(i)->data(1).toInt()) {
+            case 2:
+                if(Direction == down)
+                {
+                    heroPosY-=1;
+                    JumpOrnot = false;
+                    UnderBrick = false;
+                    Velocity=0;
+                }
+                else if(Direction == up)
+                {
+                    heroPosY+=Velocity;
+                    UnderBrick = true;
+                }
+                else
+                {
+                    JumpOrnot = true;
+                    UnderBrick = false;
+                }
+                break;
+            case 4:
+                arrive = true;
+                break;
+            case 5:
+                emit succeed();
+                break;
+            default:
+                break;
+
+
             }
-            else if(collidingItems().at(i)->data(1).toInt()==2 && (Direction == up))
-            {
-                heroPosY+=Velocity;
-                UnderBrick = true;
-            }
-            else
-            {
-                JumpOrnot = true;
-                UnderBrick = false;
-            }
-        }
+      }
         if(JumpOrnot)
         {
             heroPosY-=Velocity;
@@ -392,8 +410,12 @@ void player::FreeFalling(void)
                 Velocity =  0 - Velocity;
             }
             heroPosY-=Velocity;//让人往下掉
-            Velocity-=Gravity;
+            Velocity=(0.9*Velocity-Gravity);
         }
+    }
+    else
+    {
+        emit notcollided();
     }
 
 //    if(collidingItems().at(i)->data(2).toInt()==0&&!SkillTimer1->isActive()&&!SkillTimer0->isActive()&&!SkillTimer2->isActive())

@@ -4,6 +4,10 @@
 #include"obstacle.h"
 #include <QMainWindow>
 #include "hello.h"
+#define SCREENWIDTH 1500
+#define SCREENHEIGHT 1080
+#define BRICKNUM 27
+#define COINNUM 7
 namespace Ui {
 class MainWindow;
 }
@@ -16,13 +20,25 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     void keyPressEvent(QKeyEvent *event);
 
-    QGraphicsScene *pScene = new QGraphicsScene();
-    QGraphicsView *pView = new QGraphicsView();
+
     void shootBullet(int p,int q);
     ~MainWindow();
+    void paintEvent(QPaintEvent *event);
+
+    QGraphicsScene *pScene = new QGraphicsScene();
+    QGraphicsView *pView = new QGraphicsView();
+    player *item;
+    obstacle *cloud[3];
+    obstacle *ground;
+    obstacle *brick[BRICKNUM];
+    obstacle *coin[COINNUM];
+    obstacle *book;
+    obstacle *h;
+    void firstLevelIni();
 
 private slots:
     void on_begin_clicked();
+    void on_pushButton_clicked();
 
 private:
     Ui::MainWindow *ui;
