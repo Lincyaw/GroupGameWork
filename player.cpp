@@ -63,7 +63,7 @@ player::player(QObject *parent) : QObject(parent)
         }
         if(KeyPressed(Key_D))
         {
-            qDebug()<<heroPosX;
+          //  qDebug()<<heroPosX;
             HorizontalDir = right;
             if(heroPosX<-430 || arrive)
             {
@@ -348,6 +348,10 @@ void player::keyReleaseEvent(QKeyEvent *event)
 void player::FreeFalling(void)
 {
     int i;
+    if(heroPosY>1000)
+    {
+        emit failed();
+    }
     if(Velocity<=0)
     {
         Direction = down;
@@ -391,6 +395,16 @@ void player::FreeFalling(void)
                 break;
             case 5:
                 emit succeed();
+                break;
+            case 11:
+                if(!SkillTimer1->isActive()&&!SkillTimer0->isActive()&&!SkillTimer2->isActive())
+                {
+                    heroBlood-=1;
+                   if(heroBlood<=0)
+                   {
+                      emit failed();
+                   }
+                }
                 break;
             default:
                 break;

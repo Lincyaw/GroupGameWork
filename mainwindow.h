@@ -6,6 +6,10 @@
 #include "hello.h"
 #include<QPushButton>
 #include<QMessageBox>
+#include<QFileDialog>
+#include<QSound>//多媒体模块下的音效头文件
+#include <QFileInfo>
+#include<QMediaPlayer>
 #define SCREENWIDTH 1500
 #define SCREENHEIGHT 1080
 #define GROUNDNUM 8
@@ -38,7 +42,8 @@ public:
     obstacle *book;
     obstacle *h;
     void firstLevelIni();
-
+ //  QSound *BGM = new QSound(":/m/back/BGM.wav");
+QMediaPlayer *myPlayer= new QMediaPlayer;
 private slots:
     void on_begin_clicked();
     void on_pushButton_clicked();

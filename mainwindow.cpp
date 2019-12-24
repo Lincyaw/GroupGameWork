@@ -33,6 +33,11 @@ void MainWindow::on_begin_clicked()
                                          );
     if(clickedTimes==0)
     {
+        //BGM->play();
+
+        myPlayer->setMedia(QUrl("qrc:/m/back/bgm.mp3"));
+        myPlayer->setVolume(80);
+        myPlayer->play();
         firstLevelIni();
         pView->show();
         clickedTimes++;
@@ -42,6 +47,7 @@ void MainWindow::on_begin_clicked()
 void MainWindow::on_pushButton_clicked()
 {
     pView->close();
+    myPlayer->stop();
 }
 
 void MainWindow::firstLevelIni()

@@ -121,5 +121,6 @@
     </qresource>
     <qresource prefix="/m">
         <file>back/welcome.png</file>
+        <file>back/bgm.mp3</file>
     </qresource>
 </RCC>
