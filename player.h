@@ -104,7 +104,7 @@ private:
     int PicHeight;
     void keyPressEvent(QKeyEvent *event) override;
     void keyReleaseEvent(QKeyEvent *event) override;
-    int Gravity = 4; //重力值
+    float Gravity = 4; //重力值
     inline void SaveKeyPressed( int key )
     {
         m_PressedKeys |= ( 1 << key );

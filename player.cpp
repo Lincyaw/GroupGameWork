@@ -19,7 +19,7 @@ player::player(QObject *parent) : QObject(parent)
         {
             Direction = up;
             JumpOrnot = true;
-            setVelocity(8);
+            setVelocity(19);
         }
         if(KeyPressed(Key_A))
         {
@@ -63,8 +63,9 @@ player::player(QObject *parent) : QObject(parent)
         }
         if(KeyPressed(Key_D))
         {
+            qDebug()<<heroPosX;
             HorizontalDir = right;
-            if(heroPosX<-500)
+            if(heroPosX<0)
             {
               moveBy(HorizontalSpeed,0);  //相对现在的位置移动
                heroPosX+=HorizontalSpeed;
@@ -248,7 +249,7 @@ player::player(QObject *parent) : QObject(parent)
         SkillCounter++;
         }
     });
-    JumpTimer->start(15);
+    JumpTimer->start(40);
     KeyTimer->start(10);
     setPosition(-700,0);
     setData(1,1);
@@ -395,7 +396,7 @@ void player::FreeFalling(void)
                 Velocity =  0 - Velocity;
             }
             heroPosY-=Velocity;//让人往下掉
-            Velocity=(0.8*Velocity-Gravity);
+            Velocity=(0.9*Velocity-Gravity);
         }
     }
     else

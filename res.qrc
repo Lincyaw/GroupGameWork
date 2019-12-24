@@ -119,4 +119,7 @@
         <file>obstacle/cloud.png</file>
         <file>obstacle/mainbuild.png</file>
     </qresource>
+    <qresource prefix="/m">
+        <file>back/welcome.png</file>
+    </qresource>
 </RCC>
