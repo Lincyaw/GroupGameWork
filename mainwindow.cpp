@@ -12,6 +12,7 @@ MainWindow::MainWindow(QWidget *parent) :
     setWindowTitle("游戏");
 
 }
+
 void MainWindow::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
@@ -20,13 +21,11 @@ void MainWindow::paintEvent(QPaintEvent *event)
     painter.drawPixmap(0,0,this->width(),this->height(),pix);
 }
 
-void MainWindow::keyPressEvent(QKeyEvent *event)
-{
-}
 MainWindow::~MainWindow()
 {
     delete ui;
 }
+
 void MainWindow::on_begin_clicked()
 {
     QMessageBox::information(this,"游戏提示",
@@ -39,19 +38,24 @@ void MainWindow::on_begin_clicked()
         clickedTimes++;
     }
 }
+
 void MainWindow::on_pushButton_clicked()
 {
     pView->close();
 }
+
 void MainWindow::firstLevelIni()
 {
     //初始化地面
-    ground = new obstacle;
-    ground->setType(1);
-    ground->setPosition(-700,650);
-    ground->setWidthHeight(1980,200);
-    ground->setData(1,2);
-    pScene->addItem(ground);
+    for(int i = 0; i < GROUNDNUM; i++)
+    {
+        ground[i] = new obstacle;
+        ground[i]->setType(1);
+        ground[i]->setPosition(-700 + 200 * i,650);
+        ground[i]->setWidthHeight(200,200);
+        ground[i]->setData(1,2);
+        pScene->addItem(ground[i]);
+    }
 
 
     //初始化砖块
@@ -59,7 +63,7 @@ void MainWindow::firstLevelIni()
     {
         brick[i] = new obstacle;
         brick[i]->setType(1);
-        brick[i]->setPosition(-200 + 50 * i,350);
+        brick[i]->setPosition(-200 + 50 * i,370);
         brick[i]->setWidthHeight(50,50);
         brick[i]->setData(1,2);
         pScene->addItem(brick[i]);
@@ -95,7 +99,7 @@ void MainWindow::firstLevelIni()
     {
         brick[i+12] = new obstacle;
         brick[i+12]->setType(1);
-        brick[i+12]->setPosition(1500 + 250 * i,400 - 100 * i);
+        brick[i+12]->setPosition(1500 + 300 * i,400 - 100 * i);
         brick[i+12]->setWidthHeight(50,50);
         brick[i+12]->setData(1,2);
         pScene->addItem(brick[i+12]);
@@ -104,7 +108,7 @@ void MainWindow::firstLevelIni()
     {
         brick[i+15] = new obstacle;
         brick[i+15]->setType(1);
-        brick[i+15]->setPosition(2500 + 250 * i,200 + 100 * i);
+        brick[i+15]->setPosition(2500 + 300 * i,200 + 100 * i);
         brick[i+15]->setWidthHeight(50,50);
         brick[i+15]->setData(1,2);
         pScene->addItem(brick[i+15]);
@@ -148,6 +152,7 @@ void MainWindow::firstLevelIni()
     brick[26]->setWidthHeight(50,50);
     brick[26]->setData(1,2);
     pScene->addItem(brick[26]);
+
     //初始化金币
     coin[0] = new obstacle;
     coin[0]->setType(2);
@@ -183,7 +188,7 @@ void MainWindow::firstLevelIni()
 
     coin[4] = new obstacle;
     coin[4]->setType(2);
-    coin[4]->setPosition(1750,250);
+    coin[4]->setPosition(1800,250);
     coin[4]->setWidthHeight(50,50);
     coin[4]->setShowFlag(1);
     coin[4]->setData(1,3);
@@ -222,6 +227,7 @@ void MainWindow::firstLevelIni()
         cloud[i]->setWidthHeight(100,50);
         pScene->addItem(cloud[i]);
     }
+
     //初始化主楼
     h = new obstacle;
     h->setType(5);
@@ -230,17 +236,16 @@ void MainWindow::firstLevelIni()
     h->setData(1,5);
     pScene->addItem(h);
 
-    //bullet *D1 = new bullet;
-    // 将 item 添加至场景中
-    // 为视图设置场景
-
-
+    //初始化角色
     item = new player;
     item->setFlag(QGraphicsItem::ItemIsFocusable);  //鼠标选中这个item之后就是聚焦, 然后可以用键盘控制这个item
     item->setFlag(QGraphicsItem::ItemIsMovable);
     item->setPosition(-700,500);
     pScene->addItem(item);
     pScene->setFocusItem(item);
+
+    // 将 item 添加至场景中
+    // 为视图设置场景
 
 
     pView->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
@@ -250,6 +255,7 @@ void MainWindow::firstLevelIni()
     pView->centerOn(0,0);
     pView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     pView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    //背景移动
     connect(item,&player::BackGroundMove,[=](){
         for (int i = 0; i < BRICKNUM; i++)
         {
@@ -261,7 +267,15 @@ void MainWindow::firstLevelIni()
         }
         book->moveBy(-3,0);
     });
+
+    //胜利
     connect(item,&player::succeed,[=](){
         pView->close();
     });
+}
+
+void MainWindow::keyPressEvent(QKeyEvent *event)
+{
+
+
 }

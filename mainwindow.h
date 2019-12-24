@@ -8,6 +8,7 @@
 #include<QMessageBox>
 #define SCREENWIDTH 1500
 #define SCREENHEIGHT 1080
+#define GROUNDNUM 8
 #define BRICKNUM 27
 #define COINNUM 7
 namespace Ui {
@@ -31,7 +32,7 @@ public:
     QGraphicsView *pView = new QGraphicsView();
     player *item;
     obstacle *cloud[3];
-    obstacle *ground;
+    obstacle *ground[GROUNDNUM];
     obstacle *brick[BRICKNUM];
     obstacle *coin[COINNUM];
     obstacle *book;
