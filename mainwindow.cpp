@@ -7,7 +7,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-
+    setFixedSize(400,400);
     //resize(1920,1080);
 
     player *item;
@@ -219,7 +219,7 @@ MainWindow::MainWindow(QWidget *parent) :
     pView->resize(1980,1080);
 
     pView->setScene(pScene);
-    pView->setStyleSheet("border:none; background:white;");
+    pView->setStyleSheet("border:none; background:green");
     pView->centerOn(0,0);
     pView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     pView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
