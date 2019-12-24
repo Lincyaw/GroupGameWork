@@ -5,11 +5,11 @@ obstacle::obstacle(QObject *parent) : QObject(parent)
     connect(cloudTimer,&QTimer::timeout,[=](){
         if(type == 4)
         {
-            obPosX -= 30;
             if(obPosX < -800)
             {
-                obPosX = 800;
+                obPosX = 1180;
             }
+            obPosX -= 30;
             update(obPosX,obPosY,obWidth,obHeight);
         }
     });
