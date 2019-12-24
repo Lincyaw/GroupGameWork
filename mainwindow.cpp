@@ -3,6 +3,7 @@
 #include<QDebug>
 #define SCREENWIDTH 1920
 #define SCREENHEIGHT 1080
+#define GROUNDNUM 10
 #define BRICKNUM 27
 #define COINNUM 7
 MainWindow::MainWindow(QWidget *parent) :
@@ -17,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     player *item;
     obstacle *cloud[3];
-    obstacle *ground;
+    obstacle *ground[GROUNDNUM];
     obstacle *brick[BRICKNUM];
     obstacle *coin[COINNUM];
     obstacle *book;
@@ -31,19 +32,22 @@ MainWindow::MainWindow(QWidget *parent) :
     pScene->setFocusItem(item);
 
     //初始化地面
-    ground = new obstacle;
-    ground->setType(1);
-    ground->setPosition(-700,650);
-    ground->setWidthHeight(1980,200);
-    ground->setData(1,2);
-    pScene->addItem(ground);
+    for(int i = 0; i < GROUNDNUM; i++)
+    {
+        ground[i] = new obstacle;
+        ground[i]->setType(1);
+        ground[i]->setPosition(-700 + 200 * i,650);
+        ground[i]->setWidthHeight(200,200);
+        ground[i]->setData(1,2);
+        pScene->addItem(ground[i]);
+    }
 
     //初始化砖块
     for(int i = 0; i < 3; i++)
     {
         brick[i] = new obstacle;
         brick[i]->setType(1);
-        brick[i]->setPosition(-200 + 50 * i,350);
+        brick[i]->setPosition(-200 + 50 * i,370);
         brick[i]->setWidthHeight(50,50);
         brick[i]->setData(1,2);
         pScene->addItem(brick[i]);
@@ -79,7 +83,7 @@ MainWindow::MainWindow(QWidget *parent) :
     {
         brick[i+12] = new obstacle;
         brick[i+12]->setType(1);
-        brick[i+12]->setPosition(1500 + 250 * i,400 - 100 * i);
+        brick[i+12]->setPosition(1500 + 300 * i,400 - 100 * i);
         brick[i+12]->setWidthHeight(50,50);
         brick[i+12]->setData(1,2);
         pScene->addItem(brick[i+12]);
@@ -88,7 +92,7 @@ MainWindow::MainWindow(QWidget *parent) :
     {
         brick[i+15] = new obstacle;
         brick[i+15]->setType(1);
-        brick[i+15]->setPosition(2500 + 250 * i,200 + 100 * i);
+        brick[i+15]->setPosition(2500 + 300 * i,200 + 100 * i);
         brick[i+15]->setWidthHeight(50,50);
         brick[i+15]->setData(1,2);
         pScene->addItem(brick[i+15]);
@@ -132,6 +136,7 @@ MainWindow::MainWindow(QWidget *parent) :
     brick[26]->setWidthHeight(50,50);
     brick[26]->setData(1,2);
     pScene->addItem(brick[26]);
+
     //初始化金币
     coin[0] = new obstacle;
     coin[0]->setType(2);
@@ -167,7 +172,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     coin[4] = new obstacle;
     coin[4]->setType(2);
-    coin[4]->setPosition(1750,250);
+    coin[4]->setPosition(1800,250);
     coin[4]->setWidthHeight(50,50);
     coin[4]->setShowFlag(1);
     coin[4]->setData(1,3);
@@ -219,9 +224,7 @@ MainWindow::MainWindow(QWidget *parent) :
     h->setWidthHeight(200,200);
     pScene->addItem(h);
 
-    //bullet *D1 = new bullet;
-    // 将 item 添加至场景中
-
+    //背景移动
     connect(item,&player::BackGroundMove,[=](){
         for (int i = 0; i < BRICKNUM; i++)
         {
@@ -245,9 +248,9 @@ MainWindow::MainWindow(QWidget *parent) :
     pView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     pView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-   // pView->setParent(this);
+    // pView->setParent(this);
     //pView->setVisible(false);
-
+    //bullet *D1 = new bullet;
 
 }
 
