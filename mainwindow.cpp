@@ -29,9 +29,7 @@ void MainWindow::paintEvent(QPaintEvent *event)
 
 
 
-void MainWindow::keyPressEvent(QKeyEvent *event)
-{
-}
+
 MainWindow::~MainWindow()
 {
     delete ui;
@@ -278,24 +276,12 @@ void MainWindow::firstLevelIni()
     //pView->setVisible(false);
     //bullet *D1 = new bullet;
 
+});
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *event)
 {
 
-
-
-}
-
-MainWindow::~MainWindow()
-{
-    delete ui;
-}
-
-void MainWindow::on_begin_clicked()
-{
-    pView->show();
-    this->setVisible(false);
 
 
 }
