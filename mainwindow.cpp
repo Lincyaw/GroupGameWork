@@ -252,7 +252,6 @@ void MainWindow::firstLevelIni()
         book->moveBy(-3,0);
     });
     connect(item,&player::succeed,[=](){
-        delete pView;
-//下一个场景的初始化
+
     });
 }
