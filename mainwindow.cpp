@@ -12,6 +12,7 @@ MainWindow::MainWindow(QWidget *parent) :
     setWindowTitle("游戏");
 
 }
+
 void MainWindow::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
@@ -20,32 +21,24 @@ void MainWindow::paintEvent(QPaintEvent *event)
     painter.drawPixmap(0,0,this->width(),this->height(),pix);
 }
 
-
-  //  resize(SCREENWIDTH,SCREENHEIGHT);//左边界-700 右边界1280
-
-
-
-
-
-
-
-
 MainWindow::~MainWindow()
 {
     delete ui;
 }
+
 void MainWindow::on_begin_clicked()
 {
     firstLevelIni();
     pView->show();
 }
+
 void MainWindow::on_pushButton_clicked()
 {
     pView->deleteLater();
 }
+
 void MainWindow::firstLevelIni()
 {
-
     //初始化地面
     for(int i = 0; i < GROUNDNUM; i++)
     {
@@ -226,6 +219,7 @@ void MainWindow::firstLevelIni()
         cloud[i]->setWidthHeight(100,50);
         pScene->addItem(cloud[i]);
     }
+
     //初始化主楼
     h = new obstacle;
     h->setType(5);
@@ -234,10 +228,14 @@ void MainWindow::firstLevelIni()
     h->setData(1,5);
     pScene->addItem(h);
 
+    //初始化角色
+    item = new player;
+    item->setFlag(QGraphicsItem::ItemIsFocusable);  //鼠标选中这个item之后就是聚焦, 然后可以用键盘控制这个item
+    item->setFlag(QGraphicsItem::ItemIsMovable);
+    item->setPosition(-700,500);
+    pScene->addItem(item);
+    pScene->setFocusItem(item);
 
-    //背景移动
-
-    //bullet *D1 = new bullet;
     // 将 item 添加至场景中
     // 为视图设置场景
     pView->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
@@ -248,14 +246,7 @@ void MainWindow::firstLevelIni()
     pView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     pView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-
-    item = new player;
-    item->setFlag(QGraphicsItem::ItemIsFocusable);  //鼠标选中这个item之后就是聚焦, 然后可以用键盘控制这个item
-    item->setFlag(QGraphicsItem::ItemIsMovable);
-    item->setPosition(-700,500);
-    pScene->addItem(item);
-    pScene->setFocusItem(item);
-
+    //背景移动
     connect(item,&player::BackGroundMove,[=](){
         for (int i = 0; i < BRICKNUM; i++)
         {
@@ -267,21 +258,16 @@ void MainWindow::firstLevelIni()
         }
         book->moveBy(-3,0);
     });
+
+    //胜利
     connect(item,&player::succeed,[=](){
 
-    // 为视图设置场景
 
-
-    // pView->setParent(this);
-    //pView->setVisible(false);
-    //bullet *D1 = new bullet;
-
-});
+    });
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *event)
 {
-
 
 
 }

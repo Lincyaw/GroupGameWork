@@ -8,7 +8,7 @@ obstacle::obstacle(QObject *parent) : QObject(parent)
             obPosX -= 30;
             if(obPosX < -800)
             {
-                obPosX = 1180;
+                obPosX = 800;
             }
             update(obPosX,obPosY,obWidth,obHeight);
         }
