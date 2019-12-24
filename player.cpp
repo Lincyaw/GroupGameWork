@@ -250,7 +250,7 @@ player::player(QObject *parent) : QObject(parent)
     });
     JumpTimer->start(15);
     KeyTimer->start(10);
-    setPosition(-700,0);
+    setPosition(-700,500);
     setData(1,1);
     setVelocity(0);
 }

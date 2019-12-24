@@ -5,6 +5,7 @@
 #define SCREENHEIGHT 1080
 #define BRICKNUM 27
 #define COINNUM 7
+#include "javacup.h"
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -14,7 +15,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
   //  resize(SCREENWIDTH,SCREENHEIGHT);//左边界-700 右边界1280
 
-
+//    JavaCup *cup1 = new JavaCup;
+//    cup1->setPosition(10,10);
+    javacup * cup = new javacup(nullptr,70,100,50,0,3,0);
     player *item;
     obstacle *cloud[3];
     obstacle *ground;
@@ -26,8 +29,8 @@ MainWindow::MainWindow(QWidget *parent) :
     item = new player;
     item->setFlag(QGraphicsItem::ItemIsFocusable);  //鼠标选中这个item之后就是聚焦, 然后可以用键盘控制这个item
     item->setFlag(QGraphicsItem::ItemIsMovable);
-    item->setPosition(-700,500);
     pScene->addItem(item);
+    pScene->addItem(cup);
     pScene->setFocusItem(item);
 
     //初始化地面

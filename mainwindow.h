@@ -4,6 +4,7 @@
 #include"obstacle.h"
 #include <QMainWindow>
 #include "hello.h"
+//#include "javacup.h"
 namespace Ui {
 class MainWindow;
 }
