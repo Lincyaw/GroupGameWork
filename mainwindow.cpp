@@ -11,42 +11,63 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    setFixedSize(400,400);
+    setWindowIcon(QIcon(":/obstacle/obstacle/coin.png"));
+    setWindowTitle("游戏");
 
+}
 
-  //  resize(SCREENWIDTH,SCREENHEIGHT);//左边界-700 右边界1280
+void MainWindow::paintEvent(QPaintEvent *event)
+{
+    QPainter painter(this);
+    QPixmap pix;
+    pix.load(":/m/back/welcome.png");
+    painter.drawPixmap(0,0,this->width(),this->height(),pix);
+}
 
-//    JavaCup *cup1 = new JavaCup;
-//    cup1->setPosition(10,10);
-    javacup * cup = new javacup(nullptr,70,100,50,0,3,0);
-    player *item;
-    obstacle *cloud[3];
-    obstacle *ground;
-    obstacle *brick[BRICKNUM];
-    obstacle *coin[COINNUM];
-    obstacle *book;
-    obstacle *h;
+MainWindow::~MainWindow()
+{
+    delete ui;
+}
 
-    item = new player;
-    item->setFlag(QGraphicsItem::ItemIsFocusable);  //鼠标选中这个item之后就是聚焦, 然后可以用键盘控制这个item
-    item->setFlag(QGraphicsItem::ItemIsMovable);
-    pScene->addItem(item);
-    pScene->addItem(cup);
-    pScene->setFocusItem(item);
+void MainWindow::on_begin_clicked()
+{
+    QMessageBox::information(this,"游戏提示",
+                             "WAD控制角色左右移动和上下移动\nJKL释放技能\n打败怪兽有大量积分哦"
+                                         );
+    if(clickedTimes==0)
+    {
+        firstLevelIni();
+        pView->show();
+        clickedTimes++;
+    }
+}
 
+void MainWindow::on_pushButton_clicked()
+{
+    pView->close();
+}
+
+void MainWindow::firstLevelIni()
+{
     //初始化地面
-    ground = new obstacle;
-    ground->setType(1);
-    ground->setPosition(-700,650);
-    ground->setWidthHeight(1980,200);
-    ground->setData(1,2);
-    pScene->addItem(ground);
+    for(int i = 0; i < GROUNDNUM; i++)
+    {
+        ground[i] = new obstacle;
+        ground[i]->setType(1);
+        ground[i]->setPosition(-700 + 200 * i,650);
+        ground[i]->setWidthHeight(200,200);
+        ground[i]->setData(1,2);
+        pScene->addItem(ground[i]);
+    }
+
 
     //初始化砖块
     for(int i = 0; i < 3; i++)
     {
         brick[i] = new obstacle;
         brick[i]->setType(1);
-        brick[i]->setPosition(-200 + 50 * i,350);
+        brick[i]->setPosition(-200 + 50 * i,370);
         brick[i]->setWidthHeight(50,50);
         brick[i]->setData(1,2);
         pScene->addItem(brick[i]);
@@ -82,7 +103,7 @@ MainWindow::MainWindow(QWidget *parent) :
     {
         brick[i+12] = new obstacle;
         brick[i+12]->setType(1);
-        brick[i+12]->setPosition(1500 + 250 * i,400 - 100 * i);
+        brick[i+12]->setPosition(1500 + 300 * i,400 - 100 * i);
         brick[i+12]->setWidthHeight(50,50);
         brick[i+12]->setData(1,2);
         pScene->addItem(brick[i+12]);
@@ -91,7 +112,7 @@ MainWindow::MainWindow(QWidget *parent) :
     {
         brick[i+15] = new obstacle;
         brick[i+15]->setType(1);
-        brick[i+15]->setPosition(2500 + 250 * i,200 + 100 * i);
+        brick[i+15]->setPosition(2500 + 300 * i,200 + 100 * i);
         brick[i+15]->setWidthHeight(50,50);
         brick[i+15]->setData(1,2);
         pScene->addItem(brick[i+15]);
@@ -135,6 +156,7 @@ MainWindow::MainWindow(QWidget *parent) :
     brick[26]->setWidthHeight(50,50);
     brick[26]->setData(1,2);
     pScene->addItem(brick[26]);
+
     //初始化金币
     coin[0] = new obstacle;
     coin[0]->setType(2);
@@ -170,7 +192,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     coin[4] = new obstacle;
     coin[4]->setType(2);
-    coin[4]->setPosition(1750,250);
+    coin[4]->setPosition(1800,250);
     coin[4]->setWidthHeight(50,50);
     coin[4]->setShowFlag(1);
     coin[4]->setData(1,3);
@@ -208,11 +230,6 @@ MainWindow::MainWindow(QWidget *parent) :
         cloud[i]->setPosition(-700 + (SCREENWIDTH / 3) * i,0);
         cloud[i]->setWidthHeight(100,50);
         pScene->addItem(cloud[i]);
-//        connect(cloud[i]->cloudTimer,&QTimer::timeout,[=](){
-//            cloud[i]->moveBy(-30,0);
-//            update(cloud[i]->obPosX,cloud[i]->obPosY,cloud[i]->obWidth,cloud[i]->obHeight);
-//        });
-//        cloud[i]->cloudTimer->start(500);
     }
 
     //初始化主楼
@@ -220,11 +237,29 @@ MainWindow::MainWindow(QWidget *parent) :
     h->setType(5);
     h->setPosition(0,450);
     h->setWidthHeight(200,200);
+    h->setData(1,5);
     pScene->addItem(h);
 
-    //bullet *D1 = new bullet;
-    // 将 item 添加至场景中
+    //初始化角色
+    item = new player;
+    item->setFlag(QGraphicsItem::ItemIsFocusable);  //鼠标选中这个item之后就是聚焦, 然后可以用键盘控制这个item
+    item->setFlag(QGraphicsItem::ItemIsMovable);
+    item->setPosition(-700,500);
+    pScene->addItem(item);
+    pScene->setFocusItem(item);
 
+    // 将 item 添加至场景中
+    // 为视图设置场景
+
+
+    pView->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
+    pView->resize(SCREENWIDTH,SCREENHEIGHT);
+    pView->setScene(pScene);
+    pView->setStyleSheet("border:none; background:black;");
+    pView->centerOn(0,0);
+    pView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    pView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    //背景移动
     connect(item,&player::BackGroundMove,[=](){
         for (int i = 0; i < BRICKNUM; i++)
         {
@@ -237,38 +272,14 @@ MainWindow::MainWindow(QWidget *parent) :
         book->moveBy(-3,0);
     });
 
-    // 为视图设置场景
-    pView->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
-
-    pView->resize(SCREENWIDTH,SCREENHEIGHT);
-
-
-    pView->setScene(pScene);
-    pView->setStyleSheet("border:none; background:black;");
-    pView->centerOn(0,0);
-    pView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    pView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-
-   // pView->setParent(this);
-    //pView->setVisible(false);
-
-
+    //胜利
+    connect(item,&player::succeed,[=](){
+        pView->close();
+    });
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *event)
 {
 
 
-
-}
-
-MainWindow::~MainWindow()
-{
-    delete ui;
-}
-
-void MainWindow::on_begin_clicked()
-{
-    pView->show();
-    this->setVisible(false);
 }

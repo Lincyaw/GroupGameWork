@@ -29,7 +29,6 @@ public:
     explicit obstacle(QObject *parent = 0);
 
     int type;  //障碍物类型 1: 砖块 2: 金币 3：书 4：云 5：主楼
-//    int number;  //障碍物个数
     int obPosX;  //障碍物坐标
     int obPosY;
     int obWidth;  //障碍物的宽
@@ -41,6 +40,7 @@ public:
     QPixmap Book = QPixmap(":/obstacle/obstacle/book.jpg");
     QPixmap Cloud = QPixmap(":/obstacle/obstacle/cloud.png");
     QPixmap H = QPixmap(":/obstacle/obstacle/mainbuild.png");
+
     QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
 

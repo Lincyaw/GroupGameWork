@@ -32,7 +32,7 @@ public:
     int heroPosY;//人物的y位置
     float Velocity;//人物跳跃时候的垂直的速度
     int heroBlood;
-
+    bool arrive = false;
 
     enum Dir{up,down,left,right};//人物的方向
     Dir Direction;
@@ -104,7 +104,7 @@ private:
     int PicHeight;
     void keyPressEvent(QKeyEvent *event) override;
     void keyReleaseEvent(QKeyEvent *event) override;
-    int Gravity = 4; //重力值
+    float Gravity = 4; //重力值
     inline void SaveKeyPressed( int key )
     {
         m_PressedKeys |= ( 1 << key );
@@ -138,6 +138,7 @@ signals:
     void Skill4();
     void collided();
     void notcollided();
+    void succeed();
 public slots:
      void FreeFalling(void);
 };
