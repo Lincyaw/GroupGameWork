@@ -32,7 +32,7 @@ public:
     int heroPosY;//人物的y位置
     float Velocity;//人物跳跃时候的垂直的速度
     int heroBlood;
-
+    bool arrive = false;
 
     enum Dir{up,down,left,right};//人物的方向
     Dir Direction;
@@ -138,6 +138,7 @@ signals:
     void Skill4();
     void collided();
     void notcollided();
+    void succeed();
 public slots:
      void FreeFalling(void);
 };

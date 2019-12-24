@@ -65,9 +65,9 @@ player::player(QObject *parent) : QObject(parent)
         {
             qDebug()<<heroPosX;
             HorizontalDir = right;
-            if(heroPosX<0)
+            if(heroPosX<-430 || arrive)
             {
-              moveBy(HorizontalSpeed,0);  //相对现在的位置移动
+               moveBy(HorizontalSpeed,0);  //相对现在的位置移动
                heroPosX+=HorizontalSpeed;
             }
             else
@@ -363,27 +363,41 @@ void player::FreeFalling(void)
     }
     if(!collidingItems().isEmpty())
     {
-        collided();
+        emit collided();
         for(i = 0;i < collidingItems().length(); i++)
         {
-            if(collidingItems().at(i)->data(1).toInt()==2 && Direction == down)
-            {
-                heroPosY-=1;
-                JumpOrnot = false;
-                UnderBrick = false;
-                Velocity=0;
+            switch (collidingItems().at(i)->data(1).toInt()) {
+            case 2:
+                if(Direction == down)
+                {
+                    heroPosY-=1;
+                    JumpOrnot = false;
+                    UnderBrick = false;
+                    Velocity=0;
+                }
+                else if(Direction == up)
+                {
+                    heroPosY+=Velocity;
+                    UnderBrick = true;
+                }
+                else
+                {
+                    JumpOrnot = true;
+                    UnderBrick = false;
+                }
+                break;
+            case 4:
+                arrive = true;
+                break;
+            case 5:
+                emit succeed();
+                break;
+            default:
+                break;
+
+
             }
-            else if(collidingItems().at(i)->data(1).toInt()==2 && (Direction == up))
-            {
-                heroPosY+=Velocity;
-                UnderBrick = true;
-            }
-            else
-            {
-                JumpOrnot = true;
-                UnderBrick = false;
-            }
-        }
+      }
         if(JumpOrnot)
         {
             heroPosY-=Velocity;
@@ -401,7 +415,7 @@ void player::FreeFalling(void)
     }
     else
     {
-        notcollided();
+        emit notcollided();
     }
 
 //    if(collidingItems().at(i)->data(2).toInt()==0&&!SkillTimer1->isActive()&&!SkillTimer0->isActive()&&!SkillTimer2->isActive())

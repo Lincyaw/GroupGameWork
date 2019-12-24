@@ -4,7 +4,7 @@
 #include"obstacle.h"
 #include <QMainWindow>
 #include "hello.h"
-#define SCREENWIDTH 1920
+#define SCREENWIDTH 1500
 #define SCREENHEIGHT 1080
 #define BRICKNUM 27
 #define COINNUM 7

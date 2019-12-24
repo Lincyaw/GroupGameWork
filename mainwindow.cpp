@@ -219,6 +219,7 @@ void MainWindow::firstLevelIni()
     h->setType(5);
     h->setPosition(0,450);
     h->setWidthHeight(200,200);
+    h->setData(1,5);
     pScene->addItem(h);
 
     //bullet *D1 = new bullet;
@@ -231,7 +232,6 @@ void MainWindow::firstLevelIni()
     pView->centerOn(0,0);
     pView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     pView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-
 
 
     item = new player;
@@ -250,5 +250,9 @@ void MainWindow::firstLevelIni()
             coin[i]->moveBy(-3,0);
         }
         book->moveBy(-3,0);
+    });
+    connect(item,&player::succeed,[=](){
+        delete pView;
+//下一个场景的初始化
     });
 }
