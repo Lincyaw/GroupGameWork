@@ -65,6 +65,7 @@ public:
 
 signals:
     void GroundTwinkcle();
+    void GetCoin();
 public slots:
 };
 
