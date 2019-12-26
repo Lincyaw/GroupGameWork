@@ -28,13 +28,26 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_begin_clicked()
 {
-    firstLevelIni();
-    pView->show();
+    QMessageBox::information(this,"游戏提示",
+                             "WAD控制角色左右移动和上下移动\nJKL释放技能\n打败怪兽有大量积分哦"
+                                         );
+    if(clickedTimes==0)
+    {
+        //BGM->play();
+
+        myPlayer->setMedia(QUrl("qrc:/m/back/bgm.mp3"));
+        myPlayer->setVolume(80);
+        myPlayer->play();
+        firstLevelIni();
+        pView->show();
+        clickedTimes++;
+    }
 }
 
 void MainWindow::on_pushButton_clicked()
 {
-    pView->deleteLater();
+    pView->close();
+    myPlayer->stop();
 }
 
 void MainWindow::firstLevelIni()
@@ -54,6 +67,7 @@ void MainWindow::firstLevelIni()
         ground[i]->setData(1,2);
         pScene->addItem(ground[i]);
     }
+
 
     //初始化砖块
     nBrick(0,3,-200,370);
@@ -189,6 +203,8 @@ void MainWindow::firstLevelIni()
 
     // 将 item 添加至场景中
     // 为视图设置场景
+
+
     pView->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
     pView->resize(SCREENWIDTH,SCREENHEIGHT);
     pView->setScene(pScene);
@@ -196,7 +212,6 @@ void MainWindow::firstLevelIni()
     pView->centerOn(0,0);
     pView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     pView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-
     //背景移动
     connect(item,&player::BackGroundMove,[=](){
         qDebug()<<brick[1]->pos();
@@ -227,8 +242,7 @@ void MainWindow::firstLevelIni()
 
     //胜利
     connect(item,&player::succeed,[=](){
-
-
+        pView->close();
     });
 }
 
