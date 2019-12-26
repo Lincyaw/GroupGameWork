@@ -51,6 +51,7 @@ public:
     obstacle *homework;
     void firstLevelIni();
     void newOb(obstacle *one, int type, int x, int y, int w, int h, int data);
+    void nGround(int begin, int end, int x, int y);
     void nBrick(int begin, int end, int x, int y);
     void nCoin(int begin, int end, int x, int y);
 

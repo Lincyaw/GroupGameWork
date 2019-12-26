@@ -52,23 +52,17 @@ void MainWindow::on_pushButton_clicked()
 void MainWindow::firstLevelIni()
 {
     //初始化地面
-    for(int i = 0; i < GROUNDNUM; i++)
+    for(int i = 0; i <  GROUNDNUM; i++)
     {
         ground[i] = new obstacle;
-        ground[i]->setType(1);
-       // ground[i]->setPosition(-700 + 200 * i,650);
-        ground[i]->setPos(-400+i*150,650);
-        ground[i]->setWidthHeight(300,200);
-        ground[i]->setData(1,2);
-        pScene->addItem(ground[i]);
     }
+    nGround(0,GROUNDNUM,-400,650);
 
-
+    //初始化砖块
     for(int i = 0; i <  BRICKNUM; i++)
     {
         brick[i] = new obstacle;
     }
-    //初始化砖块
     nBrick(0,2,-200,570);
     nBrick(2,4,0,470);
     nBrick(4,5,200,370);
@@ -83,6 +77,19 @@ void MainWindow::firstLevelIni()
     nBrick(16,17,1900,470);
     nBrick(17,18,2100,370);
 
+    //初始化金币
+    for(int i = 0; i <  COINNUM; i++)
+    {
+        coin[i] = new obstacle;
+    }
+    nCoin(0,3,0,445);
+    coin[0]->magic = 1;
+    nCoin(3,4,800,345);
+
+    //初始化书
+    book = new obstacle;
+    newOb(book,3,2500,550,180,200,4);
+
     //初始化云
     for(int i = 0; i < CLOUDNUM; i++)
     {
@@ -92,6 +99,10 @@ void MainWindow::firstLevelIni()
         cloud[i]->setWidthHeight(100,50);
         pScene->addItem(cloud[i]);
     }
+
+    //初始化主楼
+    h = new obstacle;
+    newOb(h,5,500,550,180,200,5);
 
     //初始化会动的砖
     for(int i = 0; i < 3; i++)
@@ -107,14 +118,7 @@ void MainWindow::firstLevelIni()
 
 
 
-    //初始化金币w
-    for(int i = 0; i <  COINNUM; i++)
-    {
-        coin[i] = new obstacle;
-    }
-    nCoin(0,3,0,445);
-    coin[0]->magic = 1;
-	
+
 	
 	
 	
@@ -164,8 +168,6 @@ void MainWindow::firstLevelIni()
     pView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     //背景移动
     connect(item,&player::BackGroundMove,[=](){
-        //qDebug()<<brick[1]->pos();
-
         for (int i = 0; i < BRICKNUM; i++)
         {
             brick[i]->moveBy(-2,0);
@@ -176,10 +178,14 @@ void MainWindow::firstLevelIni()
             }
         }
 
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 4; i++)
         {
             coin[i]->moveBy(-2,0);
         }
+
+        book->moveBy(-2,0);
+
+        h->moveBy(-2,0);
 
         for (int i = 0; i < 3; i++)
         {
@@ -240,12 +246,19 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 void MainWindow::newOb(obstacle *one, int type, int x, int y, int w, int h, int data)
 {
     one->setType(type);
-//    one->setPosition(x,y-300);
     one->setPos(x,y-300);
     one->setWidthHeight(w,h);
     one->setData(1,data);
     one->setPos(x,y);
     pScene->addItem(one);
+}
+
+void MainWindow::nGround(int begin, int end, int x, int y)
+{
+    for(int i = begin; i < end; i++)
+    {
+        newOb(ground[i],0,x + 150 * (i - begin),y,300,200,2);
+    }
 }
 
 void MainWindow::nBrick(int begin, int end, int x, int y)
@@ -263,3 +276,4 @@ void MainWindow::nCoin(int begin, int end, int x, int y)
         newOb(coin[i],2,x + 25 * (i - begin),y,50,50,3);
     }
 }
+
