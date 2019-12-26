@@ -155,7 +155,8 @@ void MainWindow::firstLevelIni()
             brick[i]->moveBy(-2,0);
             if(brick[i]->pos().x()<-500)
             {
-                //pScene->removeItem(brick[i]);
+                pScene->removeItem(brick[i]);
+
             }
         }
 
