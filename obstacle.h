@@ -35,6 +35,7 @@ public:
     int obHeight;  //障碍物的高
     int showflag;  //障碍物是否显示 0: 不显示 1： 显示
     int magic = 0;
+    int moveFlag;
 
     QPixmap Ground = QPixmap(":/obstacle/obstacle/brick01.png");
     QPixmap Coin = QPixmap(":/obstacle/obstacle/coin.png");

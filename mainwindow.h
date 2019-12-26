@@ -28,7 +28,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     void keyPressEvent(QKeyEvent *event);
-
+//    int count = 0;
 
     void shootBullet(int p,int q);
     ~MainWindow();
@@ -43,7 +43,7 @@ public:
     obstacle *coin[COINNUM];
     obstacle *book;
     obstacle *h;
-//    obstacle *mbrick[MBRICKNUM];
+    obstacle *mbrick[3];
     obstacle *homework;
     void firstLevelIni();
     void newOb(obstacle *one, int type, int x, int y, int w, int h, int data);

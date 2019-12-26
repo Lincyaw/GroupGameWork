@@ -6,10 +6,10 @@ obstacle::obstacle(QObject *parent) : QObject(parent)
     connect(cloudTimer,&QTimer::timeout,[=](){
         if(type == 4)
         {
-            obPosX -= 5;
-            if(obPosX < -800)
+            setPos(pos().x() - 5,pos().y());
+            if(pos().x() < -475)
             {
-                obPosX = 800;
+                setPos(375,pos().y());;
             }
             update(pos().x(),pos().y(),obWidth,obHeight);
         }
@@ -19,7 +19,22 @@ obstacle::obstacle(QObject *parent) : QObject(parent)
     connect(brickTimer,&QTimer::timeout,[=](){
         if(type == 6)
         {
-            obPosX -= 5;
+            if(moveFlag)
+            {
+                setPos(pos().x() + 5,pos().y());
+            }
+            else
+            {
+                setPos(pos().x() - 5,pos().y());
+            }
+            if(pos().x() < -100)
+            {
+                moveFlag = 1;
+            }
+            else if(pos().x() > 200)
+            {
+                moveFlag = 0;
+            }
             update(pos().x(),pos().y(),obWidth,obHeight);
         }
     });
@@ -39,7 +54,6 @@ void obstacle::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
     {
     case 1://砖块
     {
-        if(showflag)
         painter->drawPixmap(pos().x(),pos().y(),obWidth,obHeight,Ground);
         break;
     }

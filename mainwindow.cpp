@@ -10,18 +10,18 @@ MainWindow::MainWindow(QWidget *parent) :
     setFixedSize(400,400);
     setWindowIcon(QIcon(":/obstacle/obstacle/coin.png"));
     setWindowTitle("游戏");
-    int count = 0;
-    connect(coin[0]->GroundTimer,&QTimer::timeout,[=](){
-        count++;
-        if(count%2)
-        {
-            for(int i = 0;i < GROUNDNUM; i++)
-            {
-                ground[i]->type = 3;
-                ground[i]->showflag = 0;
-            }
-        }
-    });
+
+//    connect(coin[0]->GroundTimer,&QTimer::timeout,[=](){
+//        count++;
+//        if(count%2)
+//        {
+//            for(int i = 0;i < GROUNDNUM; i++)
+//            {
+//                ground[i]->type = 3;
+//                ground[i]->showflag = 0;
+//            }
+//        }
+//    });
 
 }
 
@@ -64,10 +64,6 @@ void MainWindow::on_pushButton_clicked()
 
 void MainWindow::firstLevelIni()
 {
-    for(int i = 0; i <  BRICKNUM; i++)
-    {
-        brick[i] = new obstacle;
-    }
     //初始化地面
     for(int i = 0; i < GROUNDNUM; i++)
     {
@@ -80,14 +76,26 @@ void MainWindow::firstLevelIni()
         pScene->addItem(ground[i]);
     }
 
-
+    for(int i = 0; i <  BRICKNUM; i++)
+    {
+        brick[i] = new obstacle;
+    }
     //初始化砖块
     nBrick(0,2,-200,570);
     nBrick(2,4,0,470);
-    nBrick(4,6,200,370);
-    nCoin(0,1,200,320);
-    coin[0]->magic = 1;
- //   nBrick(4,6,200,370);
+    nBrick(4,5,200,370);
+    nBrick(5,7,700,380);
+    nBrick(7,8,800,580);
+    nBrick(8,10,900,480);
+    nBrick(10,11,1200,370);
+    nBrick(11,12,1400,470);
+    nBrick(12,13,1600,570);
+    nBrick(13,14,1800,470);
+    nBrick(14,15,2000,570);
+    nBrick(16,17,2200,470);
+    nBrick(17,18,2400,370);
+//    nCoin(0,1,200,320);
+//    coin[0]->magic = 1;
 
 //    //初始化书
 //    book = new obstacle;
@@ -98,16 +106,15 @@ void MainWindow::firstLevelIni()
 //    book->setData(1,4);
 //    pScene->addItem(book);
 
-//    //初始化云
-//    for(int i = 0; i < CLOUDNUM; i++)
-//    {
-//        cloud[i] = new obstacle;
-//        cloud[i]->setType(4);
-//        //cloud[i]->setPosition(-700 + (SCREENWIDTH / 3) * i,0);
-//        cloud[i]->setPos(-700 + (SCREENWIDTH / 3) * i,0);
-//        cloud[i]->setWidthHeight(100,50);
-//        pScene->addItem(cloud[i]);
-//    }
+    //初始化云
+    for(int i = 0; i < CLOUDNUM; i++)
+    {
+        cloud[i] = new obstacle;
+        cloud[i]->setType(4);
+        cloud[i]->setPos(-375 + 250 * i,300);
+        cloud[i]->setWidthHeight(100,50);
+        pScene->addItem(cloud[i]);
+    }
 
 //    //初始化主楼
 //    h = new obstacle;
@@ -118,16 +125,17 @@ void MainWindow::firstLevelIni()
 //    h->setData(1,5);
 //    pScene->addItem(h);
 
-//    //初始化会动的砖
-//    for(int i = 0; i < 3; i++)
-//    {
-//        mbrick[i] = new obstacle;
-//        mbrick[i]->setType(6);
-//        mbrick[i]->setPosition(9300 + 600 * i,200);
-//        mbrick[i]->setWidthHeight(50,50);
-//        mbrick[i]->setData(1,2);
-//        pScene->addItem(mbrick[i]);
-//    }
+    //初始化会动的砖
+    for(int i = 0; i < 3; i++)
+    {
+        mbrick[i] = new obstacle;
+        mbrick[i]->setType(6);
+        mbrick[i]->setPos(3000 + 600 * i,550);
+        mbrick[i]->setWidthHeight(50,50);
+        mbrick[i]->setData(1,2);
+        mbrick[i]->moveFlag = 0;
+        pScene->addItem(mbrick[i]);
+    }
 
 //    for(int i = 0; i < 3; i++)
 //    {
@@ -200,7 +208,7 @@ void MainWindow::firstLevelIni()
         //qDebug()<<brick[1]->pos();
         for (int i = 0; i < BRICKNUM; i++)
         {
-            brick[i]->moveBy(-3,0);
+            brick[i]->moveBy(-2,0);
           //  brick[i]->obPosX-=3;
            // update(brick[i]->obPosX,brick[i]->obPosY,brick[i]->obWidth,brick[i]->obHeight);
         }
@@ -213,11 +221,10 @@ void MainWindow::firstLevelIni()
 //        book->obPosX-=3;
 //        book->moveBy(-3,0);
         //update(book->obPosX,book->obPosY,book->obWidth,book->obHeight);
-//        for (int i = 0; i < 3; i++)
-//        {
-//            mbrick[i]->obPosX-=3;
-//            update(mbrick[i]->obPosX,mbrick[i]->obPosY,mbrick[i]->obWidth,mbrick[i]->obHeight);
-//        }
+        for (int i = 0; i < 3; i++)
+        {
+            mbrick[i]->moveBy(-2,0);
+        }
        // homework->obPosX-=3;
 //        homework->moveBy(-3,0);
         //update(homework->obPosX,homework->obPosY,homework->obWidth,homework->obHeight);
