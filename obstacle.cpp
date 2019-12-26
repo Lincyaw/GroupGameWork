@@ -110,6 +110,11 @@ void obstacle::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
         painter->drawPixmap(pos().x(),pos().y(),obWidth,obHeight,Homework);
         break;
     }
+    case 8://树
+    {
+        painter->drawPixmap(pos().x(),pos().y(),obWidth,obHeight,Tree);
+        break;
+    }
     }
 
 }

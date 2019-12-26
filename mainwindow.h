@@ -23,6 +23,7 @@
 #define BRICKNUM 20
 #define COINNUM 5
 #define MBRICKNUM 5
+#define TREENUM 5
 
 namespace Ui {
 class MainWindow;
@@ -52,7 +53,7 @@ public:
     obstacle *h;
     obstacle *mbrick[MBRICKNUM];
 //    obstacle *homework;
-    obstacle *homework;
+    obstacle *tree[TREENUM];
     QGraphicsTextItem *text = new QGraphicsTextItem;
     void firstLevelIni();
     void newOb(obstacle *one, int type, int x, int y, int w, int h, int data);

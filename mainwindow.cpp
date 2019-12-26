@@ -116,6 +116,17 @@ void MainWindow::firstLevelIni()
     }
     nmBrick(0,3,3000,550);
 
+    //初始化树
+    for(int i = 0; i < TREENUM; i++)
+    {
+        tree[i] = new obstacle;
+        tree[i]->setType(8);
+        tree[i]->setPos(-375 + 150 * i,600);
+        tree[i]->setWidthHeight(100,100);
+        pScene->addItem(tree[i]);
+    }
+
+
 //    //初始化作业
 //    homework = new obstacle;
 //    newOb(homework,7,550,550,180,200,6);
