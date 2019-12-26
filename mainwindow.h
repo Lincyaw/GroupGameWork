@@ -18,7 +18,8 @@
 #define SCREENHEIGHT 1080
 #define CLOUDNUM 3
 #define GROUNDNUM 6
-#define CupNum 10
+#define CupNum 15
+#define PlusNum 5
 #define BRICKNUM 45
 #define COINNUM 8
 #define MBRICKNUM 15
@@ -60,8 +61,10 @@ public:
     QList<int> generateUniqueRandomNumber();
  //  QSound *BGM = new QSound(":/m/back/BGM.wav");
     QMediaPlayer *myPlayer= new QMediaPlayer;
-    //怪物
+
+    //怪物*******************************************
     javacup * Cups[CupNum];
+
 private slots:
     void on_begin_clicked();
     void on_pushButton_clicked();

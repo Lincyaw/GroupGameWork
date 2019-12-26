@@ -132,16 +132,44 @@ void MainWindow::firstLevelIni()
     Cups[2] = new javacup(nullptr,100,700,40,0,3,0);
     Cups[3] = new javacup(nullptr,400,600,40,0,3,0);
     Cups[4] = new javacup(nullptr,900,700,40,0,3,0);
-    Cups[5] = new javacup(nullptr,1200,900,40,0,3,0);
-    Cups[6] = new javacup(nullptr,1700,750,40,0,3,0);
-    Cups[7] = new javacup(nullptr,1950,900,40,0,3,0);
+    Cups[5] = new javacup(nullptr,1200,900,20,0,3,0);
+    Cups[6] = new javacup(nullptr,1700,750,60,0,3,0);
+    Cups[7] = new javacup(nullptr,1950,900,50,0,3,0);
     Cups[8] = new javacup(nullptr,2300,1000,40,0,3,0);
-    Cups[9] = new javacup(nullptr,2500,800,40,0,3,0);
-    for(int i = 0; i < 10; i++)
+    Cups[9] = new javacup(nullptr,2500,800,30,0,3,0);
+
+    Cups[10] = new javacup(nullptr,900,700,40,0,3,0);
+    Cups[11] = new javacup(nullptr,1200,850,40,0,3,0);
+    Cups[12] = new javacup(nullptr,400,1000,40,0,3,0);
+    Cups[13] = new javacup(nullptr,900,1300,40,0,3,0);
+    Cups[14] = new javacup(nullptr,100,1400,40,0,3,0);
+
+    for(int i = 0; i < CupNum; i++)
     {
         pScene->addItem(Cups[i]);
-    }
+        Cups[i]->setRangeXY(40,40);
+        Cups[i]->setVerticalV(2+i%3);
+        Cups[i]->setHorizontalV(2+i%3);
+        Cups[i]->MoveMode = (i+2)%5+1;
+        if(i>9)
+        {
+            Cups[i]->HeroSkin = QPixmap(":/C++/C++.png");
+            Cups[i]->HeroNormalSkin = QPixmap(":/C++/C++.png");
+            Cups[i]->HeroBeAttackedSkin = QPixmap(":/C++/CBeAttacked.png");
+            Cups[i]->PicWidth = 48;
+            Cups[i]->PicHeight = 54;
+            Cups[i]->setRangeXY(70,70);
 
+        }
+    }
+//    for(int i = 0; i < PlusNum; i++)
+//    {
+//        pScene->addItem(plus[i]);
+//        plus[i]->setRangeXY(40,40);
+//        plus[i]->setVerticalV(4+(i%4));
+//        plus[i]->setHorizontalV(5+(i%4));
+//        plus[i]->MoveMode = i%3 + 1;
+//    }
 
 
     //连接攻击信号与怪物信号
@@ -151,6 +179,12 @@ void MainWindow::firstLevelIni()
         connect(item,&player::Skill1,Cups[i],&javacup::AttackedByK);
         connect(item,&player::Skill2,Cups[i],&javacup::AttackedByL);
     }
+//    for(int i = 0; i < PlusNum; i++)
+//    {
+//        connect(item,&player::Skill0,plus[i],&Cpp::AttackedByJ);
+//        connect(item,&player::Skill1,plus[i],&Cpp::AttackedByK);
+//        connect(item,&player::Skill2,plus[i],&Cpp::AttackedByL);
+//    }
     // 将 item 添加至场景中
     // 为视图设置场景
 
@@ -196,10 +230,11 @@ void MainWindow::firstLevelIni()
             mbrick[i]->moveBy(-2,0);
         }
 
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < CupNum; i++)
         {
             Cups[i]->moveBy(-3,0);
         }
+
 
 
     });
