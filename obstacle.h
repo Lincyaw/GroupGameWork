@@ -55,8 +55,9 @@ public:
     void setWidthHeight(int width,int height);
     void setShowFlag(int num);
 
-signals:
 
+signals:
+    void GroundTwinkcle();
 public slots:
 };
 

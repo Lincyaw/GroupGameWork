@@ -10,6 +10,7 @@ MainWindow::MainWindow(QWidget *parent) :
     setFixedSize(400,400);
     setWindowIcon(QIcon(":/obstacle/obstacle/coin.png"));
     setWindowTitle("游戏");
+
 //    connect(coin[0]->groundTimer,&QTimer::timeout,[=](){
 //        for(int i = 0;i<1;i++)
 //        {
@@ -21,7 +22,6 @@ MainWindow::MainWindow(QWidget *parent) :
 //            {
 //                ground[i]->showflag = 0;
 //            }
-
 //        }
 //       // count++;
 //    });
@@ -87,6 +87,9 @@ void MainWindow::firstLevelIni()
     nBrick(0,2,-200,570);
     nBrick(2,4,0,470);
     nBrick(4,6,200,370);
+    nCoin(0,1,200,320);
+    coin[0]->magic = 1;
+
 
     coin[0] = new obstacle;
     nCoin(0,1,200,345);
