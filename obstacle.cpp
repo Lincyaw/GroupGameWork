@@ -66,7 +66,7 @@ void obstacle::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
     {
         if(showflag)
         {
-            painter->drawPixmap(pos().x(),pos().y(),obWidth,obHeight,Coin);
+            painter->drawPixmap(pos().x(),pos().y(),obWidth,obHeight,Book);
         }
         if(!collidingItems().isEmpty())
         {

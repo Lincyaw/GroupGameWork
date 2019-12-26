@@ -87,9 +87,9 @@ void MainWindow::firstLevelIni()
     {
         coin[i] = new obstacle;
     }
-    nCoin(0,3,0,445);
+    nCoin(0,2,0,410);
     coin[0]->magic = 1;
-    nCoin(3,4,800,345);
+    nCoin(2,3,800,310);
 
     //初始化书
     book = new obstacle;
@@ -296,7 +296,7 @@ void MainWindow::nCoin(int begin, int end, int x, int y)
 {
     for(int i = begin; i < end; i++)
     {
-        newOb(coin[i],2,x + 25 * (i - begin),y,50,50,3);
+        newOb(coin[i],2,x + 40 * (i - begin),y,80,120,3);
     }
 }
 
