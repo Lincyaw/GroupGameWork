@@ -2,10 +2,11 @@
 #include<QDebug>
 obstacle::obstacle(QObject *parent) : QObject(parent)
 {
+    setShowFlag(1);
     connect(cloudTimer,&QTimer::timeout,[=](){
         if(type == 4)
         {
-            obPosX -= 30;
+            obPosX -= 5;
             if(obPosX < -800)
             {
                 obPosX = 800;
@@ -13,7 +14,7 @@ obstacle::obstacle(QObject *parent) : QObject(parent)
             update(obPosX,obPosY,obWidth,obHeight);
         }
     });
-    cloudTimer->start(500);
+    cloudTimer->start(200);
 }
 
 QRectF obstacle::boundingRect()const
