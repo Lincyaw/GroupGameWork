@@ -87,10 +87,6 @@ void MainWindow::firstLevelIni()
     nBrick(0,2,-200,570);
     nBrick(2,4,0,470);
     nBrick(4,6,200,370);
-    nCoin(0,1,200,320);
-    coin[0]->magic = 1;
-
-
     coin[0] = new obstacle;
     nCoin(0,1,200,345);
     coin[0]->magic = 1;
