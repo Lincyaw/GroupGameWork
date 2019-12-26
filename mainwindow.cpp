@@ -140,9 +140,9 @@ void MainWindow::firstLevelIni()
 
     Cups[10] = new javacup(nullptr,900,700,40,0,3,0);
     Cups[11] = new javacup(nullptr,1200,850,40,0,3,0);
-    Cups[12] = new javacup(nullptr,400,1000,40,0,3,0);
-    Cups[13] = new javacup(nullptr,900,1300,40,0,3,0);
-    Cups[14] = new javacup(nullptr,100,1400,40,0,3,0);
+    Cups[12] = new javacup(nullptr,3000,1000,40,0,3,0);
+    Cups[13] = new javacup(nullptr,2700,1300,40,0,3,0);
+    Cups[14] = new javacup(nullptr,3200,1400,40,0,3,0);
 
     for(int i = 0; i < CupNum; i++)
     {
