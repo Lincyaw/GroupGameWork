@@ -138,11 +138,21 @@ void MainWindow::firstLevelIni()
     // 将 item 添加至场景中
     // 为视图设置场景
 
-
+    QFont font;
+    font.setKerning(true);
+    font.setBold(true);
+    text->setPlainText("血量:"+QString::number(item->heroBlood));
+    text->setPos(-700,500);
+    text->setFont(font);
+    pScene->addItem(text);
+    connect(item,&player::DecBlood,[=](){
+        text->setPlainText("血量:"+QString::number(item->heroBlood));
+        text->update();
+    });
     pView->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
     pView->resize(SCREENWIDTH,SCREENHEIGHT);
     pView->setScene(pScene);
-    pView->setStyleSheet("border:none; background:black;");
+    pView->setStyleSheet("border:none; background:white;");
     pView->centerOn(0,0);
     pView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     pView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -168,21 +178,23 @@ void MainWindow::firstLevelIni()
         coin[0]->moveBy(-2,0);
     });
     connect(coin[0]->groundTimer,&QTimer::timeout,[=](){
+
+        k++;
+        if(k==3)
+        {
+            k=0;
+        }
         for(int i = 0;i<GROUNDNUM;i++)
         {
-            if(count%2==0)
+            if(count%2==0&&(i+1)%2==k)
             {
                 pScene->removeItem(ground[i]);
                 pScene->update();
-                qDebug()<<"showflag=2";
-                ground[i]->setData(1,2);
             }
             else
             {
                 pScene->addItem(ground[i]);
-                ground[i]->setData(1,1);
                 pScene->update();
-               qDebug()<<"showflag=1";
             }
 
         }
@@ -235,5 +247,39 @@ void MainWindow::nCoin(int begin, int end, int x, int y)
     for(int i = begin; i < end; i++)
     {
         newOb(coin[i],2,x + 50 * (i - begin),y,50,50,3);
+    }
+}
+QList<int> MainWindow::generateUniqueRandomNumber()
+{
+    int i,j;
+    QList<int> numbersList;
+    qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
+    for(i=0;i<8;i++)
+    {
+        numbersList.append(qrand()%8);
+        bool flag = true;
+        while(flag)
+        {
+            for(j=0;j<i;j++)
+            {
+                if(numbersList[i]==numbersList[j])
+                {
+                    break;
+                }
+                if(j<i)
+                {
+                    numbersList[i]=rand()%8;
+                }
+                if(j==i)
+                {
+                    flag=!flag;
+                }
+            }
+        }
+        for(i=0;i<8;i++)
+        {
+            qDebug()<<numbersList[i];
+        }
+        return numbersList;
     }
 }

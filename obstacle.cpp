@@ -71,7 +71,7 @@ void obstacle::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
                 {
                     if(!groundTimer->isActive()&&magic==1)
                     {
-                        groundTimer->start(1000);
+                        groundTimer->start(400);
                     }
                     setShowFlag(0);
                     update(pos().x(),pos().y(),obWidth,obHeight);

@@ -251,7 +251,7 @@ player::player(QObject *parent) : QObject(parent)
     });
     JumpTimer->start(40);
     KeyTimer->start(10);
-    setPos(-50,500);
+    setPos(-300,500);
     setData(1,1);
     setVelocity(0);
 }
@@ -400,6 +400,7 @@ void player::FreeFalling(void)
                 if(!SkillTimer1->isActive()&&!SkillTimer0->isActive()&&!SkillTimer2->isActive())
                 {
                     heroBlood-=1;
+                    emit DecBlood();
                    if(heroBlood<=0)
                    {
                       emit failed();

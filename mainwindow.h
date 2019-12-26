@@ -11,10 +11,13 @@
 #include <QFileInfo>
 #include<QMediaPlayer>
 #include "javacup.h"
+#include<QGraphicsTextItem>
+#include<QFont>
+#include<QTime>
 #define SCREENWIDTH 1500
 #define SCREENHEIGHT 1080
 #define CLOUDNUM 3
-#define GROUNDNUM 8
+#define GROUNDNUM 6
 #define CupNum 1
 #define BRICKNUM 45
 #define COINNUM 8
@@ -31,12 +34,12 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     void keyPressEvent(QKeyEvent *event);
-//    int count = 0;
 
     void shootBullet(int p,int q);
     ~MainWindow();
     void paintEvent(QPaintEvent *event);
     int clickedTimes=0;
+    int k=0;
     int count = 0;
     QGraphicsScene *pScene = new QGraphicsScene();
     QGraphicsView *pView = new QGraphicsView();
@@ -49,11 +52,12 @@ public:
     obstacle *h;
     obstacle *mbrick[3];
     obstacle *homework;
+    QGraphicsTextItem *text = new QGraphicsTextItem;
     void firstLevelIni();
     void newOb(obstacle *one, int type, int x, int y, int w, int h, int data);
     void nBrick(int begin, int end, int x, int y);
     void nCoin(int begin, int end, int x, int y);
-
+    QList<int> generateUniqueRandomNumber();
  //  QSound *BGM = new QSound(":/m/back/BGM.wav");
     QMediaPlayer *myPlayer= new QMediaPlayer;
     //怪物

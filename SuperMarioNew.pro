@@ -14,7 +14,6 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
     anemy.cpp \
-    javacup.cpp \
         mainwindow.cpp \
     player.cpp \
     obstacle.cpp \

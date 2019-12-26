@@ -31,7 +31,7 @@ public:
     int heroPosX;//人物的x位置
     int heroPosY;//人物的y位置
     float Velocity;//人物跳跃时候的垂直的速度
-    int heroBlood = 10;
+    int heroBlood = 20;
     bool arrive = false;
 
     enum Dir{up,down,left,right};//人物的方向
@@ -39,7 +39,7 @@ public:
     Dir HorizontalDir;
     int RunSkinCounter = 0;//人物移动的时候皮肤切换计数器
     int SkillCounter = 0;
-
+    int Score = 0;
 
 
     int HorizontalSpeed = 2;
@@ -142,6 +142,7 @@ signals:
     void notcollided();
     void succeed();
     void failed();
+    void DecBlood();
 public slots:
      void FreeFalling(void);
 };
