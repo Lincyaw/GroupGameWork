@@ -21,9 +21,9 @@
 #define CLOUDNUM 3
 #define GROUNDNUM 6
 #define CupNum 10
-#define BRICKNUM 45
-#define COINNUM 8
-#define MBRICKNUM 15
+#define BRICKNUM 20
+#define COINNUM 5
+#define MBRICKNUM 5
 
 namespace Ui {
 class MainWindow;
@@ -45,19 +45,24 @@ public:
     QGraphicsScene *pScene = new QGraphicsScene();
     QGraphicsView *pView = new QGraphicsView();
     player *item;
-    obstacle *cloud[CLOUDNUM];
     obstacle *ground[GROUNDNUM];
     obstacle *brick[BRICKNUM];
     obstacle *coin[COINNUM];
     obstacle *book;
+    obstacle *cloud[CLOUDNUM];
     obstacle *h;
+    obstacle *mbrick[MBRICKNUM];
+//    obstacle *homework;
     obstacle *mbrick[3];
     obstacle *homework;
     QGraphicsTextItem *text = new QGraphicsTextItem;
     void firstLevelIni();
     void newOb(obstacle *one, int type, int x, int y, int w, int h, int data);
+    void nGround(int begin, int end, int x, int y);
     void nBrick(int begin, int end, int x, int y);
     void nCoin(int begin, int end, int x, int y);
+    void nmBrick(int begin, int end, int x, int y);
+
     QList<int> generateUniqueRandomNumber();
  //  QSound *BGM = new QSound(":/m/back/BGM.wav");
     QMediaPlayer *myPlayer= new QMediaPlayer;

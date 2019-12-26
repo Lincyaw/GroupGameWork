@@ -119,6 +119,7 @@
         <file>obstacle/cloud.png</file>
         <file>obstacle/mainbuild.png</file>
         <file>obstacle/homework.png</file>
+        <file>obstacle/Grass.png</file>
     </qresource>
     <qresource prefix="/m">
         <file>back/welcome.png</file>
