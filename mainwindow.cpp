@@ -214,7 +214,7 @@ void MainWindow::firstLevelIni()
     pView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     //背景移动
     connect(item,&player::BackGroundMove,[=](){
-        qDebug()<<brick[1]->pos();
+        //qDebug()<<brick[1]->pos();
         for (int i = 0; i < BRICKNUM; i++)
         {
             brick[i]->moveBy(-3,0);
@@ -243,6 +243,13 @@ void MainWindow::firstLevelIni()
     //胜利
     connect(item,&player::succeed,[=](){
         pView->close();
+        QMessageBox::about(this,"Victory","你赢了!");
+    });
+    connect(item,&player::failed,[=](){
+
+        pView->close();
+        QMessageBox::about(this,"Defeated","你输了!\n再来一次吧!奥利给!!!!");
+        //this->setAttribute(Qt::WA_DeleteOnClose,1);
     });
 }
 
