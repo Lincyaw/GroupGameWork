@@ -22,7 +22,6 @@
 #include<QKeyEvent>
 #include<QList>
 #include<QPainter>
-#include"somedeclare.h"
 #include <QObject>
 
 /*怪物的移动模式,默认为1
@@ -90,6 +89,7 @@ signals:
 //    void die();
     void Behurt();
     void Recoveried();
+    void BeKilled();
 public slots:
     void AttackedByJ();
     void AttackedByK();

@@ -191,6 +191,15 @@ void MainWindow::firstLevelIni()
         connect(item,&player::Skill0,Cups[i],&javacup::AttackedByJ);
         connect(item,&player::Skill1,Cups[i],&javacup::AttackedByK);
         connect(item,&player::Skill2,Cups[i],&javacup::AttackedByL);
+        connect(Cups[i],&javacup::BeKilled,[=](){
+            item->Score+=50;
+            if(item->Score>100)
+            {
+                item->Score-=100;
+                item->heroBlood+=5;
+            }
+            emit item->DecBlood();
+        });
     }
     // 将 item 添加至场景中
     // 为视图设置场景
@@ -199,14 +208,15 @@ void MainWindow::firstLevelIni()
     QFont font;
     font.setKerning(true);
     font.setBold(true);
-    text->setPlainText("血量:"+QString::number(item->heroBlood));
+    text->setPlainText("血量:"+QString::number(item->heroBlood)+"\n积分:"+QString::number(item->Score));
     text->setPos(-700,500);
     text->setFont(font);
     pScene->addItem(text);
     connect(item,&player::DecBlood,[=](){
-        text->setPlainText("血量:"+QString::number(item->heroBlood));
+        text->setPlainText("血量:"+QString::number(item->heroBlood)+"\n积分:"+QString::number(item->Score));
         text->update();
     });
+
 
     pView->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
     pView->resize(SCREENWIDTH,SCREENHEIGHT);
