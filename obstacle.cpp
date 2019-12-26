@@ -96,6 +96,7 @@ void obstacle::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
                     setShowFlag(0);
                     update(pos().x(),pos().y(),obWidth,obHeight);
                     emit GetCoin();
+                    delete this;
                 }
             }
         }

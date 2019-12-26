@@ -98,7 +98,18 @@ void MainWindow::firstLevelIni()
     nCoin(3,4,900,310);
     nCoin(4,5,1300,510);
     nCoin(5,6,1700,510);
-
+    for(int i = 0; i <  COINNUM; i++)
+    {
+        connect(coin[i],&obstacle::GetCoin,[=](){
+            item->Score+=20;
+            if(item->Score>100)
+            {
+                item->Score-=100;
+                item->heroBlood+=5;
+            }
+            emit item->DecBlood();
+        });
+    }
 
     //初始化书
     book = new obstacle;
