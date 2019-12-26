@@ -5,12 +5,13 @@ player::player(QObject *parent) : QObject(parent)
     setCursor(Qt::OpenHandCursor);
     PicWidth = 46;
     PicHeight = 56;
+
     color = QColor(qrand()%256,qrand()%256,qrand()%256);
     connect(JumpTimer,&QTimer::timeout,[=](){
         FreeFalling();
         if(collidingItems().isEmpty())
         {
-         update(heroPosX-50, heroPosY-50,46+100, 156);
+            update(pos().x()-50, pos().y()-50,46+100, 156);
         }
     });
 
@@ -24,7 +25,8 @@ player::player(QObject *parent) : QObject(parent)
         if(KeyPressed(Key_A))
         {
              HorizontalDir = left;
-             heroPosX-=HorizontalSpeed;
+             setX(pos().x()-HorizontalSpeed);
+            // pos().x()-=HorizontalSpeed;
              moveBy(-HorizontalSpeed,0);  //相对现在的位置移动
              if(!SkillTimer1->isActive()&&!SkillTimer0->isActive()&&!SkillTimer2->isActive())
              {
@@ -63,12 +65,12 @@ player::player(QObject *parent) : QObject(parent)
         }
         if(KeyPressed(Key_D))
         {
-            qDebug()<<heroPosX;
+            qDebug()<<pos().x();
             HorizontalDir = right;
-            if(heroPosX<-430 || arrive)
+            if(pos().x()<100 || arrive)
             {
                moveBy(HorizontalSpeed,0);  //相对现在的位置移动
-               heroPosX+=HorizontalSpeed;
+               setX(pos().x()+HorizontalSpeed);
             }
             else
             {
@@ -134,7 +136,7 @@ player::player(QObject *parent) : QObject(parent)
             emit Skill0();
             PicWidth = 100;
             PicHeight = 90;
-            heroPosY-=5;
+            moveBy(0,-5);
             switch (SkillCounter) {
             case 0:
                 HeroSkin = Attack30;
@@ -170,7 +172,7 @@ player::player(QObject *parent) : QObject(parent)
         emit Skill1();
         PicWidth = 100;
         PicHeight = 90;
-        heroPosY-=5;
+        moveBy(0,-5);
         switch (SkillCounter) {
         case 0:
             HeroSkin = Attack40;
@@ -205,7 +207,7 @@ player::player(QObject *parent) : QObject(parent)
         emit Skill2();
         PicWidth = 100;
         PicHeight = 90;
-        heroPosY-=5;
+        moveBy(0,-5);
         switch (SkillCounter) {
         case 0:
             HeroSkin = Attack00;
@@ -251,14 +253,14 @@ player::player(QObject *parent) : QObject(parent)
     });
     JumpTimer->start(40);
     KeyTimer->start(10);
-    setPosition(-700,0);
+    setPos(-50,500);
     setData(1,1);
     setVelocity(0);
 }
 QRectF player::boundingRect()const
 {
     qreal penWidth = 1;
-    return QRectF(heroPosX-penWidth / 2, heroPosY - penWidth/2,PicWidth+penWidth, PicHeight+penWidth);
+    return QRectF(pos().x()-penWidth / 2, pos().y() - penWidth/2,PicWidth+penWidth, PicHeight+penWidth);
 }
 void player::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
@@ -269,7 +271,7 @@ void player::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QW
    // painter->drawRect(0,50,30,20);
     //如果与其他图形项碰撞则显示红色，否则显示绿色
 
-    painter->drawPixmap(heroPosX,heroPosY,PicWidth,PicHeight,HeroSkin);
+    painter->drawPixmap(pos().x(),pos().y(),PicWidth,PicHeight,HeroSkin);
 
 }
 void player::mousePressEvent(QGraphicsSceneMouseEvent *event)
@@ -300,7 +302,6 @@ void player::keyPressEvent(QKeyEvent *event)
     }
     if(event->key() == Qt::Key_S)
     {
-        heroPosY+=HorizontalSpeed;
         moveBy(0,HorizontalSpeed);  //相对现在的位置移动
     }
     if(event->key() == Qt::Key_J)
@@ -358,7 +359,7 @@ void player::FreeFalling(void)
     }
     if(Direction == up || collidingItems().isEmpty())
     {
-        heroPosY-=Velocity;
+        moveBy(0,-Velocity);
         Velocity=0.7*Velocity-Gravity;
     }
     if(!collidingItems().isEmpty())
@@ -370,14 +371,15 @@ void player::FreeFalling(void)
             case 2:
                 if(Direction == down)
                 {
-                    heroPosY-=1;
+                    moveBy(0,-1);
                     JumpOrnot = false;
                     UnderBrick = false;
                     Velocity=0;
                 }
                 else if(Direction == up)
                 {
-                    heroPosY+=Velocity;
+                  //  pos().y()+=Velocity;
+                    moveBy(0,Velocity);
                     UnderBrick = true;
                 }
                 else
@@ -400,7 +402,7 @@ void player::FreeFalling(void)
       }
         if(JumpOrnot)
         {
-            heroPosY-=Velocity;
+            moveBy(0,-Velocity);
             Velocity-=Gravity;
         }
         if(UnderBrick)//如果向上跳跃的时候碰到了砖头
@@ -409,7 +411,8 @@ void player::FreeFalling(void)
             {
                 Velocity =  0 - Velocity;
             }
-            heroPosY-=Velocity;//让人往下掉
+           // pos().y()-=Velocity;//让人往下掉
+            moveBy(0,-Velocity);
             Velocity=(0.9*Velocity-Gravity);
         }
     }
@@ -428,11 +431,6 @@ void player::FreeFalling(void)
 //    }
 
     return;
-}
-void player::setPosition(int x,int y)
-{
-    heroPosX = x;
-    heroPosY = y;
 }
 void player::setVelocity(int v)
 {

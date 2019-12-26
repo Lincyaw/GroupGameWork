@@ -2,23 +2,33 @@
 #include<QDebug>
 obstacle::obstacle(QObject *parent) : QObject(parent)
 {
+    setShowFlag(1);
     connect(cloudTimer,&QTimer::timeout,[=](){
         if(type == 4)
         {
-            obPosX -= 30;
+            obPosX -= 5;
             if(obPosX < -800)
             {
                 obPosX = 800;
             }
-            update(obPosX,obPosY,obWidth,obHeight);
+            update(pos().x(),pos().y(),obWidth,obHeight);
         }
     });
-    cloudTimer->start(500);
+    cloudTimer->start(200);
+
+    connect(brickTimer,&QTimer::timeout,[=](){
+        if(type == 6)
+        {
+            obPosX -= 5;
+            update(pos().x(),pos().y(),obWidth,obHeight);
+        }
+    });
+    brickTimer->start(200);
 }
 
 QRectF obstacle::boundingRect()const
 {
-    return QRectF(obPosX,obPosY,obWidth,obHeight);
+    return QRectF(pos().x(),pos().y(),obWidth,obHeight);
 }
 
 void obstacle::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -29,14 +39,14 @@ void obstacle::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
     {
     case 1://砖块
     {
-        painter->drawPixmap(obPosX,obPosY,obWidth,obHeight,Ground);
+        painter->drawPixmap(pos().x(),pos().y(),obWidth,obHeight,Ground);
         break;
     }
     case 2://金币
     {
         if (showflag == 1)
         {
-            painter->drawPixmap(obPosX,obPosY,obWidth,obHeight,Coin);
+            painter->drawPixmap(pos().x(),pos().y(),obWidth,obHeight,Coin);
         }
         if(!collidingItems().isEmpty())
         {
@@ -45,7 +55,7 @@ void obstacle::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
                 if(collidingItems().at(i)->data(1).toInt()==1)
                 {
                     setShowFlag(0);
-                    update(obPosX,obPosY,obWidth,obHeight);
+                    update(pos().x(),pos().y(),obWidth,obHeight);
                 }
             }
         }
@@ -53,17 +63,27 @@ void obstacle::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
     }
     case 3://书
     {
-        painter->drawPixmap(obPosX,obPosY,obWidth,obHeight,Book);
+        painter->drawPixmap(pos().x(),pos().y(),obWidth,obHeight,Book);
         break;
     }
     case 4://云
     {
-        painter->drawPixmap(obPosX,obPosY,obWidth,obHeight,Cloud);
+        painter->drawPixmap(pos().x(),pos().y(),obWidth,obHeight,Cloud);
         break;
     }
     case 5://主楼
     {
-        painter->drawPixmap(obPosX,obPosY,obWidth,obHeight,H);
+        painter->drawPixmap(pos().x(),pos().y(),obWidth,obHeight,H);
+        break;
+    }
+    case 6://会动的砖
+    {
+        painter->drawPixmap(pos().x(),pos().y(),obWidth,obHeight,Ground);
+        break;
+    }
+    case 7://作业
+    {
+        painter->drawPixmap(pos().x(),pos().y(),obWidth,obHeight,Homework);
         break;
     }
     }
