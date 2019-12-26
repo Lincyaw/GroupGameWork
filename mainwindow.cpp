@@ -10,19 +10,6 @@ MainWindow::MainWindow(QWidget *parent) :
     setFixedSize(400,400);
     setWindowIcon(QIcon(":/obstacle/obstacle/coin.png"));
     setWindowTitle("游戏");
-
-//    connect(coin[0]->GroundTimer,&QTimer::timeout,[=](){
-//        count++;
-//        if(count%2)
-//        {
-//            for(int i = 0;i < GROUNDNUM; i++)
-//            {
-//                ground[i]->type = 3;
-//                ground[i]->showflag = 0;
-//            }
-//        }
-//    });
-
 }
 
 void MainWindow::paintEvent(QPaintEvent *event)
@@ -70,11 +57,12 @@ void MainWindow::firstLevelIni()
         ground[i] = new obstacle;
         ground[i]->setType(1);
        // ground[i]->setPosition(-700 + 200 * i,650);
-        ground[i]->setPos(-700 + 200 * i,650);
-        ground[i]->setWidthHeight(400,200);
+        ground[i]->setPos(-400+i*150,650);
+        ground[i]->setWidthHeight(300,200);
         ground[i]->setData(1,2);
         pScene->addItem(ground[i]);
     }
+
 
     for(int i = 0; i <  BRICKNUM; i++)
     {
@@ -94,17 +82,6 @@ void MainWindow::firstLevelIni()
     nBrick(14,15,2000,570);
     nBrick(16,17,2200,470);
     nBrick(17,18,2400,370);
-//    nCoin(0,1,200,320);
-//    coin[0]->magic = 1;
-
-//    //初始化书
-//    book = new obstacle;
-//    book->setType(3);
-//    //book->setPosition(10000,450);
-//    book->setPos(10000,450);
-//    book->setWidthHeight(160,200);
-//    book->setData(1,4);
-//    pScene->addItem(book);
 
     //初始化云
     for(int i = 0; i < CLOUDNUM; i++)
@@ -115,15 +92,6 @@ void MainWindow::firstLevelIni()
         cloud[i]->setWidthHeight(100,50);
         pScene->addItem(cloud[i]);
     }
-
-//    //初始化主楼
-//    h = new obstacle;
-//    h->setType(5);
-//  //  h->setPosition(50,450);
-//    h->setPos(50,450);
-//    h->setWidthHeight(200,200);
-//    h->setData(1,5);
-//    pScene->addItem(h);
 
     //初始化会动的砖
     for(int i = 0; i < 3; i++)
@@ -137,54 +105,16 @@ void MainWindow::firstLevelIni()
         pScene->addItem(mbrick[i]);
     }
 
-//    for(int i = 0; i < 3; i++)
-//    {
-//        mbrick[i+3] = new obstacle;
-//        mbrick[i+3]->setType(6);
-//        mbrick[i+3]->setPosition(9600 + 600 * i,400);
-//        mbrick[i+3]->setWidthHeight(50,50);
-//        mbrick[i+3]->setData(1,2);
-//        pScene->addItem(mbrick[i+3]);
-//    }
 
-//    for(int i = 0; i < 3; i++)
-//    {
-//        mbrick[i+6] = new obstacle;
-//        mbrick[i+6]->setType(6);
-//        mbrick[i+6]->setPosition(10900 + 1200 * i,300);
-//        mbrick[i+6]->setWidthHeight(50,50);
-//        mbrick[i+6]->setData(1,2);
-//        pScene->addItem(mbrick[i+6]);
-//    }
 
-//    for(int i = 0; i < 3; i++)
-//    {
-//        mbrick[i+9] = new obstacle;
-//        mbrick[i+9]->setType(6);
-//        mbrick[i+9]->setPosition(11200 + 600 * i,380);
-//        mbrick[i+9]->setWidthHeight(50,50);
-//        mbrick[i+9]->setData(1,2);
-//        pScene->addItem(mbrick[i+9]);
-//    }
-
-//    for(int i = 0; i < 3; i++)
-//    {
-//        mbrick[i+12] = new obstacle;
-//        mbrick[i+12]->setType(6);
-//        mbrick[i+12]->setPosition(11500 + 900 * i,180);
-//        mbrick[i+12]->setWidthHeight(50,50);
-//        mbrick[i+12]->setData(1,2);
-//        pScene->addItem(mbrick[i+12]);
-//    }
-
-    //初始化作业
-//    homework = new obstacle;
-//    homework->setType(7);
-//    homework->setPosition(5500,450);
-//    homework->setWidthHeight(200,200);
-//    homework->setData(1,6);
-//    pScene->addItem(homework);
-
+    //初始化金币
+    coin[0] = new obstacle;
+    nCoin(0,1,200,345);
+    coin[0]->magic = 1;
+	
+	
+	
+	
     //初始化角色
     item = new player;
     item->setFlag(QGraphicsItem::ItemIsFocusable);  //鼠标选中这个item之后就是聚焦, 然后可以用键盘控制这个item
@@ -192,6 +122,19 @@ void MainWindow::firstLevelIni()
     pScene->addItem(item);
     pScene->setFocusItem(item);
 
+
+    ///初始化怪物*************************************************
+    Cups[0] = new javacup(nullptr,0,550,40,0,3,0);
+    pScene->addItem(Cups[0]);
+
+
+    //连接攻击信号与怪物信号
+    for(int i = 0; i < CupNum; i++)
+    {
+        connect(item,&player::Skill0,Cups[i],&javacup::AttackedByJ);
+        connect(item,&player::Skill1,Cups[i],&javacup::AttackedByK);
+        connect(item,&player::Skill2,Cups[i],&javacup::AttackedByL);
+    }
     // 将 item 添加至场景中
     // 为视图设置场景
 
@@ -206,30 +149,44 @@ void MainWindow::firstLevelIni()
     //背景移动
     connect(item,&player::BackGroundMove,[=](){
         //qDebug()<<brick[1]->pos();
+
         for (int i = 0; i < BRICKNUM; i++)
         {
             brick[i]->moveBy(-2,0);
-          //  brick[i]->obPosX-=3;
-           // update(brick[i]->obPosX,brick[i]->obPosY,brick[i]->obWidth,brick[i]->obHeight);
         }
-//        for (int i = 0; i < COINNUM; i++)
-//        {
-//            coin[i]->moveBy(-3,0);
-           // coin[i]->obPosX-=3;
-           // update(coin[i]->obPosX,coin[i]->obPosY,coin[i]->obWidth,coin[i]->obHeight);
-//        }
-//        book->obPosX-=3;
-//        book->moveBy(-3,0);
-        //update(book->obPosX,book->obPosY,book->obWidth,book->obHeight);
+
         for (int i = 0; i < 3; i++)
         {
             mbrick[i]->moveBy(-2,0);
         }
-       // homework->obPosX-=3;
-//        homework->moveBy(-3,0);
-        //update(homework->obPosX,homework->obPosY,homework->obWidth,homework->obHeight);
+            if(brick[i]->pos().x()<-500)
+            {
+                pScene->removeItem(brick[i]);
+            }
+        Cups[0]->moveBy(-3,0);
+        coin[0]->moveBy(-2,0);
     });
+    connect(coin[0]->groundTimer,&QTimer::timeout,[=](){
+        for(int i = 0;i<GROUNDNUM;i++)
+        {
+            if(count%2==0)
+            {
+                pScene->removeItem(ground[i]);
+                pScene->update();
+                qDebug()<<"showflag=2";
+                ground[i]->setData(1,2);
+            }
+            else
+            {
+                pScene->addItem(ground[i]);
+                ground[i]->setData(1,1);
+                pScene->update();
+               qDebug()<<"showflag=1";
+            }
 
+        }
+         count++;
+    });
     //胜利
     connect(item,&player::succeed,[=](){
         pView->close();
@@ -239,7 +196,10 @@ void MainWindow::firstLevelIni()
 
         pView->close();
         QMessageBox::about(this,"Defeated","你输了!\n再来一次吧!奥利给!!!!");
-        //this->setAttribute(Qt::WA_DeleteOnClose,1);
+        this->close();
+    });
+    connect(item,&player::failed,[=](){
+        pView->close();
         this->close();
     });
 }

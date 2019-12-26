@@ -13,6 +13,8 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
+    anemy.cpp \
+    javacup.cpp \
         mainwindow.cpp \
     player.cpp \
     obstacle.cpp \
@@ -20,6 +22,8 @@ SOURCES += main.cpp\
 
 
 HEADERS  += mainwindow.h \
+    anemy.h \
+    javacup.h \
     somedeclare.h \
     player.h \
     obstacle.h \
@@ -29,4 +33,5 @@ HEADERS  += mainwindow.h \
 FORMS    += mainwindow.ui
 
 RESOURCES += \
+    monster/monster.qrc \
     res.qrc

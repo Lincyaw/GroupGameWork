@@ -41,7 +41,9 @@ public:
     int SkillCounter = 0;
 
 
+
     int HorizontalSpeed = 2;
+
     QTimer *JumpTimer = new QTimer;
     QTimer *KeyTimer = new QTimer;
     QTimer *SkillTimer0 = new QTimer;

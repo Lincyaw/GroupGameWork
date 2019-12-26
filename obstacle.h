@@ -49,7 +49,8 @@ public:
 
     QTimer *cloudTimer = new QTimer;
     QTimer *brickTimer = new QTimer;
-    QTimer *GroundTimer = new QTimer;
+    QTimer *groundTimer = new QTimer;
+
     void setType(int num);
     void setPosition(int x,int y);
     void setWidthHeight(int width,int height);

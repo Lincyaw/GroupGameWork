@@ -10,13 +10,16 @@
 #include<QSound>//多媒体模块下的音效头文件
 #include <QFileInfo>
 #include<QMediaPlayer>
+#include "javacup.h"
 #define SCREENWIDTH 1500
 #define SCREENHEIGHT 1080
 #define CLOUDNUM 3
 #define GROUNDNUM 8
+#define CupNum 1
 #define BRICKNUM 45
 #define COINNUM 8
 #define MBRICKNUM 15
+
 namespace Ui {
 class MainWindow;
 }
@@ -34,6 +37,7 @@ public:
     ~MainWindow();
     void paintEvent(QPaintEvent *event);
     int clickedTimes=0;
+    int count = 0;
     QGraphicsScene *pScene = new QGraphicsScene();
     QGraphicsView *pView = new QGraphicsView();
     player *item;
@@ -51,7 +55,9 @@ public:
     void nCoin(int begin, int end, int x, int y);
 
  //  QSound *BGM = new QSound(":/m/back/BGM.wav");
-QMediaPlayer *myPlayer= new QMediaPlayer;
+    QMediaPlayer *myPlayer= new QMediaPlayer;
+    //怪物
+    javacup * Cups[CupNum];
 private slots:
     void on_begin_clicked();
     void on_pushButton_clicked();

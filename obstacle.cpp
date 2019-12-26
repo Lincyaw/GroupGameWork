@@ -69,12 +69,12 @@ void obstacle::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
             {
                 if(collidingItems().at(i)->data(1).toInt()==1)
                 {
+                    if(!groundTimer->isActive()&&magic==1)
+                    {
+                        groundTimer->start(1000);
+                    }
                     setShowFlag(0);
                     update(pos().x(),pos().y(),obWidth,obHeight);
-                    if(magic == 1)
-                    {
-                        GroundTimer->start(500);
-                    }
                 }
             }
         }
