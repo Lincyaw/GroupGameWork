@@ -19,8 +19,8 @@
 #define SCREENHEIGHT 1080
 #define CLOUDNUM 3
 #define GROUNDNUM 6
-#define CupNum 15
-#define BRICKNUM 20
+#define CupNum 25
+#define BRICKNUM 45
 #define COINNUM 3
 #define MBRICKNUM 5
 #define TREENUM 5

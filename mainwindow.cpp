@@ -150,29 +150,39 @@ void MainWindow::firstLevelIni()
     Cups[7] = new javacup(nullptr,1950,900,50,0,3,0);
     Cups[8] = new javacup(nullptr,2300,1000,40,0,3,0);
     Cups[9] = new javacup(nullptr,2500,800,30,0,3,0);
-
     Cups[10] = new javacup(nullptr,900,700,40,0,3,0);
     Cups[11] = new javacup(nullptr,1200,850,40,0,3,0);
-    Cups[12] = new javacup(nullptr,3000,1000,40,0,3,0);
+    Cups[12] = new javacup(nullptr,2600,1000,40,0,3,0);
     Cups[13] = new javacup(nullptr,2700,1300,40,0,3,0);
-    Cups[14] = new javacup(nullptr,3200,1400,40,0,3,0);
+
+    Cups[14] = new javacup(nullptr,800,1400,40,0,3,0);
+    Cups[15] = new javacup(nullptr,900,1400,40,0,3,0);
+    Cups[16] = new javacup(nullptr,1000,1400,40,0,3,0);
+    Cups[17] = new javacup(nullptr,1200,1400,40,0,3,0);
+    Cups[18] = new javacup(nullptr,1700,1400,40,0,3,0);
+    Cups[19] = new javacup(nullptr,1400,1400,40,0,3,0);
+    Cups[20] = new javacup(nullptr,2300,1400,40,0,3,0);
+    Cups[21] = new javacup(nullptr,1900,1400,40,0,3,0);
+    Cups[22] = new javacup(nullptr,2400,1400,40,0,3,0);
+    Cups[23] = new javacup(nullptr,1600,1400,40,0,3,0);
+    Cups[24] = new javacup(nullptr,2700,1400,40,0,3,0);
 
     for(int i = 0; i < CupNum; i++)
     {
+//        Cups[i] = new javacup;
         pScene->addItem(Cups[i]);
-        Cups[i]->setRangeXY(40,40);
+        Cups[i]->setPosition(Cups[i]->BornPosX,(i%5)+800);
+        Cups[i]->setRangeXY(40+10*(i%4),40+10*(i%4));
         Cups[i]->setVerticalV(2+i%3);
         Cups[i]->setHorizontalV(2+i%3);
         Cups[i]->MoveMode = (i+2)%5+1;
-        if(i>9)
+        if(i>13)
         {
             Cups[i]->HeroSkin = QPixmap(":/C++/C++.png");
             Cups[i]->HeroNormalSkin = QPixmap(":/C++/C++.png");
             Cups[i]->HeroBeAttackedSkin = QPixmap(":/C++/CBeAttacked.png");
             Cups[i]->PicWidth = 48;
             Cups[i]->PicHeight = 54;
-            Cups[i]->setRangeXY(70,70);
-
         }
     }
 //    for(int i = 0; i < PlusNum; i++)
