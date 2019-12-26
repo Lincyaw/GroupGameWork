@@ -25,7 +25,6 @@ player::player(QObject *parent) : QObject(parent)
         if(KeyPressed(Key_A))
         {
              HorizontalDir = left;
-             setX(pos().x()-HorizontalSpeed);
             // pos().x()-=HorizontalSpeed;
              moveBy(-HorizontalSpeed,0);  //相对现在的位置移动
              if(!SkillTimer1->isActive()&&!SkillTimer0->isActive()&&!SkillTimer2->isActive())
@@ -65,12 +64,11 @@ player::player(QObject *parent) : QObject(parent)
         }
         if(KeyPressed(Key_D))
         {
-            qDebug()<<pos().x();
+           // qDebug()<<pos().x();
             HorizontalDir = right;
             if(pos().x()<100 || arrive)
             {
                moveBy(HorizontalSpeed,0);  //相对现在的位置移动
-               setX(pos().x()+HorizontalSpeed);
             }
             else
             {
@@ -349,7 +347,7 @@ void player::keyReleaseEvent(QKeyEvent *event)
 void player::FreeFalling(void)
 {
     int i;
-    if(heroPosY>1000)
+    if(pos().y()>700)
     {
         emit failed();
     }
