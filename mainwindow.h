@@ -3,7 +3,6 @@
 #include"player.h"
 #include"obstacle.h"
 #include <QMainWindow>
-#include "hello.h"
 #include<QPushButton>
 #include<QMessageBox>
 #include<QFileDialog>
@@ -53,7 +52,6 @@ public:
     obstacle *h;
     obstacle *mbrick[MBRICKNUM];
 //    obstacle *homework;
-    obstacle *mbrick[3];
     obstacle *homework;
     QGraphicsTextItem *text = new QGraphicsTextItem;
     void firstLevelIni();

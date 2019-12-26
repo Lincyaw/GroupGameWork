@@ -17,7 +17,6 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     player.cpp \
     obstacle.cpp \
-    hello.cpp \
     javacup.cpp \
     mypushbutton.cpp
 
@@ -27,7 +26,6 @@ HEADERS  += mainwindow.h \
     somedeclare.h \
     player.h \
     obstacle.h \
-    hello.h \
     javacup.h \
     mypushbutton.h
 

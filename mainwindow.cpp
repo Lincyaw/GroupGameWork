@@ -325,6 +325,7 @@ QList<int> MainWindow::generateUniqueRandomNumber()
                 }
             }
         }
+    }
         for(i=0;i<8;i++)
         {
             qDebug()<<numbersList[i];
