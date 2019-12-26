@@ -7,7 +7,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    setFixedSize(700,700);
+    setFixedSize(400,400);
     setWindowIcon(QIcon(":/obstacle/obstacle/coin.png"));
     setWindowTitle("游戏");
 
@@ -52,10 +52,6 @@ void MainWindow::on_pushButton_clicked()
 
 void MainWindow::firstLevelIni()
 {
-    for(int i = 0; i< BRICKNUM;i++)
-    {
-        brick[i] = new obstacle;
-    }
     //初始化地面
     for(int i = 0; i < GROUNDNUM; i++)
     {
@@ -67,40 +63,101 @@ void MainWindow::firstLevelIni()
         pScene->addItem(ground[i]);
     }
 
-    //初始化砖块
-    nBrick(0,3,-200,370);
-    nBrick(3,6,70,200);
 
+    //初始化砖块
     for(int i = 0; i < 3; i++)
     {
-        newOb(brick[i+6],1,400 + 50 * i,400,50,50,2);
+        brick[i] = new obstacle;
+        brick[i]->setType(1);
+        brick[i]->setPosition(-200 + 50 * i,370);
+        brick[i]->setWidthHeight(50,50);
+        brick[i]->setData(1,2);
+        pScene->addItem(brick[i]);
     }
     for(int i = 0; i < 3; i++)
     {
-        newOb(brick[i+9],1,950 + 50 * i,400,50,50,2);
+        brick[i+3] = new obstacle;
+        brick[i+3]->setType(1);
+        brick[i+3]->setPosition(70 + 50 * i,200);
+        brick[i+3]->setWidthHeight(50,50);
+        brick[i+3]->setData(1,2);
+        pScene->addItem(brick[i+3]);
     }
     for(int i = 0; i < 3; i++)
     {
-        newOb(brick[i+12],1,1500 + 300 * i,400 - 100 * i,50,50,2);
+        brick[i+6] = new obstacle;
+        brick[i+6]->setType(1);
+        brick[i+6]->setPosition(400 + 50 * i,400);
+        brick[i+6]->setWidthHeight(50,50);
+        brick[i+6]->setData(1,2);
+        pScene->addItem(brick[i+6]);
     }
     for(int i = 0; i < 3; i++)
     {
-        newOb(brick[i+15],1,2500 + 300 * i,200 + 100 * i,50,50,2);
+        brick[i+9] = new obstacle;
+        brick[i+9]->setType(1);
+        brick[i+9]->setPosition(950 + 50 * i,400);
+        brick[i+9]->setWidthHeight(50,50);
+        brick[i+9]->setData(1,2);
+        pScene->addItem(brick[i+9]);
+    }
+    for(int i = 0; i < 3; i++)
+    {
+        brick[i+12] = new obstacle;
+        brick[i+12]->setType(1);
+        brick[i+12]->setPosition(1500 + 300 * i,400 - 100 * i);
+        brick[i+12]->setWidthHeight(50,50);
+        brick[i+12]->setData(1,2);
+        pScene->addItem(brick[i+12]);
+    }
+    for(int i = 0; i < 3; i++)
+    {
+        brick[i+15] = new obstacle;
+        brick[i+15]->setType(1);
+        brick[i+15]->setPosition(2500 + 300 * i,200 + 100 * i);
+        brick[i+15]->setWidthHeight(50,50);
+        brick[i+15]->setData(1,2);
+        pScene->addItem(brick[i+15]);
     }
     for(int i = 0; i < 2; i++)
     {
-        newOb(brick[i+18],1,3500 + 50 * i,400,50,50,2);
+        brick[i+18] = new obstacle;
+        brick[i+18]->setType(1);
+        brick[i+18]->setPosition(3500 + 50 * i,400);
+        brick[i+18]->setWidthHeight(50,50);
+        brick[i+18]->setData(1,2);
+        pScene->addItem(brick[i+18]);
     }
-    newOb(brick[20],1,3750,200,50,50,2);
+    brick[20] = new obstacle;
+    brick[20]->setType(1);
+    brick[20]->setPosition(3750,200);
+    brick[20]->setWidthHeight(50,50);
+    brick[20]->setData(1,2);
+    pScene->addItem(brick[20]);
     for(int i = 0; i < 3; i++)
     {
-        newOb(brick[i+21],1,4450 + 50 * i,270,50,50,2);
+        brick[i+21] = new obstacle;
+        brick[i+21]->setType(1);
+        brick[i+21]->setPosition(4450 + 50 * i,270);
+        brick[i+21]->setWidthHeight(50,50);
+        brick[i+21]->setData(1,2);
+        pScene->addItem(brick[i+21]);
     }
     for(int i = 0; i < 2; i++)
     {
-        newOb(brick[i+24],1,4800 + 50 * i,400,50,50,2);
+        brick[i+24] = new obstacle;
+        brick[i+24]->setType(1);
+        brick[i+24]->setPosition(4800 + 50 * i,400);
+        brick[i+24]->setWidthHeight(50,50);
+        brick[i+24]->setData(1,2);
+        pScene->addItem(brick[i+24]);
     }
-    newOb(brick[26],1,5150,200,50,50,2);
+    brick[26] = new obstacle;
+    brick[26]->setType(1);
+    brick[26]->setPosition(5150,200);
+    brick[26]->setWidthHeight(50,50);
+    brick[26]->setData(1,2);
+    pScene->addItem(brick[26]);
 
     //初始化金币
     coin[0] = new obstacle;
@@ -208,34 +265,19 @@ void MainWindow::firstLevelIni()
     connect(item,&player::BackGroundMove,[=](){
         for (int i = 0; i < BRICKNUM; i++)
         {
-
-            brick[i]->obPosX-=3;
-            brick[i]->update(brick[i]->obPosX,brick[i]->obPosY,brick[i]->obWidth,brick[i]->obHeight);
-
+            brick[i]->moveBy(-3,0);
         }
         for (int i = 0; i < COINNUM; i++)
         {
-            //coin[i]->moveBy(-3,0);
-            coin[i]->obPosX-=3;
-            coin[i]->update(coin[i]->obPosX,coin[i]->obPosY,coin[i]->obWidth,coin[i]->obHeight);
+            coin[i]->moveBy(-3,0);
         }
-        book->obPosX-=3;
-        book->update(book->obPosX,book->obPosY,book->obWidth,book->obHeight);
-
+        book->moveBy(-3,0);
     });
 
     //胜利
     connect(item,&player::succeed,[=](){
         pView->close();
-         QMessageBox::about(this,"Victory","你赢了!");
-        this->close();
     });
-    connect(item,&player::failed,[=](){
-        pView->close();
-         QMessageBox::about(this,"Defeated","你输了!");
-        this->close();
-    }
-    );
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *event)
@@ -243,31 +285,3 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 
 
 }
-void MainWindow::newOb(obstacle *one, int type, int x, int y, int w, int h, int data)
-{
-    //one = new obstacle;
-    one->setType(type);
-    one->setPosition(x,y);
-    one->setWidthHeight(w,h);
-    one->setData(1,data);
-    pScene->addItem(one);
-}
-void MainWindow::deleteOb()
-{
-    //获得指定矩形区域内的元素的指针列表
-    QList<QGraphicsItem *> item_list_p = pView->scene()->items(QRectF(-1000,0,200,800), Qt::IntersectsItemShape);
-    //删除元素
-    for(int i=0; i<item_list_p.size(); i++)
-    {
-        pView->scene()->removeItem(item_list_p[i]);  //从scene移除
-        delete item_list_p[i];  //释放内存
-    }
-}
-void MainWindow::nBrick(int begin,int end,int x,int y)
-{
-    for(int i = begin; i < end; i++)
-    {
-        newOb(brick[i],1,x+50*i,y,50,50,2);
-    }
-}
-

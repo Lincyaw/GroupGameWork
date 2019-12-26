@@ -10,9 +10,6 @@
 #include<QSound>//多媒体模块下的音效头文件
 #include <QFileInfo>
 #include<QMediaPlayer>
-#include<QAction>
-#include<QLabel>
-#include<QGraphicsItemGroup>
 #define SCREENWIDTH 1500
 #define SCREENHEIGHT 1080
 #define GROUNDNUM 8
@@ -45,12 +42,8 @@ public:
     obstacle *book;
     obstacle *h;
     void firstLevelIni();
-    void newOb(obstacle *one, int type, int x, int y, int w, int h, int data);
-    void deleteOb();
-    void nBrick(int begin, int end, int x, int y);
  //  QSound *BGM = new QSound(":/m/back/BGM.wav");
 QMediaPlayer *myPlayer= new QMediaPlayer;
-
 private slots:
     void on_begin_clicked();
     void on_pushButton_clicked();
