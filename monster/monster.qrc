@@ -1,5 +1,8 @@
 <RCC>
     <qresource prefix="/">
-        <file>javacup/java.jpg</file>
+        <file>javacup/java.png</file>
+        <file>javacup/javaBeAttacked.png</file>
+        <file>C++/C++.png</file>
+        <file>C++/CBeAttacked.png</file>
     </qresource>
 </RCC>

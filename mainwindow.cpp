@@ -149,21 +149,59 @@ void MainWindow::firstLevelIni()
 
 
     ///初始化怪物*************************************************
-    Cups[0] = new javacup(nullptr,-250,1200,40,0,3,0);
-    Cups[1] = new javacup(nullptr,0,1200,40,0,3,0);
-    Cups[2] = new javacup(nullptr,100,1070,40,0,3,0);
-    Cups[3] = new javacup(nullptr,400,1130,40,0,3,0);
-    Cups[4] = new javacup(nullptr,900,900,40,0,3,0);
-    Cups[5] = new javacup(nullptr,1200,840,40,0,3,0);
-    Cups[6] = new javacup(nullptr,1700,1023,40,0,3,0);
-    Cups[7] = new javacup(nullptr,1950,870,40,0,3,0);
-    Cups[8] = new javacup(nullptr,2300,940,40,0,3,0);
-    Cups[9] = new javacup(nullptr,2500,1010,40,0,3,0);
-    for(int i = 0; i < 10; i++)
-    {
-        pScene->addItem(Cups[i]);
-    }
+    Cups[0] = new javacup(nullptr,-250,900,40,0,3,0);
+    Cups[1] = new javacup(nullptr,0,800,40,0,3,0);
+    Cups[2] = new javacup(nullptr,100,700,40,0,3,0);
+    Cups[3] = new javacup(nullptr,400,600,40,0,3,0);
+    Cups[4] = new javacup(nullptr,900,700,40,0,3,0);
+    Cups[5] = new javacup(nullptr,1200,900,20,0,3,0);
+    Cups[6] = new javacup(nullptr,1700,750,60,0,3,0);
+    Cups[7] = new javacup(nullptr,1950,900,50,0,3,0);
+    Cups[8] = new javacup(nullptr,2300,1000,40,0,3,0);
+    Cups[9] = new javacup(nullptr,2500,800,30,0,3,0);
+    Cups[10] = new javacup(nullptr,900,700,40,0,3,0);
+    Cups[11] = new javacup(nullptr,1200,850,40,0,3,0);
+    Cups[12] = new javacup(nullptr,2600,1000,40,0,3,0);
+    Cups[13] = new javacup(nullptr,2700,1300,40,0,3,0);
 
+    Cups[14] = new javacup(nullptr,800,1400,40,0,3,0);
+    Cups[15] = new javacup(nullptr,900,1400,40,0,3,0);
+    Cups[16] = new javacup(nullptr,1000,1400,40,0,3,0);
+    Cups[17] = new javacup(nullptr,1200,1400,40,0,3,0);
+    Cups[18] = new javacup(nullptr,1700,1400,40,0,3,0);
+    Cups[19] = new javacup(nullptr,1400,1400,40,0,3,0);
+    Cups[20] = new javacup(nullptr,2300,1400,40,0,3,0);
+    Cups[21] = new javacup(nullptr,1900,1400,40,0,3,0);
+    Cups[22] = new javacup(nullptr,2400,1400,40,0,3,0);
+    Cups[23] = new javacup(nullptr,1600,1400,40,0,3,0);
+    Cups[24] = new javacup(nullptr,2700,1400,40,0,3,0);
+
+    for(int i = 0; i < CupNum; i++)
+    {
+//        Cups[i] = new javacup;
+        pScene->addItem(Cups[i]);
+        Cups[i]->setPosition(Cups[i]->BornPosX,(i%5)+800);
+        Cups[i]->setRangeXY(40+10*(i%4),40+10*(i%4));
+        Cups[i]->setVerticalV(2+i%3);
+        Cups[i]->setHorizontalV(2+i%3);
+        Cups[i]->MoveMode = (i+2)%5+1;
+        if(i>13)
+        {
+            Cups[i]->HeroSkin = QPixmap(":/C++/C++.png");
+            Cups[i]->HeroNormalSkin = QPixmap(":/C++/C++.png");
+            Cups[i]->HeroBeAttackedSkin = QPixmap(":/C++/CBeAttacked.png");
+            Cups[i]->PicWidth = 48;
+            Cups[i]->PicHeight = 54;
+        }
+    }
+//    for(int i = 0; i < PlusNum; i++)
+//    {
+//        pScene->addItem(plus[i]);
+//        plus[i]->setRangeXY(40,40);
+//        plus[i]->setVerticalV(4+(i%4));
+//        plus[i]->setHorizontalV(5+(i%4));
+//        plus[i]->MoveMode = i%3 + 1;
+//    }
 
 
     //连接攻击信号与怪物信号
@@ -172,8 +210,16 @@ void MainWindow::firstLevelIni()
         connect(item,&player::Skill0,Cups[i],&javacup::AttackedByJ);
         connect(item,&player::Skill1,Cups[i],&javacup::AttackedByK);
         connect(item,&player::Skill2,Cups[i],&javacup::AttackedByL);
+        connect(Cups[i],&javacup::BeKilled,[=](){
+            item->Score+=50;
+            if(item->Score>100)
+            {
+                item->Score-=100;
+                item->heroBlood+=5;
+            }
+            emit item->DecBlood();
+        });
     }
-
     // 将 item 添加至场景中
     // 为视图设置场景
 
@@ -181,14 +227,15 @@ void MainWindow::firstLevelIni()
     QFont font;
     font.setKerning(true);
     font.setBold(true);
-    text->setPlainText("血量:"+QString::number(item->heroBlood));
+    text->setPlainText("血量:"+QString::number(item->heroBlood)+"\n积分:"+QString::number(item->Score));
     text->setPos(-700,500);
     text->setFont(font);
     pScene->addItem(text);
     connect(item,&player::DecBlood,[=](){
-        text->setPlainText("血量:"+QString::number(item->heroBlood));
+        text->setPlainText("血量:"+QString::number(item->heroBlood)+"\n积分:"+QString::number(item->Score));
         text->update();
     });
+
 
     pView->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
     pView->resize(SCREENWIDTH,SCREENHEIGHT);
@@ -224,7 +271,7 @@ void MainWindow::firstLevelIni()
             mbrick[i]->moveBy(-2,0);
         }
 
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < CupNum; i++)
         {
             Cups[i]->moveBy(-3,0);
         }

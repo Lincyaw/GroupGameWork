@@ -22,7 +22,6 @@
 #include<QKeyEvent>
 #include<QList>
 #include<QPainter>
-#include"somedeclare.h"
 class player : public QObject,public QGraphicsItem
 {
     Q_OBJECT

@@ -22,10 +22,12 @@
 #include<QKeyEvent>
 #include<QList>
 #include<QPainter>
-#include"somedeclare.h"
 #include <QObject>
 
-
+/*怪物的移动模式,默认为1
+1.左右横跳
+2.上下起伏
+3.六亲不认*/
 class anemy : public QObject,public QGraphicsItem
 {
     Q_OBJECT
@@ -43,9 +45,12 @@ public:
     QColor color;
     int PicWidth;
     int PicHeight;
+    int MoveMode;//怪物移动模式
+
+
     int MoveFlat;//1为可移动，2为不可移动
-    static const int MoveInterval = 30; //移动间隔
-    static const int RecoveryInterval = 30;//硬直恢复
+    static const int MoveInterval = 40; //移动间隔
+    static const int RecoveryInterval = 1000;//硬直恢复
 
     enum Dir{up,down,left,right};//人物的方向
     Dir VerticalDir;
@@ -66,6 +71,7 @@ public:
     void setHorizontalV(float v);
     void setVerticalV(float v);
     void setRangeXY(int x,int y);
+    void setMoveMode(int Mode);
     void attackJudge();
     //////////////////////////////////////////////////////////////////////////////
 private:
@@ -83,6 +89,7 @@ signals:
 //    void die();
     void Behurt();
     void Recoveried();
+    void BeKilled();
 public slots:
     void AttackedByJ();
     void AttackedByK();

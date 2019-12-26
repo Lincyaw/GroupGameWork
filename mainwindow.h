@@ -19,9 +19,12 @@
 #define SCREENHEIGHT 1080
 #define CLOUDNUM 3
 #define GROUNDNUM 6
-#define CupNum 10
+
 #define BRICKNUM 20
 #define COINNUM 6
+#define CupNum 25
+
+
 #define MBRICKNUM 5
 #define TREENUM 5
 
@@ -65,12 +68,14 @@ public:
     QList<int> generateUniqueRandomNumber();
  //  QSound *BGM = new QSound(":/m/back/BGM.wav");
     QMediaPlayer *myPlayer= new QMediaPlayer;
-    //怪物
+
+    //怪物*******************************************
     javacup * Cups[CupNum];
     QPixmap knife = QPixmap(":/m/back/knife.png");
     QPixmap knife2 = QPixmap(":/m/back/knife2.png");
     QPixmap start = QPixmap(":/m/back/start.png");
     QPixmap hit = QPixmap(":/m/back/hit.png");
+
 private slots:
 
 private:

@@ -13,9 +13,6 @@ anemy::anemy(QObject *parent ,int postionx ,int postiony ,int RangeX,int RangeY,
     MoveTimer = new QTimer ;
     RecoveryTimer = new QTimer;
     heroBlood = 10;
-    connect(this,&anemy::Behurt,[=]{
-        HeroSkin = HeroBeAttackedSkin;
-    });
     connect(RecoveryTimer,&QTimer::timeout,[=](){
        HeroSkin = HeroNormalSkin;
        MoveFlat = 1;
@@ -58,6 +55,13 @@ void anemy::setRangeXY(int x,int y)
     m_RangeX = x;
     m_RangeY = y;
 }
+
+void anemy::setMoveMode(int Mode)
+{
+    MoveMode = Mode;
+}
+
+
 //被攻击时不能移动，掉血，图片变红
 void anemy::AttackedByJ()
 {
@@ -68,6 +72,7 @@ void anemy::AttackedByJ()
             if(collidingItems().at(i)->data(1).toInt()== 1)//与人物碰撞
             {
                 MoveFlat = 0;//进入僵直
+                HeroSkin = HeroBeAttackedSkin;
                 RecoveryTimer->start(RecoveryInterval);//若干秒后恢复
                 heroBlood--;//怪物扣血
                 if(heroBlood == 0)
@@ -87,8 +92,9 @@ void anemy::AttackedByK()
             if(collidingItems().at(i)->data(1).toInt()== 1)//与人物碰撞
             {
                 MoveFlat = 0;//进入僵直
+                HeroSkin = HeroBeAttackedSkin;
                 RecoveryTimer->start(RecoveryInterval);//若干秒后恢复
-                heroBlood--;//怪物扣血
+                heroBlood-=2;//怪物扣血
                 if(heroBlood == 0)
                 {
                     delete this;
@@ -97,6 +103,7 @@ void anemy::AttackedByK()
         }
     }
 }
+//L技能秒杀怪物**************************************************************************************************
 void anemy::AttackedByL()
 {
     if(!collidingItems().isEmpty())
@@ -106,12 +113,13 @@ void anemy::AttackedByL()
             if(collidingItems().at(i)->data(1).toInt()== 1)//与人物碰撞
             {
                 MoveFlat = 0;//进入僵直
+                HeroSkin = HeroBeAttackedSkin;
                 RecoveryTimer->start(RecoveryInterval);//若干秒后恢复
-                heroBlood--;//怪物扣血
-                if(heroBlood == 0)
-                {
+//                heroBlood--;//怪物扣血
+//                if(heroBlood == 0)
+//                {
                     delete this;
-                }
+//                }
             }
         }
     }
