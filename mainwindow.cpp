@@ -7,9 +7,39 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    setFixedSize(400,400);
-    setWindowIcon(QIcon(":/obstacle/obstacle/coin.png"));
-    setWindowTitle("游戏");
+    setFixedSize(700,700);
+    setWindowIcon(QIcon(":/m/back/hit.png"));
+    setWindowTitle("SuperHiter");
+    MyPushButton * startBtn = new MyPushButton(":/m/back/knife.png");
+    startBtn->setParent(this);
+    startBtn->move(this->width() * 0.5 - 80 * 0.5 ,this->height() * 0.6 );
+
+    connect(startBtn,&MyPushButton::clicked,[=](){
+        //qDebug() << "点击了开始";
+        //做弹起特效
+        startBtn->zoom1();
+        startBtn->zoom2();
+
+        //显示选择关卡场景
+        // pView->show();
+
+        QMessageBox::information(this,"游戏提示",
+                                 "WAD控制角色左右移动和上下移动\nJKL释放技能\n打败怪兽有大量积分哦!!!"
+                                 );
+        if(clickedTimes==0)
+        {
+            //BGM->play();
+
+            myPlayer->setMedia(QUrl("qrc:/m/back/bgm.mp3"));
+            myPlayer->setVolume(80);
+            myPlayer->play();
+            firstLevelIni();
+            this->hide();
+            pView->show();
+            clickedTimes++;
+        }
+
+    });
 }
 
 void MainWindow::paintEvent(QPaintEvent *event)
@@ -24,31 +54,6 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
-
-void MainWindow::on_begin_clicked()
-{
-    QMessageBox::information(this,"游戏提示",
-                             "WAD控制角色左右移动和上下移动\nJKL释放技能\n打败怪兽有大量积分哦"
-                                         );
-    if(clickedTimes==0)
-    {
-        //BGM->play();
-
-        myPlayer->setMedia(QUrl("qrc:/m/back/bgm.mp3"));
-        myPlayer->setVolume(80);
-        myPlayer->play();
-        firstLevelIni();
-        pView->show();
-        clickedTimes++;
-    }
-}
-
-void MainWindow::on_pushButton_clicked()
-{
-    pView->close();
-    myPlayer->stop();
-}
-
 void MainWindow::firstLevelIni()
 {
     //初始化地面
@@ -124,16 +129,16 @@ void MainWindow::firstLevelIni()
 
 
     ///初始化怪物*************************************************
-    Cups[0] = new javacup(nullptr,-250,900,40,0,3,0);
-    Cups[1] = new javacup(nullptr,0,800,40,0,3,0);
-    Cups[2] = new javacup(nullptr,100,700,40,0,3,0);
-    Cups[3] = new javacup(nullptr,400,600,40,0,3,0);
-    Cups[4] = new javacup(nullptr,900,700,40,0,3,0);
-    Cups[5] = new javacup(nullptr,1200,900,40,0,3,0);
-    Cups[6] = new javacup(nullptr,1700,750,40,0,3,0);
-    Cups[7] = new javacup(nullptr,1950,900,40,0,3,0);
-    Cups[8] = new javacup(nullptr,2300,1000,40,0,3,0);
-    Cups[9] = new javacup(nullptr,2500,800,40,0,3,0);
+    Cups[0] = new javacup(nullptr,-250,1200,40,0,3,0);
+    Cups[1] = new javacup(nullptr,0,1200,40,0,3,0);
+    Cups[2] = new javacup(nullptr,100,1070,40,0,3,0);
+    Cups[3] = new javacup(nullptr,400,1130,40,0,3,0);
+    Cups[4] = new javacup(nullptr,900,900,40,0,3,0);
+    Cups[5] = new javacup(nullptr,1200,840,40,0,3,0);
+    Cups[6] = new javacup(nullptr,1700,1023,40,0,3,0);
+    Cups[7] = new javacup(nullptr,1950,870,40,0,3,0);
+    Cups[8] = new javacup(nullptr,2300,940,40,0,3,0);
+    Cups[9] = new javacup(nullptr,2500,1010,40,0,3,0);
     for(int i = 0; i < 10; i++)
     {
         pScene->addItem(Cups[i]);
@@ -151,10 +156,24 @@ void MainWindow::firstLevelIni()
 
     // 将 item 添加至场景中
     // 为视图设置场景
+
+
+    QFont font;
+    font.setKerning(true);
+    font.setBold(true);
+    text->setPlainText("血量:"+QString::number(item->heroBlood));
+    text->setPos(-700,500);
+    text->setFont(font);
+    pScene->addItem(text);
+    connect(item,&player::DecBlood,[=](){
+        text->setPlainText("血量:"+QString::number(item->heroBlood));
+        text->update();
+    });
+
     pView->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
     pView->resize(SCREENWIDTH,SCREENHEIGHT);
     pView->setScene(pScene);
-    pView->setStyleSheet("border:none; background:black;");
+    pView->setStyleSheet("border:none; background:white;");
     pView->centerOn(0,0);
     pView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     pView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -193,21 +212,18 @@ void MainWindow::firstLevelIni()
     });
 
     connect(coin[0]->groundTimer,&QTimer::timeout,[=](){
+
         for(int i = 0;i<GROUNDNUM;i++)
         {
             if(count%2==0)
             {
                 pScene->removeItem(ground[i]);
                 pScene->update();
-                qDebug()<<"showflag=2";
-                ground[i]->setData(1,2);
             }
             else
             {
                 pScene->addItem(ground[i]);
-                ground[i]->setData(1,1);
                 pScene->update();
-               qDebug()<<"showflag=1";
             }
 
         }
@@ -273,10 +289,45 @@ void MainWindow::nCoin(int begin, int end, int x, int y)
     }
 }
 
+
 void MainWindow::nmBrick(int begin, int end, int x, int y)
 {
     for(int i = begin; i < end; i++)
     {
         newOb(mbrick[i],6,x + 600 * (i - begin),y,50,50,2);
     }
+}
+
+QList<int> MainWindow::generateUniqueRandomNumber()
+{
+    int i,j;
+    QList<int> numbersList;
+    qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
+    for(i=0;i<8;i++)
+    {
+        numbersList.append(qrand()%8);
+        bool flag = true;
+        while(flag)
+        {
+            for(j=0;j<i;j++)
+            {
+                if(numbersList[i]==numbersList[j])
+                {
+                    break;
+                }
+                if(j<i)
+                {
+                    numbersList[i]=rand()%8;
+                }
+                if(j==i)
+                {
+                    flag=!flag;
+                }
+            }
+        }
+        for(i=0;i<8;i++)
+        {
+            qDebug()<<numbersList[i];
+        }
+        return numbersList;
 }

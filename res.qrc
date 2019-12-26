@@ -124,5 +124,9 @@
     <qresource prefix="/m">
         <file>back/welcome.png</file>
         <file>back/bgm.mp3</file>
+        <file>back/hit.png</file>
+        <file>back/knife.png</file>
+        <file>back/knife2.png</file>
+        <file>back/start.png</file>
     </qresource>
 </RCC>

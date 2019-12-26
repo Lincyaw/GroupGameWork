@@ -11,10 +11,15 @@
 #include <QFileInfo>
 #include<QMediaPlayer>
 #include "javacup.h"
+#include<QGraphicsTextItem>
+#include<QFont>
+#include<QTime>
+#include<QPushButton>
+#include"mypushbutton.h"
 #define SCREENWIDTH 1500
 #define SCREENHEIGHT 1080
 #define CLOUDNUM 3
-#define GROUNDNUM 8
+#define GROUNDNUM 6
 #define CupNum 10
 #define BRICKNUM 20
 #define COINNUM 5
@@ -31,7 +36,6 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     void keyPressEvent(QKeyEvent *event);
-//    int count = 0;
 
     void shootBullet(int p,int q);
     ~MainWindow();
@@ -49,6 +53,9 @@ public:
     obstacle *h;
     obstacle *mbrick[MBRICKNUM];
 //    obstacle *homework;
+    obstacle *mbrick[3];
+    obstacle *homework;
+    QGraphicsTextItem *text = new QGraphicsTextItem;
     void firstLevelIni();
     void newOb(obstacle *one, int type, int x, int y, int w, int h, int data);
     void nGround(int begin, int end, int x, int y);
@@ -56,13 +63,16 @@ public:
     void nCoin(int begin, int end, int x, int y);
     void nmBrick(int begin, int end, int x, int y);
 
+    QList<int> generateUniqueRandomNumber();
  //  QSound *BGM = new QSound(":/m/back/BGM.wav");
     QMediaPlayer *myPlayer= new QMediaPlayer;
     //怪物
     javacup * Cups[CupNum];
+    QPixmap knife = QPixmap(":/m/back/knife.png");
+    QPixmap knife2 = QPixmap(":/m/back/knife2.png");
+    QPixmap start = QPixmap(":/m/back/start.png");
+    QPixmap hit = QPixmap(":/m/back/hit.png");
 private slots:
-    void on_begin_clicked();
-    void on_pushButton_clicked();
 
 private:
     Ui::MainWindow *ui;
