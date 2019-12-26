@@ -10,21 +10,6 @@ MainWindow::MainWindow(QWidget *parent) :
     setFixedSize(400,400);
     setWindowIcon(QIcon(":/obstacle/obstacle/coin.png"));
     setWindowTitle("游戏");
-
-//    connect(coin[0]->groundTimer,&QTimer::timeout,[=](){
-//        for(int i = 0;i<1;i++)
-//        {
-//            if(count%2)
-//            {
-//                ground[i]->showflag = 1;
-//            }
-//            else
-//            {
-//                ground[i]->showflag = 0;
-//            }
-//        }
-//       // count++;
-//    });
 }
 
 void MainWindow::paintEvent(QPaintEvent *event)
@@ -76,8 +61,8 @@ void MainWindow::firstLevelIni()
         ground[i] = new obstacle;
         ground[i]->setType(1);
        // ground[i]->setPosition(-700 + 200 * i,650);
-        ground[i]->setPos(-700 + 200 * i,650);
-        ground[i]->setWidthHeight(400,200);
+        ground[i]->setPos(-400+i*150,650);
+        ground[i]->setWidthHeight(300,200);
         ground[i]->setData(1,2);
         pScene->addItem(ground[i]);
     }
@@ -111,13 +96,38 @@ void MainWindow::firstLevelIni()
     //背景移动
     connect(item,&player::BackGroundMove,[=](){
         //qDebug()<<brick[1]->pos();
+
         for (int i = 0; i < BRICKNUM; i++)
         {
             brick[i]->moveBy(-2,0);
+            if(brick[i]->pos().x()<-500)
+            {
+                pScene->removeItem(brick[i]);
+            }
         }
         coin[0]->moveBy(-2,0);
     });
+    connect(coin[0]->groundTimer,&QTimer::timeout,[=](){
+        for(int i = 0;i<GROUNDNUM;i++)
+        {
+            if(count%2==0)
+            {
+                pScene->removeItem(ground[i]);
+                pScene->update();
+                qDebug()<<"showflag=2";
+                ground[i]->setData(1,2);
+            }
+            else
+            {
+                pScene->addItem(ground[i]);
+                ground[i]->setData(1,1);
+                pScene->update();
+               qDebug()<<"showflag=1";
+            }
 
+        }
+         count++;
+    });
     //胜利
     connect(item,&player::succeed,[=](){
         pView->close();
