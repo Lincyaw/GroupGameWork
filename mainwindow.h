@@ -14,6 +14,8 @@
 #include<QGraphicsTextItem>
 #include<QFont>
 #include<QTime>
+#include<QPushButton>
+#include"mypushbutton.h"
 #define SCREENWIDTH 1500
 #define SCREENHEIGHT 1080
 #define CLOUDNUM 3
@@ -39,7 +41,6 @@ public:
     ~MainWindow();
     void paintEvent(QPaintEvent *event);
     int clickedTimes=0;
-    int k=0;
     int count = 0;
     QGraphicsScene *pScene = new QGraphicsScene();
     QGraphicsView *pView = new QGraphicsView();
@@ -62,9 +63,11 @@ public:
     QMediaPlayer *myPlayer= new QMediaPlayer;
     //怪物
     javacup * Cups[CupNum];
+    QPixmap knife = QPixmap(":/m/back/knife.png");
+    QPixmap knife2 = QPixmap(":/m/back/knife2.png");
+    QPixmap start = QPixmap(":/m/back/start.png");
+    QPixmap hit = QPixmap(":/m/back/hit.png");
 private slots:
-    void on_begin_clicked();
-    void on_pushButton_clicked();
 
 private:
     Ui::MainWindow *ui;

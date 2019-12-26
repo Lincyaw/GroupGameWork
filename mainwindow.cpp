@@ -7,9 +7,39 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    setFixedSize(400,400);
-    setWindowIcon(QIcon(":/obstacle/obstacle/coin.png"));
-    setWindowTitle("游戏");
+    setFixedSize(700,700);
+    setWindowIcon(QIcon(":/m/back/hit.png"));
+    setWindowTitle("SuperHiter");
+    MyPushButton * startBtn = new MyPushButton(":/m/back/knife.png");
+    startBtn->setParent(this);
+    startBtn->move(this->width() * 0.5 - 80 * 0.5 ,this->height() * 0.6 );
+
+    connect(startBtn,&MyPushButton::clicked,[=](){
+        //qDebug() << "点击了开始";
+        //做弹起特效
+        startBtn->zoom1();
+        startBtn->zoom2();
+
+        //显示选择关卡场景
+        // pView->show();
+
+        QMessageBox::information(this,"游戏提示",
+                                 "WAD控制角色左右移动和上下移动\nJKL释放技能\n打败怪兽有大量积分哦!!!"
+                                 );
+        if(clickedTimes==0)
+        {
+            //BGM->play();
+
+            myPlayer->setMedia(QUrl("qrc:/m/back/bgm.mp3"));
+            myPlayer->setVolume(80);
+            myPlayer->play();
+            firstLevelIni();
+            this->hide();
+            pView->show();
+            clickedTimes++;
+        }
+
+    });
 }
 
 void MainWindow::paintEvent(QPaintEvent *event)
@@ -24,31 +54,6 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
-
-void MainWindow::on_begin_clicked()
-{
-    QMessageBox::information(this,"游戏提示",
-                             "WAD控制角色左右移动和上下移动\nJKL释放技能\n打败怪兽有大量积分哦"
-                                         );
-    if(clickedTimes==0)
-    {
-        //BGM->play();
-
-        myPlayer->setMedia(QUrl("qrc:/m/back/bgm.mp3"));
-        myPlayer->setVolume(80);
-        myPlayer->play();
-        firstLevelIni();
-        pView->show();
-        clickedTimes++;
-    }
-}
-
-void MainWindow::on_pushButton_clicked()
-{
-    pView->close();
-    myPlayer->stop();
-}
-
 void MainWindow::firstLevelIni()
 {
     //初始化地面
@@ -127,16 +132,16 @@ void MainWindow::firstLevelIni()
 
 
     ///初始化怪物*************************************************
-    Cups[0] = new javacup(nullptr,-250,900,40,0,3,0);
-    Cups[1] = new javacup(nullptr,0,800,40,0,3,0);
-    Cups[2] = new javacup(nullptr,100,700,40,0,3,0);
-    Cups[3] = new javacup(nullptr,400,600,40,0,3,0);
-    Cups[4] = new javacup(nullptr,900,700,40,0,3,0);
-    Cups[5] = new javacup(nullptr,1200,900,40,0,3,0);
-    Cups[6] = new javacup(nullptr,1700,750,40,0,3,0);
-    Cups[7] = new javacup(nullptr,1950,900,40,0,3,0);
-    Cups[8] = new javacup(nullptr,2300,1000,40,0,3,0);
-    Cups[9] = new javacup(nullptr,2500,800,40,0,3,0);
+    Cups[0] = new javacup(nullptr,-250,1200,40,0,3,0);
+    Cups[1] = new javacup(nullptr,0,1200,40,0,3,0);
+    Cups[2] = new javacup(nullptr,100,1070,40,0,3,0);
+    Cups[3] = new javacup(nullptr,400,1130,40,0,3,0);
+    Cups[4] = new javacup(nullptr,900,900,40,0,3,0);
+    Cups[5] = new javacup(nullptr,1200,840,40,0,3,0);
+    Cups[6] = new javacup(nullptr,1700,1023,40,0,3,0);
+    Cups[7] = new javacup(nullptr,1950,870,40,0,3,0);
+    Cups[8] = new javacup(nullptr,2300,940,40,0,3,0);
+    Cups[9] = new javacup(nullptr,2500,1010,40,0,3,0);
     for(int i = 0; i < 10; i++)
     {
         pScene->addItem(Cups[i]);
@@ -205,14 +210,9 @@ void MainWindow::firstLevelIni()
     });
     connect(coin[0]->groundTimer,&QTimer::timeout,[=](){
 
-        k++;
-        if(k==3)
-        {
-            k=0;
-        }
         for(int i = 0;i<GROUNDNUM;i++)
         {
-            if(count%2==0&&(i+1)%2==k)
+            if(count%2==0)
             {
                 pScene->removeItem(ground[i]);
                 pScene->update();
