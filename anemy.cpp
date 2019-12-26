@@ -8,7 +8,7 @@ anemy::anemy(QObject *parent ,int postionx ,int postiony ,int RangeX,int RangeY,
     setRangeXY(RangeX,RangeY);
     BornPosX = postionx;
     BornPosY = postiony;
-    setPos(BornPosX,BornPosY);
+    setPosition(postionx,postiony);
     MoveFlat = 1;//初始化可移动
     MoveTimer = new QTimer ;
     RecoveryTimer = new QTimer;
@@ -25,7 +25,7 @@ anemy::anemy(QObject *parent ,int postionx ,int postiony ,int RangeX,int RangeY,
 QRectF anemy::boundingRect()const
 {
     qreal penWidth = 1;
-    return QRectF(pos().x()-penWidth / 2, pos().y()- penWidth/2,PicWidth+penWidth, PicHeight+penWidth);
+    return QRectF(heroPosX-penWidth / 2, heroPosY- penWidth/2,PicWidth+penWidth, PicHeight+penWidth);
 }
 void anemy::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
@@ -35,7 +35,7 @@ void anemy::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
    // painter->drawRect(0,0,20,20);
    // painter->drawRect(0,50,30,20);
     //如果与其他图形项碰撞则显示红色，否则显示绿色
-    painter->drawPixmap(pos().x(),pos().y(),PicWidth,PicHeight,HeroSkin);
+    painter->drawPixmap(heroPosX,heroPosY,PicWidth,PicHeight,HeroSkin);
 
 }
 
