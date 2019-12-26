@@ -34,6 +34,7 @@ public:
     int obWidth;  //障碍物的宽
     int obHeight;  //障碍物的高
     int showflag;  //障碍物是否显示 0: 不显示 1： 显示
+    int magic = 0;
 
     QPixmap Ground = QPixmap(":/obstacle/obstacle/brick01.png");
     QPixmap Coin = QPixmap(":/obstacle/obstacle/coin.png");
@@ -47,6 +48,7 @@ public:
 
     QTimer *cloudTimer = new QTimer;
     QTimer *brickTimer = new QTimer;
+    QTimer *groundTimer = new QTimer;
 
     void setType(int num);
     void setPosition(int x,int y);

@@ -34,6 +34,7 @@ public:
     ~MainWindow();
     void paintEvent(QPaintEvent *event);
     int clickedTimes=0;
+    int count = 0;
     QGraphicsScene *pScene = new QGraphicsScene();
     QGraphicsView *pView = new QGraphicsView();
     player *item;

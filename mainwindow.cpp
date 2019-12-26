@@ -10,7 +10,21 @@ MainWindow::MainWindow(QWidget *parent) :
     setFixedSize(400,400);
     setWindowIcon(QIcon(":/obstacle/obstacle/coin.png"));
     setWindowTitle("游戏");
+//    connect(coin[0]->groundTimer,&QTimer::timeout,[=](){
+//        for(int i = 0;i<1;i++)
+//        {
+//            if(count%2)
+//            {
+//                ground[i]->showflag = 1;
+//            }
+//            else
+//            {
+//                ground[i]->showflag = 0;
+//            }
 
+//        }
+//       // count++;
+//    });
 }
 
 void MainWindow::paintEvent(QPaintEvent *event)
@@ -73,96 +87,10 @@ void MainWindow::firstLevelIni()
     nBrick(0,2,-200,570);
     nBrick(2,4,0,470);
     nBrick(4,6,200,370);
- //   nBrick(4,6,200,370);
 
-//    //初始化书
-//    book = new obstacle;
-//    book->setType(3);
-//    //book->setPosition(10000,450);
-//    book->setPos(10000,450);
-//    book->setWidthHeight(160,200);
-//    book->setData(1,4);
-//    pScene->addItem(book);
-
-//    //初始化云
-//    for(int i = 0; i < CLOUDNUM; i++)
-//    {
-//        cloud[i] = new obstacle;
-//        cloud[i]->setType(4);
-//        //cloud[i]->setPosition(-700 + (SCREENWIDTH / 3) * i,0);
-//        cloud[i]->setPos(-700 + (SCREENWIDTH / 3) * i,0);
-//        cloud[i]->setWidthHeight(100,50);
-//        pScene->addItem(cloud[i]);
-//    }
-
-//    //初始化主楼
-//    h = new obstacle;
-//    h->setType(5);
-//  //  h->setPosition(50,450);
-//    h->setPos(50,450);
-//    h->setWidthHeight(200,200);
-//    h->setData(1,5);
-//    pScene->addItem(h);
-
-//    //初始化会动的砖
-//    for(int i = 0; i < 3; i++)
-//    {
-//        mbrick[i] = new obstacle;
-//        mbrick[i]->setType(6);
-//        mbrick[i]->setPosition(9300 + 600 * i,200);
-//        mbrick[i]->setWidthHeight(50,50);
-//        mbrick[i]->setData(1,2);
-//        pScene->addItem(mbrick[i]);
-//    }
-
-//    for(int i = 0; i < 3; i++)
-//    {
-//        mbrick[i+3] = new obstacle;
-//        mbrick[i+3]->setType(6);
-//        mbrick[i+3]->setPosition(9600 + 600 * i,400);
-//        mbrick[i+3]->setWidthHeight(50,50);
-//        mbrick[i+3]->setData(1,2);
-//        pScene->addItem(mbrick[i+3]);
-//    }
-
-//    for(int i = 0; i < 3; i++)
-//    {
-//        mbrick[i+6] = new obstacle;
-//        mbrick[i+6]->setType(6);
-//        mbrick[i+6]->setPosition(10900 + 1200 * i,300);
-//        mbrick[i+6]->setWidthHeight(50,50);
-//        mbrick[i+6]->setData(1,2);
-//        pScene->addItem(mbrick[i+6]);
-//    }
-
-//    for(int i = 0; i < 3; i++)
-//    {
-//        mbrick[i+9] = new obstacle;
-//        mbrick[i+9]->setType(6);
-//        mbrick[i+9]->setPosition(11200 + 600 * i,380);
-//        mbrick[i+9]->setWidthHeight(50,50);
-//        mbrick[i+9]->setData(1,2);
-//        pScene->addItem(mbrick[i+9]);
-//    }
-
-//    for(int i = 0; i < 3; i++)
-//    {
-//        mbrick[i+12] = new obstacle;
-//        mbrick[i+12]->setType(6);
-//        mbrick[i+12]->setPosition(11500 + 900 * i,180);
-//        mbrick[i+12]->setWidthHeight(50,50);
-//        mbrick[i+12]->setData(1,2);
-//        pScene->addItem(mbrick[i+12]);
-//    }
-
-    //初始化作业
-//    homework = new obstacle;
-//    homework->setType(7);
-//    homework->setPosition(5500,450);
-//    homework->setWidthHeight(200,200);
-//    homework->setData(1,6);
-//    pScene->addItem(homework);
-
+    coin[0] = new obstacle;
+    nCoin(0,1,200,345);
+    coin[0]->magic = 1;
     //初始化角色
     item = new player;
     item->setFlag(QGraphicsItem::ItemIsFocusable);  //鼠标选中这个item之后就是聚焦, 然后可以用键盘控制这个item
@@ -186,27 +114,9 @@ void MainWindow::firstLevelIni()
         //qDebug()<<brick[1]->pos();
         for (int i = 0; i < BRICKNUM; i++)
         {
-            brick[i]->moveBy(-3,0);
-          //  brick[i]->obPosX-=3;
-           // update(brick[i]->obPosX,brick[i]->obPosY,brick[i]->obWidth,brick[i]->obHeight);
+            brick[i]->moveBy(-2,0);
         }
-//        for (int i = 0; i < COINNUM; i++)
-//        {
-//            coin[i]->moveBy(-3,0);
-           // coin[i]->obPosX-=3;
-           // update(coin[i]->obPosX,coin[i]->obPosY,coin[i]->obWidth,coin[i]->obHeight);
-//        }
-//        book->obPosX-=3;
-//        book->moveBy(-3,0);
-        //update(book->obPosX,book->obPosY,book->obWidth,book->obHeight);
-//        for (int i = 0; i < 3; i++)
-//        {
-//            mbrick[i]->obPosX-=3;
-//            update(mbrick[i]->obPosX,mbrick[i]->obPosY,mbrick[i]->obWidth,mbrick[i]->obHeight);
-//        }
-       // homework->obPosX-=3;
-//        homework->moveBy(-3,0);
-        //update(homework->obPosX,homework->obPosY,homework->obWidth,homework->obHeight);
+        coin[0]->moveBy(-2,0);
     });
 
     //胜利
@@ -218,7 +128,6 @@ void MainWindow::firstLevelIni()
 
         pView->close();
         QMessageBox::about(this,"Defeated","你输了!\n再来一次吧!奥利给!!!!");
-        //this->setAttribute(Qt::WA_DeleteOnClose,1);
         this->close();
     });
 }
