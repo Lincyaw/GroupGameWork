@@ -183,7 +183,6 @@ void MainWindow::firstLevelIni()
     coin[2]->setShowFlag(1);
     coin[2]->setData(1,3);
     pScene->addItem(coin[2]);
-
     coin[3] = new obstacle;
     coin[3]->setType(2);
     coin[3]->setPosition(1000,350);
@@ -250,6 +249,19 @@ void MainWindow::firstLevelIni()
     pScene->addItem(item);
     pScene->setFocusItem(item);
 
+
+    //初始化怪物
+    Cups[0] = new javacup(nullptr,-400,500,40,0,3,0);
+    pScene->addItem(Cups[0]);
+
+
+    //连接攻击信号与怪物信号
+    for(int i = 0; i < CupNum; i++)
+    {
+        connect(item,&player::Skill0,Cups[i],&javacup::AttackedByJ);
+        connect(item,&player::Skill1,Cups[i],&javacup::AttackedByK);
+        connect(item,&player::Skill2,Cups[i],&javacup::AttackedByL);
+    }
     // 将 item 添加至场景中
     // 为视图设置场景
 
@@ -272,11 +284,16 @@ void MainWindow::firstLevelIni()
             coin[i]->moveBy(-3,0);
         }
         book->moveBy(-3,0);
+        Cups[0]->moveBy(-3,0);
     });
 
     //胜利
     connect(item,&player::succeed,[=](){
         pView->close();
+    });
+    connect(item,&player::failed,[=](){
+        pView->close();
+        this->close();
     });
 }
 
