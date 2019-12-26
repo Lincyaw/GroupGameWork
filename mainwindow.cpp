@@ -70,70 +70,39 @@ void MainWindow::firstLevelIni()
 
 
     //初始化砖块
-    nBrick(0,3,-200,370);
-    nBrick(3,6,70,200);
-    nBrick(6,9,400,400);
-    nBrick(9,12,950,400);
-    nBrick(12,13,1500,400);
-    nBrick(13,14,1800,300);
-    nBrick(14,15,2100,200);
-    nBrick(15,16,2500,200);
-    nBrick(16,17,2800,300);
-    nBrick(17,18,3100,400);
-    nBrick(18,20,3500,400);
-    nBrick(20,21,3750,200);
-    nBrick(21,24,4450,270);
-    nBrick(24,26,4800,400);
-    nBrick(26,27,5150,200);
-    nBrick(27,30,5500,380);
-    nBrick(30,33,5900,280);
-    nBrick(33,36,6300,400);
-    nBrick(36,39,6700,260);
-    nBrick(39,42,7100,200);
-    nBrick(42,45,7500,310);
+    nBrick(0,2,-200,570);
+    nBrick(2,4,0,470);
+    nBrick(4,6,200,370);
+ //   nBrick(4,6,200,370);
 
-    //初始化金币
-    for(int i = 0; i < COINNUM; i++)
-    {
-        coin[i] = new obstacle;
-    }
-    nCoin(0,1,-100,320);
-    nCoin(1,2,170,150);
-    nCoin(2,3,400,350);
-    nCoin(3,4,1000,350);
-    nCoin(4,5,1800,250);
-    nCoin(5,6,2500,150);
-    nCoin(6,7,3750,150);
-    nCoin(7,8,4450,220);
+//    //初始化书
+//    book = new obstacle;
+//    book->setType(3);
+//    //book->setPosition(10000,450);
+//    book->setPos(10000,450);
+//    book->setWidthHeight(160,200);
+//    book->setData(1,4);
+//    pScene->addItem(book);
 
-    //初始化书
-    book = new obstacle;
-    book->setType(3);
-    //book->setPosition(10000,450);
-    book->setPos(10000,450);
-    book->setWidthHeight(160,200);
-    book->setData(1,4);
-    pScene->addItem(book);
+//    //初始化云
+//    for(int i = 0; i < CLOUDNUM; i++)
+//    {
+//        cloud[i] = new obstacle;
+//        cloud[i]->setType(4);
+//        //cloud[i]->setPosition(-700 + (SCREENWIDTH / 3) * i,0);
+//        cloud[i]->setPos(-700 + (SCREENWIDTH / 3) * i,0);
+//        cloud[i]->setWidthHeight(100,50);
+//        pScene->addItem(cloud[i]);
+//    }
 
-    //初始化云
-    for(int i = 0; i < CLOUDNUM; i++)
-    {
-        cloud[i] = new obstacle;
-        cloud[i]->setType(4);
-        //cloud[i]->setPosition(-700 + (SCREENWIDTH / 3) * i,0);
-        cloud[i]->setPos(-700 + (SCREENWIDTH / 3) * i,0);
-        cloud[i]->setWidthHeight(100,50);
-        pScene->addItem(cloud[i]);
-    }
-
-    //初始化主楼
-    h = new obstacle;
-    h->setType(5);
-  //  h->setPosition(50,450);
-    h->setPos(50,450);
-    h->setWidthHeight(200,200);
-    h->setData(1,5);
-    pScene->addItem(h);
+//    //初始化主楼
+//    h = new obstacle;
+//    h->setType(5);
+//  //  h->setPosition(50,450);
+//    h->setPos(50,450);
+//    h->setWidthHeight(200,200);
+//    h->setData(1,5);
+//    pScene->addItem(h);
 
 //    //初始化会动的砖
 //    for(int i = 0; i < 3; i++)
@@ -187,12 +156,12 @@ void MainWindow::firstLevelIni()
 //    }
 
     //初始化作业
-    homework = new obstacle;
-    homework->setType(7);
-    homework->setPosition(5500,450);
-    homework->setWidthHeight(200,200);
-    homework->setData(1,6);
-    pScene->addItem(homework);
+//    homework = new obstacle;
+//    homework->setType(7);
+//    homework->setPosition(5500,450);
+//    homework->setWidthHeight(200,200);
+//    homework->setData(1,6);
+//    pScene->addItem(homework);
 
     //初始化角色
     item = new player;
@@ -221,14 +190,14 @@ void MainWindow::firstLevelIni()
           //  brick[i]->obPosX-=3;
            // update(brick[i]->obPosX,brick[i]->obPosY,brick[i]->obWidth,brick[i]->obHeight);
         }
-        for (int i = 0; i < COINNUM; i++)
-        {
-            coin[i]->moveBy(-3,0);
+//        for (int i = 0; i < COINNUM; i++)
+//        {
+//            coin[i]->moveBy(-3,0);
            // coin[i]->obPosX-=3;
            // update(coin[i]->obPosX,coin[i]->obPosY,coin[i]->obWidth,coin[i]->obHeight);
-        }
-       // book->obPosX-=3;
-        book->moveBy(-3,0);
+//        }
+//        book->obPosX-=3;
+//        book->moveBy(-3,0);
         //update(book->obPosX,book->obPosY,book->obWidth,book->obHeight);
 //        for (int i = 0; i < 3; i++)
 //        {
@@ -236,13 +205,14 @@ void MainWindow::firstLevelIni()
 //            update(mbrick[i]->obPosX,mbrick[i]->obPosY,mbrick[i]->obWidth,mbrick[i]->obHeight);
 //        }
        // homework->obPosX-=3;
-        homework->moveBy(-3,0);
+//        homework->moveBy(-3,0);
         //update(homework->obPosX,homework->obPosY,homework->obWidth,homework->obHeight);
     });
 
     //胜利
     connect(item,&player::succeed,[=](){
         pView->close();
+        this->close();
     });
 }
 

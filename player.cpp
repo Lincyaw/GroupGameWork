@@ -20,7 +20,7 @@ player::player(QObject *parent) : QObject(parent)
         {
             Direction = up;
             JumpOrnot = true;
-            setVelocity(19);
+            setVelocity(8);
         }
         if(KeyPressed(Key_A))
         {
