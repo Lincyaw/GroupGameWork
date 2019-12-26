@@ -39,12 +39,13 @@ void obstacle::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
     {
     case 1://砖块
     {
+        if(showflag)
         painter->drawPixmap(pos().x(),pos().y(),obWidth,obHeight,Ground);
         break;
     }
     case 2://金币
     {
-        if (showflag == 1)
+        if(showflag)
         {
             painter->drawPixmap(pos().x(),pos().y(),obWidth,obHeight,Coin);
         }
@@ -56,6 +57,10 @@ void obstacle::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
                 {
                     setShowFlag(0);
                     update(pos().x(),pos().y(),obWidth,obHeight);
+                    if(magic == 1)
+                    {
+                        GroundTimer->start(500);
+                    }
                 }
             }
         }
