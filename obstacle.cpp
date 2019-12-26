@@ -40,7 +40,7 @@ void obstacle::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
     case 1://砖块
     {
         if(showflag)
-        painter->drawPixmap(pos().x(),pos().y(),obWidth,obHeight,Ground);
+            painter->drawPixmap(pos().x(),pos().y(),obWidth,obHeight,Ground);
         break;
     }
     case 2://金币
@@ -55,12 +55,12 @@ void obstacle::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
             {
                 if(collidingItems().at(i)->data(1).toInt()==1)
                 {
+                    if(!groundTimer->isActive()&&magic==1)
+                    {
+                        groundTimer->start(500);
+                    }
                     setShowFlag(0);
                     update(pos().x(),pos().y(),obWidth,obHeight);
-                    if(magic == 1)
-                    {
-                        GroundTimer->start(500);
-                    }
                 }
             }
         }

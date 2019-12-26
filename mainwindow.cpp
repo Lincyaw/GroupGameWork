@@ -10,8 +10,21 @@ MainWindow::MainWindow(QWidget *parent) :
     setFixedSize(400,400);
     setWindowIcon(QIcon(":/obstacle/obstacle/coin.png"));
     setWindowTitle("游戏");
-    int count = 0;
 
+//    connect(coin[0]->groundTimer,&QTimer::timeout,[=](){
+//        for(int i = 0;i<1;i++)
+//        {
+//            if(count%2)
+//            {
+//                ground[i]->showflag = 1;
+//            }
+//            else
+//            {
+//                ground[i]->showflag = 0;
+//            }
+//        }
+//       // count++;
+//    });
 }
 
 void MainWindow::paintEvent(QPaintEvent *event)
@@ -75,10 +88,9 @@ void MainWindow::firstLevelIni()
     nBrick(0,2,-200,570);
     nBrick(2,4,0,470);
     nBrick(4,6,200,370);
-    nCoin(0,1,200,320);
-
-
-
+    coin[0] = new obstacle;
+    nCoin(0,1,200,345);
+    coin[0]->magic = 1;
     //初始化角色
     item = new player;
     item->setFlag(QGraphicsItem::ItemIsFocusable);  //鼠标选中这个item之后就是聚焦, 然后可以用键盘控制这个item
@@ -115,16 +127,10 @@ void MainWindow::firstLevelIni()
         //qDebug()<<brick[1]->pos();
         for (int i = 0; i < BRICKNUM; i++)
         {
-            brick[i]->moveBy(-3,0);
-          //  brick[i]->obPosX-=3;
-           // update(brick[i]->obPosX,brick[i]->obPosY,brick[i]->obWidth,brick[i]->obHeight);
+            brick[i]->moveBy(-2,0);
         }
-     //   for (int i = 0; i < COINNUM; i++)
-      //  {
-            coin[0]->moveBy(-3,0);
-     //   }
-     //   book->moveBy(-3,0);
         Cups[0]->moveBy(-3,0);
+        coin[0]->moveBy(-2,0);
     });
 
     //胜利
@@ -136,7 +142,6 @@ void MainWindow::firstLevelIni()
 
         pView->close();
         QMessageBox::about(this,"Defeated","你输了!\n再来一次吧!奥利给!!!!");
-        //this->setAttribute(Qt::WA_DeleteOnClose,1);
         this->close();
     });
     connect(item,&player::failed,[=](){

@@ -20,7 +20,7 @@ player::player(QObject *parent) : QObject(parent)
         {
             Direction = up;
             JumpOrnot = true;
-            setVelocity(8);
+            setVelocity(10);
         }
         if(KeyPressed(Key_A))
         {
@@ -66,7 +66,7 @@ player::player(QObject *parent) : QObject(parent)
         {
            // qDebug()<<pos().x();
             HorizontalDir = right;
-            if(pos().x()<100 || arrive)
+            if(pos().x()<0 || arrive)
             {
                moveBy(HorizontalSpeed,0);  //相对现在的位置移动
             }
