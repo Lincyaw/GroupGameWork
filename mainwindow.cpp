@@ -107,7 +107,7 @@ void MainWindow::firstLevelIni()
 
 
 
-    //初始化金币
+    //初始化金币w
     coin[0] = new obstacle;
     nCoin(0,1,200,345);
     coin[0]->magic = 1;
@@ -153,16 +153,17 @@ void MainWindow::firstLevelIni()
         for (int i = 0; i < BRICKNUM; i++)
         {
             brick[i]->moveBy(-2,0);
+            if(brick[i]->pos().x()<-500)
+            {
+                //pScene->removeItem(brick[i]);
+            }
         }
 
         for (int i = 0; i < 3; i++)
         {
             mbrick[i]->moveBy(-2,0);
         }
-            if(brick[i]->pos().x()<-500)
-            {
-                pScene->removeItem(brick[i]);
-            }
+
         Cups[0]->moveBy(-3,0);
         coin[0]->moveBy(-2,0);
     });
