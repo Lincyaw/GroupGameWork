@@ -108,8 +108,11 @@ void MainWindow::firstLevelIni()
 
 
     //初始化金币w
-    coin[0] = new obstacle;
-    nCoin(0,1,200,345);
+    for(int i = 0; i <  COINNUM; i++)
+    {
+        coin[i] = new obstacle;
+    }
+    nCoin(0,3,0,445);
     coin[0]->magic = 1;
 	
 	
@@ -162,11 +165,16 @@ void MainWindow::firstLevelIni()
 
         for (int i = 0; i < 3; i++)
         {
+            coin[i]->moveBy(-2,0);
+        }
+
+        for (int i = 0; i < 3; i++)
+        {
             mbrick[i]->moveBy(-2,0);
         }
 
         Cups[0]->moveBy(-3,0);
-        coin[0]->moveBy(-2,0);
+
     });
     connect(coin[0]->groundTimer,&QTimer::timeout,[=](){
         for(int i = 0;i<GROUNDNUM;i++)
@@ -235,6 +243,6 @@ void MainWindow::nCoin(int begin, int end, int x, int y)
 {
     for(int i = begin; i < end; i++)
     {
-        newOb(coin[i],2,x + 50 * (i - begin),y,50,50,3);
+        newOb(coin[i],2,x + 25 * (i - begin),y,50,50,3);
     }
 }
