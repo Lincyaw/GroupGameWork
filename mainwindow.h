@@ -13,10 +13,13 @@
 #include "javacup.h"
 #define SCREENWIDTH 1500
 #define SCREENHEIGHT 1080
+#define CLOUDNUM 3
 #define GROUNDNUM 8
-#define BRICKNUM 27
-#define COINNUM 7
 #define CupNum 1
+#define BRICKNUM 45
+#define COINNUM 8
+#define MBRICKNUM 15
+
 namespace Ui {
 class MainWindow;
 }
@@ -37,13 +40,19 @@ public:
     QGraphicsScene *pScene = new QGraphicsScene();
     QGraphicsView *pView = new QGraphicsView();
     player *item;
-    obstacle *cloud[3];
+    obstacle *cloud[CLOUDNUM];
     obstacle *ground[GROUNDNUM];
     obstacle *brick[BRICKNUM];
     obstacle *coin[COINNUM];
     obstacle *book;
     obstacle *h;
+//    obstacle *mbrick[MBRICKNUM];
+    obstacle *homework;
     void firstLevelIni();
+    void newOb(obstacle *one, int type, int x, int y, int w, int h, int data);
+    void nBrick(int begin, int end, int x, int y);
+    void nCoin(int begin, int end, int x, int y);
+
  //  QSound *BGM = new QSound(":/m/back/BGM.wav");
     QMediaPlayer *myPlayer= new QMediaPlayer;
     //怪物

@@ -13,24 +13,26 @@ javacup::javacup(QObject *parent,int postionx,int postiony,int RangeX,int RangeY
     connect(MoveTimer,&QTimer::timeout,[=](){
         if(MoveFlat == 1)
         {
-            if(heroPosX < BornPosX - m_RangeX)
+            if(pos().x() < BornPosX - m_RangeX)
             {
                 HorizontalDir = right;
             }
-            if(heroPosX > BornPosX + m_RangeX)
+            if(pos().x() > BornPosX + m_RangeX)
             {
                 HorizontalDir = left;
             }
             if(HorizontalDir == left)
             {
-                heroPosX = heroPosX - HorizontalV;
+               // heroPosX = heroPosX - HorizontalV;
+                moveBy(-HorizontalV,0);
             }
             else
             {
-                heroPosX = heroPosX + HorizontalV;
+//                heroPosX = heroPosX + HorizontalV;
+                moveBy(HorizontalV,0);
             }
         }
-         update(heroPosX-50, heroPosY-50,46+100, 156);
+//         update(heroPosX-50, heroPosY-50,46+100, 156);
     });
     MoveTimer->start(50);
 }
