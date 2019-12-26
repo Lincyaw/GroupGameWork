@@ -77,6 +77,7 @@ void anemy::AttackedByJ()
                 heroBlood--;//怪物扣血
                 if(heroBlood == 0)
                 {
+                    emit BeKilled();
                     delete this;
                 }
             }
@@ -97,6 +98,7 @@ void anemy::AttackedByK()
                 heroBlood-=2;//怪物扣血
                 if(heroBlood == 0)
                 {
+                    emit BeKilled();
                     delete this;
                 }
             }
@@ -118,7 +120,8 @@ void anemy::AttackedByL()
 //                heroBlood--;//怪物扣血
 //                if(heroBlood == 0)
 //                {
-                    delete this;
+                emit BeKilled();
+                delete this;
 //                }
             }
         }
