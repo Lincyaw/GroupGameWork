@@ -102,25 +102,18 @@ void MainWindow::firstLevelIni()
 
     //初始化主楼
     h = new obstacle;
-    newOb(h,5,500,550,180,200,5);
+    newOb(h,5,2600,550,180,200,5);
 
     //初始化会动的砖
-    for(int i = 0; i < 3; i++)
+    for(int i = 0; i <  MBRICKNUM; i++)
     {
         mbrick[i] = new obstacle;
-        mbrick[i]->setType(6);
-        mbrick[i]->setPos(3000 + 600 * i,550);
-        mbrick[i]->setWidthHeight(50,50);
-        mbrick[i]->setData(1,2);
-        mbrick[i]->moveFlag = 0;
-        pScene->addItem(mbrick[i]);
     }
+    nmBrick(0,3,3000,550);
 
-
-
-
-	
-	
+//    //初始化作业
+//    homework = new obstacle;
+//    newOb(homework,7,550,550,180,200,6);
 	
     //初始化角色
     item = new player;
@@ -155,10 +148,9 @@ void MainWindow::firstLevelIni()
         connect(item,&player::Skill1,Cups[i],&javacup::AttackedByK);
         connect(item,&player::Skill2,Cups[i],&javacup::AttackedByL);
     }
+
     // 将 item 添加至场景中
     // 为视图设置场景
-
-
     pView->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
     pView->resize(SCREENWIDTH,SCREENHEIGHT);
     pView->setScene(pScene);
@@ -166,16 +158,17 @@ void MainWindow::firstLevelIni()
     pView->centerOn(0,0);
     pView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     pView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
     //背景移动
     connect(item,&player::BackGroundMove,[=](){
         for (int i = 0; i < BRICKNUM; i++)
         {
             brick[i]->moveBy(-2,0);
-            if(brick[i]->pos().x()<-500)
-            {
-                pScene->removeItem(brick[i]);
+//            if(brick[i]->pos().x()<-500)
+//            {
+//                pScene->removeItem(brick[i]);
 
-            }
+//            }
         }
 
         for (int i = 0; i < 4; i++)
@@ -184,8 +177,8 @@ void MainWindow::firstLevelIni()
         }
 
         book->moveBy(-2,0);
-
         h->moveBy(-2,0);
+//        homework->moveBy(-2,0);
 
         for (int i = 0; i < 3; i++)
         {
@@ -197,8 +190,8 @@ void MainWindow::firstLevelIni()
             Cups[i]->moveBy(-3,0);
         }
 
-
     });
+
     connect(coin[0]->groundTimer,&QTimer::timeout,[=](){
         for(int i = 0;i<GROUNDNUM;i++)
         {
@@ -220,11 +213,14 @@ void MainWindow::firstLevelIni()
         }
          count++;
     });
+
     //胜利
     connect(item,&player::succeed,[=](){
         pView->close();
         QMessageBox::about(this,"Victory","你赢了!");
     });
+
+    //失败
     connect(item,&player::failed,[=](){
 
         pView->close();
@@ -277,3 +273,10 @@ void MainWindow::nCoin(int begin, int end, int x, int y)
     }
 }
 
+void MainWindow::nmBrick(int begin, int end, int x, int y)
+{
+    for(int i = begin; i < end; i++)
+    {
+        newOb(mbrick[i],6,x + 600 * (i - begin),y,50,50,2);
+    }
+}
