@@ -23,7 +23,6 @@ SOURCES += main.cpp\
 
 HEADERS  += mainwindow.h \
     anemy.h \
-    somedeclare.h \
     player.h \
     obstacle.h \
     javacup.h \
