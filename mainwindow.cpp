@@ -83,13 +83,22 @@ void MainWindow::firstLevelIni()
     nBrick(17,18,2100,370);
 
     //初始化金币
-    for(int i = 0; i <  COINNUM; i++)
-    {
-        coin[i] = new obstacle;
-    }
+//    for(int i = 0; i <  COINNUM; i++)
+//    {
+        coin[0] = new obstacle(nullptr,0);
+        coin[1] = new obstacle(nullptr,1);
+        coin[2] = new obstacle(nullptr,2);
+        coin[3] = new obstacle(nullptr,0);
+        coin[4] = new obstacle(nullptr,1);
+        coin[5] = new obstacle(nullptr,2);
+//    }
     nCoin(0,2,0,410);
     coin[0]->magic = 1;
-    nCoin(2,3,800,310);
+    nCoin(2,3,600,310);
+    nCoin(3,4,900,310);
+    nCoin(4,5,1300,510);
+    nCoin(5,6,1700,510);
+
 
     //初始化书
     book = new obstacle;
@@ -201,7 +210,7 @@ void MainWindow::firstLevelIni()
 //            }
         }
 
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < COINNUM; i++)
         {
             coin[i]->moveBy(-2,0);
         }

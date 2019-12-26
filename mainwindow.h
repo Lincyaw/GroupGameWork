@@ -21,7 +21,7 @@
 #define GROUNDNUM 6
 #define CupNum 10
 #define BRICKNUM 20
-#define COINNUM 3
+#define COINNUM 6
 #define MBRICKNUM 5
 #define TREENUM 5
 

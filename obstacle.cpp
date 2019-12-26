@@ -1,8 +1,23 @@
 #include "obstacle.h"
 #include<QDebug>
-obstacle::obstacle(QObject *parent) : QObject(parent)
+obstacle::obstacle(QObject *parent,int booktype) : QObject(parent)
 {
     setShowFlag(1);
+    switch(booktype)
+    {
+    case 0:
+        Book = Book1;
+        break;
+    case 1:
+        Book = Book2;
+        break;
+    case 2:
+        Book = Book3;
+        break;
+    default:
+        break;
+    }
+
     connect(cloudTimer,&QTimer::timeout,[=](){
         if(type == 4)
         {
