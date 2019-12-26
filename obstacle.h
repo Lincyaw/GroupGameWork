@@ -36,7 +36,7 @@ public:
     int showflag;  //障碍物是否显示 0: 不显示 1： 显示
     int magic = 0;
     int moveFlag;
-
+    bool DeleteOrNot = false;
     QPixmap Ground = QPixmap(":/obstacle/obstacle/brick01.png");
     QPixmap Coin = QPixmap(":/obstacle/obstacle/coin.png");
     QPixmap Book = QPixmap(":/obstacle/obstacle/book.jpg");
