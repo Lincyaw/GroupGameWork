@@ -7,9 +7,39 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    setFixedSize(400,400);
-    setWindowIcon(QIcon(":/obstacle/obstacle/coin.png"));
-    setWindowTitle("游戏");
+    setFixedSize(700,700);
+    setWindowIcon(QIcon(":/m/back/hit.png"));
+    setWindowTitle("SuperHiter");
+    MyPushButton * startBtn = new MyPushButton(":/m/back/knife.png");
+    startBtn->setParent(this);
+    startBtn->move(this->width() * 0.5 - 80 * 0.5 ,this->height() * 0.6 );
+
+    connect(startBtn,&MyPushButton::clicked,[=](){
+        //qDebug() << "点击了开始";
+        //做弹起特效
+        startBtn->zoom1();
+        startBtn->zoom2();
+
+        //显示选择关卡场景
+        // pView->show();
+
+        QMessageBox::information(this,"游戏提示",
+                                 "WAD控制角色左右移动和上下移动\nJKL释放技能\n打败怪兽有大量积分哦!!!"
+                                 );
+        if(clickedTimes==0)
+        {
+            //BGM->play();
+
+            myPlayer->setMedia(QUrl("qrc:/m/back/bgm.mp3"));
+            myPlayer->setVolume(80);
+            myPlayer->play();
+            firstLevelIni();
+            this->hide();
+            pView->show();
+            clickedTimes++;
+        }
+
+    });
 }
 
 void MainWindow::paintEvent(QPaintEvent *event)
@@ -24,51 +54,20 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
-
-void MainWindow::on_begin_clicked()
-{
-    QMessageBox::information(this,"游戏提示",
-                             "WAD控制角色左右移动和上下移动\nJKL释放技能\n打败怪兽有大量积分哦"
-                                         );
-    if(clickedTimes==0)
-    {
-        //BGM->play();
-
-        myPlayer->setMedia(QUrl("qrc:/m/back/bgm.mp3"));
-        myPlayer->setVolume(80);
-        myPlayer->play();
-        firstLevelIni();
-        pView->show();
-        clickedTimes++;
-    }
-}
-
-void MainWindow::on_pushButton_clicked()
-{
-    pView->close();
-    myPlayer->stop();
-}
-
 void MainWindow::firstLevelIni()
 {
     //初始化地面
-    for(int i = 0; i < GROUNDNUM; i++)
+    for(int i = 0; i <  GROUNDNUM; i++)
     {
         ground[i] = new obstacle;
-        ground[i]->setType(1);
-       // ground[i]->setPosition(-700 + 200 * i,650);
-        ground[i]->setPos(-400+i*150,650);
-        ground[i]->setWidthHeight(300,200);
-        ground[i]->setData(1,2);
-        pScene->addItem(ground[i]);
     }
+    nGround(0,GROUNDNUM,-400,650);
 
-
+    //初始化砖块
     for(int i = 0; i <  BRICKNUM; i++)
     {
         brick[i] = new obstacle;
     }
-    //初始化砖块
     nBrick(0,2,-200,570);
     nBrick(2,4,0,470);
     nBrick(4,5,200,370);
@@ -83,6 +82,19 @@ void MainWindow::firstLevelIni()
     nBrick(16,17,1900,470);
     nBrick(17,18,2100,370);
 
+    //初始化金币
+    for(int i = 0; i <  COINNUM; i++)
+    {
+        coin[i] = new obstacle;
+    }
+    nCoin(0,2,0,410);
+    coin[0]->magic = 1;
+    nCoin(2,3,800,310);
+
+    //初始化书
+    book = new obstacle;
+    newOb(book,3,2500,550,180,200,4);
+
     //初始化云
     for(int i = 0; i < CLOUDNUM; i++)
     {
@@ -93,30 +105,31 @@ void MainWindow::firstLevelIni()
         pScene->addItem(cloud[i]);
     }
 
+    //初始化主楼
+    h = new obstacle;
+    newOb(h,5,2600,550,180,200,5);
+
     //初始化会动的砖
-    for(int i = 0; i < 3; i++)
+    for(int i = 0; i <  MBRICKNUM; i++)
     {
         mbrick[i] = new obstacle;
-        mbrick[i]->setType(6);
-        mbrick[i]->setPos(3000 + 600 * i,550);
-        mbrick[i]->setWidthHeight(50,50);
-        mbrick[i]->setData(1,2);
-        mbrick[i]->moveFlag = 0;
-        pScene->addItem(mbrick[i]);
     }
+    nmBrick(0,3,3000,550);
 
-
-
-    //初始化金币w
-    for(int i = 0; i <  COINNUM; i++)
+    //初始化树
+    for(int i = 0; i < TREENUM; i++)
     {
-        coin[i] = new obstacle;
+        tree[i] = new obstacle;
+        tree[i]->setType(8);
+        tree[i]->setPos(-375 + 150 * i,600);
+        tree[i]->setWidthHeight(100,100);
+        pScene->addItem(tree[i]);
     }
-    nCoin(0,3,0,445);
-    coin[0]->magic = 1;
-	
-	
-	
+
+
+//    //初始化作业
+//    homework = new obstacle;
+//    newOb(homework,7,550,550,180,200,6);
 	
     //初始化角色
     item = new player;
@@ -179,14 +192,9 @@ void MainWindow::firstLevelIni()
         connect(item,&player::Skill1,Cups[i],&javacup::AttackedByK);
         connect(item,&player::Skill2,Cups[i],&javacup::AttackedByL);
     }
-//    for(int i = 0; i < PlusNum; i++)
-//    {
-//        connect(item,&player::Skill0,plus[i],&Cpp::AttackedByJ);
-//        connect(item,&player::Skill1,plus[i],&Cpp::AttackedByK);
-//        connect(item,&player::Skill2,plus[i],&Cpp::AttackedByL);
-//    }
     // 将 item 添加至场景中
     // 为视图设置场景
+
 
     QFont font;
     font.setKerning(true);
@@ -199,6 +207,7 @@ void MainWindow::firstLevelIni()
         text->setPlainText("血量:"+QString::number(item->heroBlood));
         text->update();
     });
+
     pView->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
     pView->resize(SCREENWIDTH,SCREENHEIGHT);
     pView->setScene(pScene);
@@ -206,24 +215,27 @@ void MainWindow::firstLevelIni()
     pView->centerOn(0,0);
     pView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     pView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
     //背景移动
     connect(item,&player::BackGroundMove,[=](){
-        //qDebug()<<brick[1]->pos();
-
         for (int i = 0; i < BRICKNUM; i++)
         {
             brick[i]->moveBy(-2,0);
-            if(brick[i]->pos().x()<-500)
-            {
-                pScene->removeItem(brick[i]);
+//            if(brick[i]->pos().x()<-500)
+//            {
+//                pScene->removeItem(brick[i]);
 
-            }
+//            }
         }
 
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 4; i++)
         {
             coin[i]->moveBy(-2,0);
         }
+
+        book->moveBy(-2,0);
+        h->moveBy(-2,0);
+//        homework->moveBy(-2,0);
 
         for (int i = 0; i < 3; i++)
         {
@@ -235,19 +247,13 @@ void MainWindow::firstLevelIni()
             Cups[i]->moveBy(-3,0);
         }
 
-
-
     });
+
     connect(coin[0]->groundTimer,&QTimer::timeout,[=](){
 
-        k++;
-        if(k==3)
-        {
-            k=0;
-        }
         for(int i = 0;i<GROUNDNUM;i++)
         {
-            if(count%2==0&&(i+1)%2==k)
+            if(count%2==0)
             {
                 pScene->removeItem(ground[i]);
                 pScene->update();
@@ -261,11 +267,14 @@ void MainWindow::firstLevelIni()
         }
          count++;
     });
+
     //胜利
     connect(item,&player::succeed,[=](){
         pView->close();
         QMessageBox::about(this,"Victory","你赢了!");
     });
+
+    //失败
     connect(item,&player::failed,[=](){
 
         pView->close();
@@ -287,12 +296,19 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 void MainWindow::newOb(obstacle *one, int type, int x, int y, int w, int h, int data)
 {
     one->setType(type);
-//    one->setPosition(x,y-300);
     one->setPos(x,y-300);
     one->setWidthHeight(w,h);
     one->setData(1,data);
     one->setPos(x,y);
     pScene->addItem(one);
+}
+
+void MainWindow::nGround(int begin, int end, int x, int y)
+{
+    for(int i = begin; i < end; i++)
+    {
+        newOb(ground[i],0,x + 150 * (i - begin),y,300,200,2);
+    }
 }
 
 void MainWindow::nBrick(int begin, int end, int x, int y)
@@ -307,9 +323,19 @@ void MainWindow::nCoin(int begin, int end, int x, int y)
 {
     for(int i = begin; i < end; i++)
     {
-        newOb(coin[i],2,x + 25 * (i - begin),y,50,50,3);
+        newOb(coin[i],2,x + 40 * (i - begin),y,80,120,3);
     }
 }
+
+
+void MainWindow::nmBrick(int begin, int end, int x, int y)
+{
+    for(int i = begin; i < end; i++)
+    {
+        newOb(mbrick[i],6,x + 600 * (i - begin),y,50,50,2);
+    }
+}
+
 QList<int> MainWindow::generateUniqueRandomNumber()
 {
     int i,j;
@@ -337,10 +363,10 @@ QList<int> MainWindow::generateUniqueRandomNumber()
                 }
             }
         }
+    }
         for(i=0;i<8;i++)
         {
             qDebug()<<numbersList[i];
         }
         return numbersList;
-    }
 }

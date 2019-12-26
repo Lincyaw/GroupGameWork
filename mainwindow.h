@@ -3,7 +3,6 @@
 #include"player.h"
 #include"obstacle.h"
 #include <QMainWindow>
-#include "hello.h"
 #include<QPushButton>
 #include<QMessageBox>
 #include<QFileDialog>
@@ -14,15 +13,17 @@
 #include<QGraphicsTextItem>
 #include<QFont>
 #include<QTime>
+#include<QPushButton>
+#include"mypushbutton.h"
 #define SCREENWIDTH 1500
 #define SCREENHEIGHT 1080
 #define CLOUDNUM 3
 #define GROUNDNUM 6
 #define CupNum 15
-#define PlusNum 5
-#define BRICKNUM 45
-#define COINNUM 8
-#define MBRICKNUM 15
+#define BRICKNUM 20
+#define COINNUM 3
+#define MBRICKNUM 5
+#define TREENUM 5
 
 namespace Ui {
 class MainWindow;
@@ -40,34 +41,39 @@ public:
     ~MainWindow();
     void paintEvent(QPaintEvent *event);
     int clickedTimes=0;
-    int k=0;
     int count = 0;
     QGraphicsScene *pScene = new QGraphicsScene();
     QGraphicsView *pView = new QGraphicsView();
     player *item;
-    obstacle *cloud[CLOUDNUM];
     obstacle *ground[GROUNDNUM];
     obstacle *brick[BRICKNUM];
     obstacle *coin[COINNUM];
     obstacle *book;
+    obstacle *cloud[CLOUDNUM];
     obstacle *h;
-    obstacle *mbrick[3];
-    obstacle *homework;
+    obstacle *mbrick[MBRICKNUM];
+//    obstacle *homework;
+    obstacle *tree[TREENUM];
     QGraphicsTextItem *text = new QGraphicsTextItem;
     void firstLevelIni();
     void newOb(obstacle *one, int type, int x, int y, int w, int h, int data);
+    void nGround(int begin, int end, int x, int y);
     void nBrick(int begin, int end, int x, int y);
     void nCoin(int begin, int end, int x, int y);
+    void nmBrick(int begin, int end, int x, int y);
+
     QList<int> generateUniqueRandomNumber();
  //  QSound *BGM = new QSound(":/m/back/BGM.wav");
     QMediaPlayer *myPlayer= new QMediaPlayer;
 
     //怪物*******************************************
     javacup * Cups[CupNum];
+    QPixmap knife = QPixmap(":/m/back/knife.png");
+    QPixmap knife2 = QPixmap(":/m/back/knife2.png");
+    QPixmap start = QPixmap(":/m/back/start.png");
+    QPixmap hit = QPixmap(":/m/back/hit.png");
 
 private slots:
-    void on_begin_clicked();
-    void on_pushButton_clicked();
 
 private:
     Ui::MainWindow *ui;

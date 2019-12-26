@@ -52,16 +52,21 @@ void obstacle::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
     Q_UNUSED(widget)
     switch(type)
     {
-    case 1://砖块
+    case 0://地
     {
         painter->drawPixmap(pos().x(),pos().y(),obWidth,obHeight,Ground);
+        break;
+    }
+    case 1://砖块
+    {
+        painter->drawPixmap(pos().x(),pos().y(),obWidth,obHeight,Brick);
         break;
     }
     case 2://金币
     {
         if(showflag)
         {
-            painter->drawPixmap(pos().x(),pos().y(),obWidth,obHeight,Coin);
+            painter->drawPixmap(pos().x(),pos().y(),obWidth,obHeight,Book);
         }
         if(!collidingItems().isEmpty())
         {
@@ -97,12 +102,17 @@ void obstacle::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
     }
     case 6://会动的砖
     {
-        painter->drawPixmap(pos().x(),pos().y(),obWidth,obHeight,Ground);
+        painter->drawPixmap(pos().x(),pos().y(),obWidth,obHeight,Brick);
         break;
     }
     case 7://作业
     {
         painter->drawPixmap(pos().x(),pos().y(),obWidth,obHeight,Homework);
+        break;
+    }
+    case 8://树
+    {
+        painter->drawPixmap(pos().x(),pos().y(),obWidth,obHeight,Tree);
         break;
     }
     }
