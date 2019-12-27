@@ -1,0 +1,16 @@
+INPUT(
+./release\main.o
+./release\anemy.o
+./release\mainwindow.o
+./release\player.o
+./release\obstacle.o
+./release\javacup.o
+./release\mypushbutton.o
+./release\qrc_monster.o
+./release\qrc_res.o
+./release\moc_mainwindow.o
+./release\moc_anemy.o
+./release\moc_player.o
+./release\moc_obstacle.o
+./release\moc_mypushbutton.o
+);

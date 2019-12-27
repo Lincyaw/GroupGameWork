@@ -1,0 +1,16 @@
+INPUT(
+./debug\main.o
+./debug\anemy.o
+./debug\mainwindow.o
+./debug\player.o
+./debug\obstacle.o
+./debug\javacup.o
+./debug\mypushbutton.o
+./debug\qrc_monster.o
+./debug\qrc_res.o
+./debug\moc_mainwindow.o
+./debug\moc_anemy.o
+./debug\moc_player.o
+./debug\moc_obstacle.o
+./debug\moc_mypushbutton.o
+);

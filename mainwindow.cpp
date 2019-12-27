@@ -29,10 +29,10 @@ MainWindow::MainWindow(QWidget *parent) :
         if(clickedTimes==0)
         {
             //BGM->play();
-
             myPlayer->setMedia(QUrl("qrc:/m/back/bgm.mp3"));
             myPlayer->setVolume(80);
             myPlayer->play();
+            qDebug()<<"asd";
             firstLevelIni();
             this->hide();
             pView->show();
@@ -251,7 +251,7 @@ void MainWindow::firstLevelIni()
     pView->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
     pView->resize(SCREENWIDTH,SCREENHEIGHT);
     pView->setScene(pScene);
-    pView->setStyleSheet("border:none; background:white;");
+    pView->setStyleSheet("border:none; background:pink;");
     pView->centerOn(0,0);
     pView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     pView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
